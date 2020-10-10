@@ -2,16 +2,15 @@ import 'phaser'
 import Player from '../../gameObjects/player'
 
 export default class JunglePlanetScene extends Phaser.Scene {
-  private cursors: Phaser.Types.Input.Keyboard.CursorKeys | null
   private frog: Player
+  private hotKeys: HotKeys | null
 
   constructor() {
     super('demo')
     this.frog = new Player()
-    this.cursors = null
+    this.hotKeys = null
   }
 
-  /* @return void */
   public preload(): void {
     console.log('preload')
     this.load.spritesheet('dude', '/src/assets/dude.png', {
@@ -23,7 +22,7 @@ export default class JunglePlanetScene extends Phaser.Scene {
   public create(): void {
     console.log('create')
     this.frog.initializeSprite(this, 1)
-    this.cursors = this.input.keyboard.createCursorKeys()
+    this.hotKeys = this.input.keyboard.addKeys('W,A,S,D') as HotKeys
   }
 
   public update(): void {
@@ -31,18 +30,24 @@ export default class JunglePlanetScene extends Phaser.Scene {
   }
 
   private setKeyboardActions(): void {
-    if (this.cursors) {
-      if (this.cursors.left?.isDown) {
-        console.log('test')
+    if (this.hotKeys) {
+      if (this.hotKeys.A.isDown) {
         this.frog.run(-1)
-      } else if (this.cursors.right?.isDown) {
+      } else if (this.hotKeys.D?.isDown) {
         this.frog.run(1)
       } else {
         this.frog.run(0)
       }
-      if (this.cursors.up?.isDown) {
+      if (this.hotKeys.W?.isDown) {
         this.frog.jump(-1)
       }
     }
   }
+}
+
+type HotKeys = {
+  W: Phaser.Input.Keyboard.Key
+  A: Phaser.Input.Keyboard.Key
+  S: Phaser.Input.Keyboard.Key
+  D: Phaser.Input.Keyboard.Key
 }
