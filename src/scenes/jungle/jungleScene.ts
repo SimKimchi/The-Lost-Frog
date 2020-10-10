@@ -1,13 +1,23 @@
 import 'phaser'
+import Platforms, { PlatformSet } from '../../gameObjects/platforms'
 import Player from '../../gameObjects/player'
 
 export default class JunglePlanetScene extends Phaser.Scene {
+  private static readonly PLATFORM_SET_1: PlatformSet[] = [
+    { x: 400, y: 568, scale: 2 },
+    { x: 600, y: 400 },
+    { x: 50, y: 250 },
+    { x: 750, y: 220 }
+  ]
+
   private frog: Player
+  private platforms: Platforms
   private hotKeys: HotKeys | null
 
   constructor() {
     super('demo')
     this.frog = new Player()
+    this.platforms = new Platforms()
     this.hotKeys = null
   }
 
@@ -22,6 +32,11 @@ export default class JunglePlanetScene extends Phaser.Scene {
   public create(): void {
     console.log('create')
     this.frog.initializeSprite(this, 1)
+    this.platforms.initializeStaticGroup(this, JunglePlanetScene.PLATFORM_SET_1)
+    this.physics.add.collider(
+      this.frog.getSprite(),
+      this.platforms.getStaticGroup()
+    )
     this.hotKeys = this.input.keyboard.addKeys('W,A,S,D') as HotKeys
   }
 

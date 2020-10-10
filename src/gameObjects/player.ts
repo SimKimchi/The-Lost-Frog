@@ -16,7 +16,11 @@ export default class Player {
     this.damage = 1
   }
 
-  initializeSprite(scene: Phaser.Scene, planetGravity: number): void {
+  public getSprite(): Phaser.Physics.Arcade.Sprite {
+    return this.sprite as Phaser.Physics.Arcade.Sprite
+  }
+
+  public initializeSprite(scene: Phaser.Scene, planetGravity: number): void {
     this.sprite = scene.physics.add.sprite(100, 450, 'dude')
 
     this.sprite.setCollideWorldBounds(true)
