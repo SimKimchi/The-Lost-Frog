@@ -3,7 +3,7 @@ import 'phaser'
 export default class Player {
   private static readonly VELOCITY_X = 500
   private static readonly VELOCITY_Y = 900
-  private static readonly GRAVITY = 1700
+  private static readonly GRAVITY = 500
 
   private currentHp: number
   private maxHp: number
