@@ -1,5 +1,6 @@
 import 'phaser'
 import Platforms, { PlatformSet } from '../../gameObjects/platforms'
+import assetRoutes from './assets'
 import Player from '../../gameObjects/player'
 
 export default class JunglePlanetScene extends Phaser.Scene {
@@ -15,7 +16,10 @@ export default class JunglePlanetScene extends Phaser.Scene {
   private hotKeys: HotKeys | null
 
   constructor() {
-    super('demo')
+    const sceneConfig: Phaser.Types.Scenes.SettingsConfig = {
+      key: 'Jungle'
+    }
+    super(sceneConfig)
     this.frog = new Player()
     this.platforms = new Platforms()
     this.hotKeys = null
@@ -23,7 +27,9 @@ export default class JunglePlanetScene extends Phaser.Scene {
 
   public preload(): void {
     console.log('preload')
-    this.load.spritesheet('dude', '/src/assets/dude.png', {
+    this.load.image('sky', assetRoutes.sky)
+    this.load.image('platform', assetRoutes.platform)
+    this.load.spritesheet('dude', assetRoutes.dude, {
       frameWidth: 32,
       frameHeight: 48
     })
@@ -31,6 +37,7 @@ export default class JunglePlanetScene extends Phaser.Scene {
 
   public create(): void {
     console.log('create')
+    this.add.image(480, 320, 'sky')
     this.frog.initializeSprite(this, 1)
     this.platforms.initializeStaticGroup(this, JunglePlanetScene.PLATFORM_SET_1)
     this.physics.add.collider(
@@ -42,6 +49,7 @@ export default class JunglePlanetScene extends Phaser.Scene {
 
   public update(): void {
     this.setKeyboardActions()
+    this.frog.updateAnimation()
   }
 
   private setKeyboardActions(): void {

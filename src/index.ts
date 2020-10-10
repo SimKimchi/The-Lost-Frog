@@ -3,7 +3,7 @@ import JunglePlanetScene from './scenes/jungle/jungleScene'
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  backgroundColor: '#125444',
+  backgroundColor: '#66a166',
   width: 960,
   height: 640,
   physics: {

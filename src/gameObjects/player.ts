@@ -71,11 +71,13 @@ export default class Player {
   public updateAnimation(): void {
     if (!this.sprite) return
 
-    if (this.sprite.body.velocity.y < 0) {
-      this.sprite.anims.play('up', true)
-    } else if (this.sprite.body.velocity.y > 0) {
-      this.sprite.anims.play('down', true)
-    } else if (this.sprite.body.velocity.x < 0) {
+    // TODO: Uncomment once we have the 'jump' and 'fall' animations
+    // if (this.sprite.body.velocity.y < 0) {
+    //   this.sprite.anims.play('up', true)
+    // } else if (this.sprite.body.velocity.y > 0) {
+    //   this.sprite.anims.play('down', true)
+    // } else
+    if (this.sprite.body.velocity.x < 0) {
       this.sprite.anims.play('left', true)
     } else if (this.sprite.body.velocity.x > 0) {
       this.sprite.anims.play('right', false)
