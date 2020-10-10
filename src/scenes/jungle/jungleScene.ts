@@ -30,17 +30,19 @@ export default class JunglePlanetScene extends Phaser.Scene {
   }
 
   private setKeyboardActions(): void {
-    if (this.hotKeys) {
-      if (this.hotKeys.A.isDown) {
-        this.frog.run(-1)
-      } else if (this.hotKeys.D?.isDown) {
-        this.frog.run(1)
-      } else {
-        this.frog.run(0)
-      }
-      if (this.hotKeys.W?.isDown) {
-        this.frog.jump(-1)
-      }
+    if (!this.hotKeys) {
+      return
+    }
+
+    if (this.hotKeys.A.isDown) {
+      this.frog.run(-1)
+    } else if (this.hotKeys.D.isDown) {
+      this.frog.run(1)
+    } else {
+      this.frog.run(0)
+    }
+    if (this.hotKeys.W.isDown) {
+      this.frog.jump(-1)
     }
   }
 }
