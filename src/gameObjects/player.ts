@@ -1,27 +1,29 @@
 import 'phaser'
 
 export default class Player {
-  private sprite: Phaser.Physics.Arcade.Sprite
+  private static readonly VELOCITY_X = 500
+  private static readonly VELOCITY_Y = 900
+  private static readonly GRAVITY = 1700
 
-  constructor(private scene: Phaser.Scene) {
-    this.scene = scene
-    this.sprite = this.initializeSprite()
+  private currentHp: number
+  private maxHp: number
+  private damage: number
+  private sprite: Phaser.Physics.Arcade.Sprite | null
+
+  constructor() {
+    this.sprite = null
+    this.currentHp = this.maxHp = 5
+    this.damage = 1
   }
 
-  setGravity(gravity: number): void {
-    this.sprite.body.setGravityY(gravity)
-  }
+  initializeSprite(scene: Phaser.Scene, planetGravity: number): void {
+    this.sprite = scene.physics.add.sprite(100, 450, 'dude')
 
-  initializeSprite(): Phaser.Physics.Arcade.Sprite {
-    const sprite: Phaser.Physics.Arcade.Sprite = this.scene.physics.add.sprite(
-      100,
-      450,
-      'dude'
-    )
-    sprite.setCollideWorldBounds(true)
-    this.scene.anims.create({
+    this.sprite.setCollideWorldBounds(true)
+
+    scene.anims.create({
       key: 'left',
-      frames: this.scene.anims.generateFrameNumbers('dude', {
+      frames: scene.anims.generateFrameNumbers('dude', {
         start: 0,
         end: 3
       }),
@@ -29,15 +31,15 @@ export default class Player {
       repeat: -1
     })
 
-    this.scene.anims.create({
-      key: 'turn',
+    scene.anims.create({
+      key: 'idle',
       frames: [{ key: 'dude', frame: 4 }],
       frameRate: 20
     })
 
-    this.scene.anims.create({
+    scene.anims.create({
       key: 'right',
-      frames: this.scene.anims.generateFrameNumbers('dude', {
+      frames: scene.anims.generateFrameNumbers('dude', {
         start: 5,
         end: 8
       }),
@@ -45,6 +47,65 @@ export default class Player {
       repeat: -1
     })
 
-    return sprite
+    this.setGravity(planetGravity)
+  }
+
+  public run(multiplier: number): void {
+    if (!this.sprite) return
+
+    this.sprite.setVelocityX(Player.VELOCITY_X * multiplier)
+  }
+
+  public jump(multiplier: number): void {
+    if (!this.sprite) return
+
+    if (this.isGrounded()) {
+      this.sprite.setVelocityY(Player.VELOCITY_Y * multiplier)
+    }
+  }
+
+  public updateAnimation(): void {
+    if (!this.sprite) return
+
+    if (this.sprite.body.velocity.y < 0) {
+      this.sprite.anims.play('up', true)
+    } else if (this.sprite.body.velocity.y > 0) {
+      this.sprite.anims.play('down', true)
+    } else if (this.sprite.body.velocity.x < 0) {
+      this.sprite.anims.play('left', true)
+    } else if (this.sprite.body.velocity.x > 0) {
+      this.sprite.anims.play('right', false)
+    } else {
+      this.sprite.anims.play('idle', false)
+    }
+  }
+
+  public takeDamage(damage: number): void {
+    this.currentHp -= damage
+
+    if (this.currentHp < 0) {
+      this.currentHp = 0
+    }
+  }
+
+  public isDead(): boolean {
+    return this.currentHp <= 0
+  }
+
+  public displayHp(): string {
+    return `Health: ${this.currentHp}/${this.maxHp}`
+  }
+
+  public setGravity(multiplier: number): void {
+    if (!this.sprite) return
+    ;(<Phaser.Physics.Arcade.Body>this.sprite.body).setGravityY(
+      Player.GRAVITY * multiplier
+    )
+  }
+
+  private isGrounded() {
+    if (!this.sprite) return
+
+    return this.sprite.body.blocked.down
   }
 }
