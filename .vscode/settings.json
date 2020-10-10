@@ -3,7 +3,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "prettier.singleQuote": true,
     "editor.formatOnSave": true,
-    "editor.formatOnSaveMode": "modifications",
     "editor.codeActionsOnSave": {
         "source.fixAll": true
     }
