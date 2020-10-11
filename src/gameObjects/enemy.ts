@@ -6,39 +6,6 @@ export default class Enemy extends Character {
     super(2, 1)
   }
 
-  public initializeSprite(scene: Phaser.Scene, planetGravity: number): void {
-    this.sprite = scene.physics.add.sprite(100, 450, 'dude')
-    this.sprite.setCollideWorldBounds(true)
-
-    scene.anims.create({
-      key: 'left',
-      frames: scene.anims.generateFrameNumbers('dude', {
-        start: 0,
-        end: 3
-      }),
-      frameRate: 10,
-      repeat: -1
-    })
-
-    scene.anims.create({
-      key: 'idle',
-      frames: [{ key: 'dude', frame: 4 }],
-      frameRate: 20
-    })
-
-    scene.anims.create({
-      key: 'right',
-      frames: scene.anims.generateFrameNumbers('dude', {
-        start: 5,
-        end: 8
-      }),
-      frameRate: 10,
-      repeat: -1
-    })
-
-    this.setGravity(planetGravity)
-  }
-
   public run(multiplier: number): void {
     if (!this.sprite) return
 

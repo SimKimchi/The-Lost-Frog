@@ -15,10 +15,11 @@ export type CharacterConfig = {
 
 export type AnimationConfig = {
   key: string
-  frameStart: number
-  frameEnd: number
-  frameRate: number
-  repeat: number
+  frame?: number
+  frameStart?: number
+  frameEnd?: number
+  frameRate?: number
+  repeat?: number
 }
 
 export type HotKeys = {

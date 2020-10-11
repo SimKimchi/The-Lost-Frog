@@ -1,43 +1,20 @@
+/* eslint-disable indent */
 import 'phaser'
 import Character from './character'
 
 export default class Player extends Character {
+  private static instance: Player
+
   constructor() {
     super(5, 1)
   }
 
-  public initializeSprite(scene: Phaser.Scene, planetGravity: number): void {
-    this.sprite = scene.physics.add.sprite(100, 450, 'dude')
+  public static getPlayer(): Player {
+    if (!Player.instance) {
+      Player.instance = new Player()
+    }
 
-    this.sprite.setCollideWorldBounds(true)
-
-    scene.anims.create({
-      key: 'left',
-      frames: scene.anims.generateFrameNumbers('dude', {
-        start: 0,
-        end: 3
-      }),
-      frameRate: 10,
-      repeat: -1
-    })
-
-    scene.anims.create({
-      key: 'idle',
-      frames: [{ key: 'dude', frame: 4 }],
-      frameRate: 20
-    })
-
-    scene.anims.create({
-      key: 'right',
-      frames: scene.anims.generateFrameNumbers('dude', {
-        start: 5,
-        end: 8
-      }),
-      frameRate: 10,
-      repeat: -1
-    })
-
-    this.setGravity(planetGravity)
+    return Player.instance
   }
 
   public run(multiplier: number): void {

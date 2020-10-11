@@ -5,8 +5,8 @@ import Player from '../gameObjects/player'
 import { HotKeys } from '../util'
 
 export default abstract class PlanetScene extends Phaser.Scene {
-  protected gravityXModifier: number
-  protected gravityYModifier: number
+  protected velocityXModifier: number
+  protected velocityYModifier: number
   protected platformMatrix: PlatformSet[][]
 
   protected frog: Player
@@ -23,10 +23,10 @@ export default abstract class PlanetScene extends Phaser.Scene {
     platformMatrix: PlatformSet[][]
   ) {
     super(sceneConfig)
-    this.gravityXModifier = gravityXModifier
-    this.gravityYModifier = gravityYModifier
+    this.velocityXModifier = gravityXModifier
+    this.velocityYModifier = gravityYModifier
     this.platformMatrix = platformMatrix
-    this.frog = new Player()
+    this.frog = Player.getPlayer()
     this.platforms = new Platforms()
     this.hotKeys = null
     this.displayScore = null

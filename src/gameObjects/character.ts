@@ -1,4 +1,6 @@
+/* eslint-disable indent */
 import 'phaser'
+import { CharacterConfig } from '../util'
 
 export default abstract class Character {
   protected static readonly VELOCITY_X = 500
@@ -20,7 +22,35 @@ export default abstract class Character {
     return this.sprite as Phaser.Physics.Arcade.Sprite
   }
 
-  abstract initializeSprite(scene: Phaser.Scene, planetGravity: number): void
+  public initializeSprite(
+    scene: Phaser.Scene,
+    planetGravity: number,
+    config: CharacterConfig
+  ): void {
+    this.sprite = scene.physics.add.sprite(
+      config.spawnX,
+      config.spawnY,
+      config.spriteKey
+    )
+
+    this.sprite.setCollideWorldBounds(config.collideWorldBounds)
+
+    for (const animation of config.animations) {
+      scene.anims.create({
+        key: animation.key,
+        frames: animation.frame
+          ? [{ key: config.spriteKey, frame: animation.frame }]
+          : scene.anims.generateFrameNumbers(config.spriteKey, {
+              start: animation.frameStart,
+              end: animation.frameEnd
+            }),
+        frameRate: animation.frameRate,
+        repeat: animation.repeat
+      })
+    }
+
+    this.setGravity(planetGravity)
+  }
 
   public abstract run(multiplier: number): void
 

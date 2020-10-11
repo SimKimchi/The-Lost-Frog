@@ -4,6 +4,8 @@ import assetRoutes from './assets'
 import { Direction } from '../../util'
 import Enemy from '../../gameObjects/enemy'
 import PlanetScene from '../PlanetScene'
+import CharacterConfigFatory from '../../factories/characterConfigFactory'
+import EnemyFatory from '../../factories/enemyFactory'
 
 export default class JunglePlanetScene extends PlanetScene {
   constructor() {
@@ -53,7 +55,11 @@ export default class JunglePlanetScene extends PlanetScene {
   }
 
   protected initializeCharacters(): void {
-    this.frog.initializeSprite(this, this.gravityYModifier)
+    this.frog.initializeSprite(
+      this,
+      this.velocityYModifier,
+      CharacterConfigFatory.getPlayerConfig()
+    )
     //this.spawnEnemies()
   }
 
@@ -66,8 +72,7 @@ export default class JunglePlanetScene extends PlanetScene {
 
   protected spawnEnemies(numberOfEnemies: number): void {
     for (let i = 0; i < numberOfEnemies; i++) {
-      const enemy: Enemy = new Enemy()
-      enemy.initializeSprite(this, this.gravityYModifier)
+      EnemyFatory.createLizard(this, this.velocityYModifier)
     }
   }
 
@@ -78,10 +83,10 @@ export default class JunglePlanetScene extends PlanetScene {
     let direction = Direction.Right
 
     if (this.hotKeys.A.isDown) {
-      this.frog.run(-this.gravityXModifier)
+      this.frog.run(-this.velocityXModifier)
       direction = Direction.Left
     } else if (this.hotKeys.D.isDown) {
-      this.frog.run(this.gravityXModifier)
+      this.frog.run(this.velocityXModifier)
       direction = Direction.Right
     } else if (this.hotKeys.S.isDown) {
       direction = Direction.Down
@@ -89,7 +94,7 @@ export default class JunglePlanetScene extends PlanetScene {
       this.frog.run(0)
     }
     if (this.hotKeys.SPACE.isDown) {
-      this.frog.jump(-this.gravityYModifier)
+      this.frog.jump(-this.velocityYModifier)
       direction = Direction.Up
     }
     if (this.hotKeys.E.isDown) {
