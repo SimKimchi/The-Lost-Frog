@@ -27,7 +27,11 @@ export default abstract class CharacterConfigFatory {
           frameRate: 10,
           repeat: -1
         }
-      ]
+      ],
+      containerSizeX: 32,
+      containerSizeY: 48,
+      spriteOffsetX: 0,
+      spriteOffsetY: 0
     }
   }
 
@@ -60,7 +64,11 @@ export default abstract class CharacterConfigFatory {
           frameRate: 10,
           repeat: -1
         }
-      ]
+      ],
+      containerSizeX: 32,
+      containerSizeY: 48,
+      spriteOffsetX: 0,
+      spriteOffsetY: 0
     }
   }
 }

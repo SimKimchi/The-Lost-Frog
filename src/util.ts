@@ -11,6 +11,10 @@ export type CharacterConfig = {
   collideWorldBounds: boolean
   spriteKey: string
   animations: AnimationConfig[]
+  containerSizeX: number
+  containerSizeY: number
+  spriteOffsetX: number
+  spriteOffsetY: number
 }
 
 export type AnimationConfig = {

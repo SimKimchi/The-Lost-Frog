@@ -13,7 +13,7 @@ export default class JunglePlanetScene extends PlanetScene {
     }
     const platformMatrix: PlatformSet[][] = [
       [
-        { x: 400, y: 568, scale: 2 },
+        { x: 400, y: 568 },
         { x: 600, y: 400 },
         { x: 50, y: 250 },
         { x: 750, y: 220 }
@@ -77,6 +77,18 @@ export default class JunglePlanetScene extends PlanetScene {
         this.frog.takeDamage(enemy.getData('damage'))
       }
     )
+
+    for (const key in this.enemies) {
+      console.log(this.frog.getAttackSprite())
+      this.physics.add.collider(
+        this.frog.getAttackSprite(),
+        this.enemies[key].getContainer(),
+        (_frog, enemy) => {
+          this.enemies[key].takeDamage(_frog.getData('damage'))
+          this.enemies[key].getSprite().setTint(0xff0000)
+        }
+      )
+    }
   }
 
   protected spawnEnemies(numberOfEnemies: number): void {

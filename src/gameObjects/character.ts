@@ -34,11 +34,15 @@ export default abstract class Character {
     planetGravity: number,
     config: CharacterConfig
   ): void {
-    this.sprite = scene.add.sprite(-15, -15, config.spriteKey)
+    this.sprite = scene.add.sprite(
+      config.spriteOffsetX,
+      config.spriteOffsetY,
+      config.spriteKey
+    )
     this.container = scene.add.container(config.spawnX, config.spawnY, [
       this.sprite
     ])
-    this.container.setSize(48, 64)
+    this.container.setSize(config.containerSizeX, config.containerSizeY)
     scene.physics.world.enable(this.container)
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setCollideWorldBounds(
       config.collideWorldBounds

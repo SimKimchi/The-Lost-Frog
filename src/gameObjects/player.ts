@@ -6,8 +6,7 @@ import { CharacterConfig } from '../util'
 export default class Player extends Character {
   private static instance: Player
   private canDoubleJump = false
-
-  private tongueSprite: Phaser.GameObjects.Sprite | null
+  private tongueSprite: Phaser.Physics.Arcade.Sprite | null
 
   constructor() {
     super(5, 1)
@@ -23,8 +22,15 @@ export default class Player extends Character {
 
     if (!this.container) return
 
-    this.tongueSprite = scene.add.sprite(50, 50, 'bomb')
+    //this.tongueSprite = scene.add.sprite(50, 2, 'bomb')
+    this.tongueSprite = scene.physics.add.sprite(50, 2, 'bomb')
+    this.tongueSprite.setGravityY(-1500)
+
     this.container.add(this.tongueSprite)
+  }
+
+  public getAttackSprite(): Phaser.Physics.Arcade.Sprite {
+    return this.tongueSprite as Phaser.Physics.Arcade.Sprite
   }
 
   public static getPlayer(): Player {
