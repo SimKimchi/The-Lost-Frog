@@ -3,20 +3,44 @@
 <html lang="en">
   <head>
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
     <meta charset="utf-8" />
     <title>The Lost Frog!</title>
     <link rel="stylesheet" href="src/styles/index.css" type="text/css" />
     <script src="src/index.ts"></script>
   </head>
   <body>
-    <h1>The Lost Frog!</h1>
-    <div id="game-container"></div>
-    <h3>Game keys:</h3>
-    <ul>
-      <li><strong>W</strong> : Jump</li>
-      <li><strong>A</strong> : Left</li>
-      <li><strong>D</strong> : Right</li>
-    </ul>
-    <p>Thanks for playing!</p>
+    <div class="container">
+      <div class="row">
+        <h1>The Lost Frog!</h1>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div id="game-container"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="row">
+            <h3>Game keys:</h3>
+          </div>
+          <div class="row">
+            <ul>
+              <li><strong>A</strong> : Left</li>
+              <li><strong>D</strong> : Right</li>
+              <li><strong>Space</strong> : Jump</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col align-self-end">
+          <p class="text-right">Thanks for playing!</p>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
