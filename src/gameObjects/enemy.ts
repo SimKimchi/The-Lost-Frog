@@ -8,7 +8,6 @@ export default class Enemy extends Character {
 
   public initializeSprite(scene: Phaser.Scene, planetGravity: number): void {
     this.sprite = scene.physics.add.sprite(100, 450, 'dude')
-
     this.sprite.setCollideWorldBounds(true)
 
     scene.anims.create({

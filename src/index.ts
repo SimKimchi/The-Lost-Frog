@@ -1,5 +1,5 @@
 import 'phaser'
-import JunglePlanetScene from './scenes/jungle/jungleScene'
+import JunglePlanetScene from './scenes/jungle/junglePlanetScene'
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
