@@ -1,6 +1,7 @@
 import 'phaser'
 import Platforms, { PlatformSet } from '../../gameObjects/platforms'
 import assetRoutes from './assets'
+import { Direction } from '../../util'
 import Player from '../../gameObjects/player'
 import { TheLostFrogGame } from '../..'
 
@@ -34,6 +35,7 @@ export default class JunglePlanetScene extends Phaser.Scene {
     console.log('preload')
     this.load.image('sky', assetRoutes.sky)
     this.load.image('platform', assetRoutes.platform)
+    this.load.image('bomb', assetRoutes.bomb)
     this.load.spritesheet('dude', assetRoutes.dude, {
       frameWidth: 32,
       frameHeight: 48
@@ -48,7 +50,7 @@ export default class JunglePlanetScene extends Phaser.Scene {
     this.initializeCollisions()
     this.initializeTexts()
 
-    this.hotKeys = this.input.keyboard.addKeys('W,A,S,D') as HotKeys
+    this.hotKeys = this.input.keyboard.addKeys('SPACE,A,S,D,E') as HotKeys
   }
 
   public update(): void {
@@ -61,22 +63,36 @@ export default class JunglePlanetScene extends Phaser.Scene {
     if (!this.hotKeys) {
       return
     }
+    let direction = Direction.Right
 
     if (this.hotKeys.A.isDown) {
       this.frog.run(-1)
+      direction = Direction.Left
     } else if (this.hotKeys.D.isDown) {
       this.frog.run(1)
+      direction = Direction.Right
+    } else if (this.hotKeys.S.isDown) {
+      direction = Direction.Down
     } else {
       this.frog.run(0)
     }
-    if (this.hotKeys.W.isDown) {
+    if (this.hotKeys.SPACE.isDown) {
       this.frog.jump(-1)
+      direction = Direction.Up
+    }
+    if (this.hotKeys.E.isDown) {
+      this.frog.attack(this, direction)
     }
   }
 
   private initializeStaticAssets(): void {
     this.add.image(480, 320, 'sky')
+    this.add.image(300, 620, 'bomb')
     this.platforms.initializeStaticGroup(this, JunglePlanetScene.PLATFORM_SET_1)
+  }
+
+  private initializeCharacters(): void {
+    this.frog.initializeSprite(this, 1)
   }
 
   private initializeCollisions(): void {
@@ -84,10 +100,6 @@ export default class JunglePlanetScene extends Phaser.Scene {
       this.frog.getSprite(),
       this.platforms.getStaticGroup()
     )
-  }
-
-  private initializeCharacters(): void {
-    this.frog.initializeSprite(this, 1)
   }
 
   private initializeTexts(): void {
@@ -111,8 +123,9 @@ export default class JunglePlanetScene extends Phaser.Scene {
 }
 
 type HotKeys = {
-  W: Phaser.Input.Keyboard.Key
+  SPACE: Phaser.Input.Keyboard.Key
   A: Phaser.Input.Keyboard.Key
   S: Phaser.Input.Keyboard.Key
   D: Phaser.Input.Keyboard.Key
+  E: Phaser.Input.Keyboard.Key
 }
