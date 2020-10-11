@@ -1,9 +1,9 @@
 import 'phaser'
 import Character from './character'
 
-export default class Player extends Character {
+export default class Enemy extends Character {
   constructor() {
-    super(5, 1)
+    super(2, 1)
   }
 
   public initializeSprite(scene: Phaser.Scene, planetGravity: number): void {
@@ -43,26 +43,20 @@ export default class Player extends Character {
   public run(multiplier: number): void {
     if (!this.sprite) return
 
-    this.sprite.setVelocityX(Player.VELOCITY_X * multiplier)
+    this.sprite.setVelocityX(Enemy.VELOCITY_X * multiplier)
   }
 
   public jump(multiplier: number): void {
     if (!this.sprite) return
 
     if (this.isGrounded()) {
-      this.sprite.setVelocityY(Player.VELOCITY_Y * multiplier)
+      this.sprite.setVelocityY(Enemy.VELOCITY_Y * multiplier)
     }
   }
 
   public updateAnimation(): void {
     if (!this.sprite) return
 
-    // TODO: Uncomment once we have the 'jump' and 'fall' animations
-    // if (this.sprite.body.velocity.y < 0) {
-    //   this.sprite.anims.play('up', true)
-    // } else if (this.sprite.body.velocity.y > 0) {
-    //   this.sprite.anims.play('down', true)
-    // } else
     if (this.sprite.body.velocity.x < 0) {
       this.sprite.anims.play('left', true)
     } else if (this.sprite.body.velocity.x > 0) {
@@ -72,14 +66,10 @@ export default class Player extends Character {
     }
   }
 
-  public displayHp(): string {
-    return `Health: ${this.currentHp}/${this.maxHp}`
-  }
-
   public setGravity(multiplier: number): void {
     if (!this.sprite) return
     ;(<Phaser.Physics.Arcade.Body>this.sprite.body).setGravityY(
-      Player.GRAVITY * multiplier
+      Enemy.GRAVITY * multiplier
     )
   }
 }
