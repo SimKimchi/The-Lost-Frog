@@ -31,10 +31,13 @@ export default abstract class CharacterConfigFatory {
     }
   }
 
-  public static getLizardConfig(): CharacterConfig {
+  public static getLizardConfig(
+    spawnX: number,
+    spawnY: number
+  ): CharacterConfig {
     return {
-      spawnX: 200,
-      spawnY: 350,
+      spawnX,
+      spawnY,
       spriteKey: 'dude',
       collideWorldBounds: true,
       animations: [

@@ -29,3 +29,7 @@ export type HotKeys = {
   D: Phaser.Input.Keyboard.Key
   E: Phaser.Input.Keyboard.Key
 }
+
+export function getRandomInt(max: number): number {
+  return Math.floor(Math.random() * Math.floor(max)) + 1
+}

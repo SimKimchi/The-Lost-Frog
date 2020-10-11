@@ -1,8 +1,7 @@
 import 'phaser'
 import { PlatformSet } from '../../gameObjects/platforms'
 import assetRoutes from './assets'
-import { Direction } from '../../util'
-import Enemy from '../../gameObjects/enemy'
+import { Direction, getRandomInt } from '../../util'
 import PlanetScene from '../PlanetScene'
 import CharacterConfigFatory from '../../factories/characterConfigFactory'
 import EnemyFatory from '../../factories/enemyFactory'
@@ -49,7 +48,7 @@ export default class JunglePlanetScene extends PlanetScene {
   }
 
   protected initializeStaticAssets(): void {
-    this.add.image(480, 320, 'sky')
+    this.add.image(480, 320, 'sky').setDepth(-1)
     this.add.image(300, 620, 'bomb')
     this.platforms.initializeStaticGroup(this, this.platformMatrix[0])
   }
@@ -60,19 +59,33 @@ export default class JunglePlanetScene extends PlanetScene {
       this.velocityYModifier,
       CharacterConfigFatory.getPlayerConfig()
     )
-    //this.spawnEnemies()
+    this.spawnEnemies(5)
   }
 
   protected initializeCollisions(): void {
+    const enemySprites = this.enemies.map((enemy) => {
+      return enemy.getSprite()
+    })
+    this.physics.add.collider(
+      [this.frog.getSprite(), ...enemySprites],
+      this.platforms.getStaticGroup()
+    )
     this.physics.add.collider(
       this.frog.getSprite(),
-      this.platforms.getStaticGroup()
+      enemySprites,
+      (_frog, enemy) => {
+        this.frog.takeDamage(enemy.getData('damage'))
+      }
     )
   }
 
   protected spawnEnemies(numberOfEnemies: number): void {
     for (let i = 0; i < numberOfEnemies; i++) {
-      EnemyFatory.createLizard(this, this.velocityYModifier)
+      const spawnX = getRandomInt(900)
+      const spawnY = getRandomInt(300)
+      this.enemies.push(
+        EnemyFatory.createLizard(this, this.velocityYModifier, spawnX, spawnY)
+      )
     }
   }
 
@@ -93,7 +106,7 @@ export default class JunglePlanetScene extends PlanetScene {
     } else {
       this.frog.run(0)
     }
-    if (this.hotKeys.SPACE.isDown) {
+    if (Phaser.Input.Keyboard.JustDown(this.hotKeys.SPACE)) {
       this.frog.jump(-this.velocityYModifier)
       direction = Direction.Up
     }

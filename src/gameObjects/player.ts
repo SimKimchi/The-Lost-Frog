@@ -4,6 +4,7 @@ import Character from './character'
 
 export default class Player extends Character {
   private static instance: Player
+  private canDoubleJump = false
 
   constructor() {
     super(5, 1)
@@ -27,6 +28,10 @@ export default class Player extends Character {
     if (!this.sprite) return
 
     if (this.isGrounded()) {
+      this.canDoubleJump = true
+      this.sprite.setVelocityY(Player.VELOCITY_Y * multiplier)
+    } else if (this.canDoubleJump) {
+      this.canDoubleJump = false
       this.sprite.setVelocityY(Player.VELOCITY_Y * multiplier)
     }
   }

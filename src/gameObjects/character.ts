@@ -3,7 +3,7 @@ import 'phaser'
 import { CharacterConfig } from '../util'
 
 export default abstract class Character {
-  protected static readonly VELOCITY_X = 500
+  protected static readonly VELOCITY_X = 400
   protected static readonly VELOCITY_Y = 900
   protected static readonly GRAVITY = 500
 
@@ -50,6 +50,8 @@ export default abstract class Character {
     }
 
     this.setGravity(planetGravity)
+
+    this.sprite.setData('damage', this.damage)
   }
 
   public abstract run(multiplier: number): void
