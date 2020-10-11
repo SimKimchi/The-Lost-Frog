@@ -2,6 +2,7 @@ import 'phaser'
 import Platforms, { PlatformSet } from '../../gameObjects/platforms'
 import assetRoutes from './assets'
 import Player from '../../gameObjects/player'
+import { TheLostFrogGame } from '../..'
 
 export default class JunglePlanetScene extends Phaser.Scene {
   private static readonly PLATFORM_SET_1: PlatformSet[] = [
@@ -14,6 +15,8 @@ export default class JunglePlanetScene extends Phaser.Scene {
   private frog: Player
   private platforms: Platforms
   private hotKeys: HotKeys | null
+  private displayScore: Phaser.GameObjects.Text | null
+  private displayHp: Phaser.GameObjects.Text | null
 
   constructor() {
     const sceneConfig: Phaser.Types.Scenes.SettingsConfig = {
@@ -23,6 +26,8 @@ export default class JunglePlanetScene extends Phaser.Scene {
     this.frog = new Player()
     this.platforms = new Platforms()
     this.hotKeys = null
+    this.displayScore = null
+    this.displayHp = null
   }
 
   public preload(): void {
@@ -37,22 +42,22 @@ export default class JunglePlanetScene extends Phaser.Scene {
 
   public create(): void {
     console.log('create')
-    this.add.image(480, 320, 'sky')
-    this.frog.initializeSprite(this, 1)
-    this.platforms.initializeStaticGroup(this, JunglePlanetScene.PLATFORM_SET_1)
-    this.physics.add.collider(
-      this.frog.getSprite(),
-      this.platforms.getStaticGroup()
-    )
+
+    this.initializeStaticAssets()
+    this.initializeCharacters()
+    this.initializeCollisions()
+    this.initializeTexts()
+
     this.hotKeys = this.input.keyboard.addKeys('W,A,S,D') as HotKeys
   }
 
   public update(): void {
-    this.setKeyboardActions()
+    this.triggerKeyboardActions()
     this.frog.updateAnimation()
+    this.updateTexts()
   }
 
-  private setKeyboardActions(): void {
+  private triggerKeyboardActions(): void {
     if (!this.hotKeys) {
       return
     }
@@ -67,6 +72,41 @@ export default class JunglePlanetScene extends Phaser.Scene {
     if (this.hotKeys.W.isDown) {
       this.frog.jump(-1)
     }
+  }
+
+  private initializeStaticAssets(): void {
+    this.add.image(480, 320, 'sky')
+    this.platforms.initializeStaticGroup(this, JunglePlanetScene.PLATFORM_SET_1)
+  }
+
+  private initializeCollisions(): void {
+    this.physics.add.collider(
+      this.frog.getSprite(),
+      this.platforms.getStaticGroup()
+    )
+  }
+
+  private initializeCharacters(): void {
+    this.frog.initializeSprite(this, 1)
+  }
+
+  private initializeTexts(): void {
+    this.displayScore = this.add.text(
+      25,
+      25,
+      (this.game as TheLostFrogGame).displayScore(),
+      {
+        fontFamiy: 'Consolas'
+      }
+    )
+    this.displayHp = this.add.text(25, 45, this.frog.displayHp(), {
+      fontFamiy: 'Consolas'
+    })
+  }
+
+  private updateTexts(): void {
+    this.displayHp?.setText(this.frog.displayHp())
+    this.displayScore?.setText((this.game as TheLostFrogGame).displayScore())
   }
 }
 
