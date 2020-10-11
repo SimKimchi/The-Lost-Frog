@@ -10,10 +10,13 @@ export default abstract class Character {
   protected currentHp: number
   protected maxHp: number
   protected damage: number
-  protected sprite: Phaser.Physics.Arcade.Sprite | null
+  protected sprite: Phaser.GameObjects.Sprite | null
+
+  protected container: Phaser.GameObjects.Container | null
 
   constructor(maxHp: number, damage: number) {
     this.sprite = null
+    this.container = null
     this.currentHp = this.maxHp = maxHp
     this.damage = damage
   }
@@ -22,18 +25,24 @@ export default abstract class Character {
     return this.sprite as Phaser.Physics.Arcade.Sprite
   }
 
-  public initializeSprite(
+  public getContainer(): Phaser.GameObjects.Container {
+    return this.container as Phaser.GameObjects.Container
+  }
+
+  public init(
     scene: Phaser.Scene,
     planetGravity: number,
     config: CharacterConfig
   ): void {
-    this.sprite = scene.physics.add.sprite(
-      config.spawnX,
-      config.spawnY,
-      config.spriteKey
+    this.sprite = scene.add.sprite(-15, -15, config.spriteKey)
+    this.container = scene.add.container(config.spawnX, config.spawnY, [
+      this.sprite
+    ])
+    this.container.setSize(48, 64)
+    scene.physics.world.enable(this.container)
+    ;(<Phaser.Physics.Arcade.Body>this.container.body).setCollideWorldBounds(
+      config.collideWorldBounds
     )
-
-    this.sprite.setCollideWorldBounds(config.collideWorldBounds)
 
     for (const animation of config.animations) {
       scene.anims.create({
@@ -51,7 +60,7 @@ export default abstract class Character {
 
     this.setGravity(planetGravity)
 
-    this.sprite.setData('damage', this.damage)
+    this.container.setData('damage', this.damage)
   }
 
   public abstract run(multiplier: number): void
@@ -73,15 +82,15 @@ export default abstract class Character {
   }
 
   public setGravity(multiplier: number): void {
-    if (!this.sprite) return
-    ;(<Phaser.Physics.Arcade.Body>this.sprite.body).setGravityY(
+    if (!this.container) return
+    ;(<Phaser.Physics.Arcade.Body>this.container.body).setGravityY(
       Character.GRAVITY * multiplier
     )
   }
 
   protected isGrounded(): boolean {
-    if (!this.sprite) return false
+    if (!this.container) return false
 
-    return this.sprite.body.blocked.down
+    return (<Phaser.Physics.Arcade.Body>this.container.body).blocked.down
   }
 }

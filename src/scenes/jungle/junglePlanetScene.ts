@@ -54,7 +54,7 @@ export default class JunglePlanetScene extends PlanetScene {
   }
 
   protected initializeCharacters(): void {
-    this.frog.initializeSprite(
+    this.frog.init(
       this,
       this.velocityYModifier,
       CharacterConfigFatory.getPlayerConfig()
@@ -63,16 +63,16 @@ export default class JunglePlanetScene extends PlanetScene {
   }
 
   protected initializeCollisions(): void {
-    const enemySprites = this.enemies.map((enemy) => {
-      return enemy.getSprite()
+    const enemyContainers = this.enemies.map((enemy) => {
+      return enemy.getContainer()
     })
     this.physics.add.collider(
-      [this.frog.getSprite(), ...enemySprites],
+      [this.frog.getContainer(), ...enemyContainers],
       this.platforms.getStaticGroup()
     )
     this.physics.add.collider(
-      this.frog.getSprite(),
-      enemySprites,
+      this.frog.getContainer(),
+      enemyContainers,
       (_frog, enemy) => {
         this.frog.takeDamage(enemy.getData('damage'))
       }

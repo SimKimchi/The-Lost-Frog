@@ -9,7 +9,7 @@ export default abstract class EnemyFatory {
     spawnY: number
   ): Enemy {
     const lizard = new Enemy()
-    lizard.initializeSprite(
+    lizard.init(
       scene,
       planetGravity,
       CharacterConfigFatory.getLizardConfig(spawnX, spawnY)

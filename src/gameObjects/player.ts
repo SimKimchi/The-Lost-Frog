@@ -1,13 +1,30 @@
 /* eslint-disable indent */
 import 'phaser'
 import Character from './character'
+import { CharacterConfig } from '../util'
 
 export default class Player extends Character {
   private static instance: Player
   private canDoubleJump = false
 
+  private tongueSprite: Phaser.GameObjects.Sprite | null
+
   constructor() {
     super(5, 1)
+    this.tongueSprite = null
+  }
+
+  public init(
+    scene: Phaser.Scene,
+    planetGravity: number,
+    config: CharacterConfig
+  ): void {
+    super.init(scene, planetGravity, config)
+
+    if (!this.container) return
+
+    this.tongueSprite = scene.add.sprite(50, 50, 'bomb')
+    this.container.add(this.tongueSprite)
   }
 
   public static getPlayer(): Player {
@@ -19,25 +36,30 @@ export default class Player extends Character {
   }
 
   public run(multiplier: number): void {
-    if (!this.sprite) return
-
-    this.sprite.setVelocityX(Player.VELOCITY_X * multiplier)
+    if (!this.container) return
+    ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityX(
+      Player.VELOCITY_X * multiplier
+    )
   }
 
   public jump(multiplier: number): void {
-    if (!this.sprite) return
+    if (!this.container) return
 
     if (this.isGrounded()) {
       this.canDoubleJump = true
-      this.sprite.setVelocityY(Player.VELOCITY_Y * multiplier)
+      ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(
+        Player.VELOCITY_Y * multiplier
+      )
     } else if (this.canDoubleJump) {
       this.canDoubleJump = false
-      this.sprite.setVelocityY(Player.VELOCITY_Y * multiplier)
+      ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(
+        Player.VELOCITY_Y * multiplier
+      )
     }
   }
 
   public updateAnimation(): void {
-    if (!this.sprite) return
+    if (!this.container || !this.sprite) return
 
     // TODO: Uncomment once we have the 'jump' and 'fall' animations
     // if (this.sprite.body.velocity.y < 0) {
@@ -45,9 +67,11 @@ export default class Player extends Character {
     // } else if (this.sprite.body.velocity.y > 0) {
     //   this.sprite.anims.play('down', true)
     // } else
-    if (this.sprite.body.velocity.x < 0) {
+    if ((<Phaser.Physics.Arcade.Body>this.container.body).velocity.x < 0) {
       this.sprite.anims.play('left', true)
-    } else if (this.sprite.body.velocity.x > 0) {
+    } else if (
+      (<Phaser.Physics.Arcade.Body>this.container.body).velocity.x > 0
+    ) {
       this.sprite.anims.play('right', false)
     } else {
       this.sprite.anims.play('idle', false)
@@ -56,12 +80,5 @@ export default class Player extends Character {
 
   public displayHp(): string {
     return `Health: ${this.currentHp}/${this.maxHp}`
-  }
-
-  public setGravity(multiplier: number): void {
-    if (!this.sprite) return
-    ;(<Phaser.Physics.Arcade.Body>this.sprite.body).setGravityY(
-      Player.GRAVITY * multiplier
-    )
   }
 }
