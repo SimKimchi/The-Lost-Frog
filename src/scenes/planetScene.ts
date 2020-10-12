@@ -15,6 +15,8 @@ export default abstract class PlanetScene extends Phaser.Scene {
   protected hotKeys: HotKeys | null
   protected displayScore: Phaser.GameObjects.Text | null
   protected displayHp: Phaser.GameObjects.Text | null
+  public music: Phaser.Sound.BaseSound | null
+  public songLoader: Phaser.Loader.LoaderPlugin | null
 
   constructor(
     sceneConfig: Phaser.Types.Scenes.SettingsConfig,
@@ -32,6 +34,8 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.displayScore = null
     this.displayHp = null
     this.enemies = []
+    this.music = null
+    this.songLoader = null
   }
 
   public abstract preload(): void
@@ -64,8 +68,10 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   protected abstract triggerKeyboardActions(): void
+  protected abstract initializeEnemyBehavior(): void
   protected abstract initializeStaticAssets(): void
   protected abstract initializeCharacters(): void
   protected abstract initializeCollisions(): void
   protected abstract spawnEnemies(numberOfEnemies: number): void
+  protected abstract playMusic(): void
 }

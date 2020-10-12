@@ -1,3 +1,6 @@
-import assetRoutes from './*.png'
+import images from './*.png'
+import sounds from './*.ogg'
 
-export default assetRoutes
+const assets = { images, sounds }
+
+export default assets

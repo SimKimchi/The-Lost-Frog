@@ -4,6 +4,9 @@ import Character from './character'
 import { CharacterConfig } from '../util'
 
 export default class Player extends Character {
+  protected moveSpeed = 400
+  protected jumpStrength = 900
+  protected gravity = 500
   private static instance: Player
   private canDoubleJump = false
 
@@ -23,8 +26,8 @@ export default class Player extends Character {
 
     if (!this.container) return
 
-    this.tongueSprite = scene.add.sprite(50, 50, 'bomb')
-    this.container.add(this.tongueSprite)
+    //this.tongueSprite = scene.add.sprite(50, 50, 'bomb')
+    //this.container.add(this.tongueSprite)
   }
 
   public static getPlayer(): Player {
@@ -35,25 +38,18 @@ export default class Player extends Character {
     return Player.instance
   }
 
-  public run(multiplier: number): void {
-    if (!this.container) return
-    ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityX(
-      Player.VELOCITY_X * multiplier
-    )
-  }
-
   public jump(multiplier: number): void {
     if (!this.container) return
 
     if (this.isGrounded()) {
       this.canDoubleJump = true
       ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(
-        Player.VELOCITY_Y * multiplier
+        this.jumpStrength * multiplier
       )
     } else if (this.canDoubleJump) {
       this.canDoubleJump = false
       ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(
-        Player.VELOCITY_Y * multiplier
+        this.jumpStrength * multiplier
       )
     }
   }
