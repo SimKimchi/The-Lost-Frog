@@ -1,6 +1,6 @@
 import 'phaser'
 import { PlatformSet } from '../../gameObjects/platforms'
-import assetRoutes from './assets'
+import assets from './assets'
 import { Direction, getRandomInt } from '../../util'
 import PlanetScene from '../PlanetScene'
 import CharacterConfigFatory from '../../factories/characterConfigFactory'
@@ -23,10 +23,11 @@ export default class JunglePlanetScene extends PlanetScene {
   }
 
   public preload(): void {
-    this.load.image('sky', assetRoutes.sky)
-    this.load.image('platform', assetRoutes.platform)
-    this.load.image('bomb', assetRoutes.bomb)
-    this.load.spritesheet('dude', assetRoutes.dude, {
+    this.load.audio('volcanoTheme', assets.sounds.volcano_theme)
+    this.load.image('sky', assets.images.sky)
+    this.load.image('platform', assets.images.platform)
+    this.load.image('bomb', assets.images.bomb)
+    this.load.spritesheet('dude', assets.images.dude, {
       frameWidth: 32,
       frameHeight: 48
     })
@@ -37,7 +38,9 @@ export default class JunglePlanetScene extends PlanetScene {
 
     this.initializeStaticAssets()
     this.initializeCharacters()
+    this.initializeEnemyBehavior()
     this.initializeCollisions()
+    this.initializeSounds()
   }
 
   public update(): void {
@@ -60,6 +63,18 @@ export default class JunglePlanetScene extends PlanetScene {
       CharacterConfigFatory.getPlayerConfig()
     )
     this.spawnEnemies(5)
+  }
+
+  protected initializeEnemyBehavior(): void {
+    for (const enemy of this.enemies) {
+      const direction = getRandomInt(2)
+      if (direction === 1) {
+        enemy.run(-this.velocityXModifier)
+      } else {
+        enemy.run(this.velocityXModifier)
+      }
+      enemy.updateAnimation()
+    }
   }
 
   protected initializeCollisions(): void {
@@ -98,13 +113,42 @@ export default class JunglePlanetScene extends PlanetScene {
   private enemyCollision(
     enemyContainers: Phaser.GameObjects.Container[]
   ): void {
-    this.physics.add.collider(
+    this.physics.add.overlap(
       this.frog.getContainer(),
       enemyContainers,
       (_frog, enemy) => {
         this.frog.takeDamage(enemy.getData('damage'))
       }
     )
+
+    this.physics.world.setBoundsCollision(true, true, false, true)
+
+    this.physics.world.on(
+      'worldbounds',
+      (
+        body: Phaser.Physics.Arcade.Body,
+        touchingUp: boolean,
+        touchingDown: boolean,
+        touchingLeft: boolean,
+        touchingRight: boolean
+      ) =>
+        this.onBodyTouchesWorldBound(
+          body,
+          touchingUp,
+          touchingDown,
+          touchingLeft,
+          touchingRight
+        )
+    )
+  }
+
+  protected initializeSounds(): void {
+    this.game.sound
+      .add('volcanoTheme', {
+        volume: 0.6,
+        loop: true
+      })
+      .play()
   }
 
   private frogAttackCollision(): void {

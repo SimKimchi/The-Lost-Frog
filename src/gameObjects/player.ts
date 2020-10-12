@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import 'phaser'
 import Character from './character'
 import { CharacterConfig, Direction } from '../util'
@@ -8,6 +7,9 @@ export default class Player extends Character {
   private static readonly ATTACK_DURATION = 200
   private static readonly ATTACK_COOLDOWN = 400
 
+  protected moveSpeed = 400
+  protected jumpStrength = 900
+  protected gravity = 500
   private static instance: Player
   private canDoubleJump = false
   private tongueSprite: Phaser.Physics.Arcade.Sprite | null
@@ -47,25 +49,18 @@ export default class Player extends Character {
     return Player.instance
   }
 
-  public run(multiplier: number): void {
-    if (!this.container) return
-    ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityX(
-      Player.VELOCITY_X * multiplier
-    )
-  }
-
   public jump(multiplier: number): void {
     if (!this.container) return
 
     if (this.isGrounded()) {
       this.canDoubleJump = true
       ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(
-        Player.VELOCITY_Y * multiplier
+        this.jumpStrength * multiplier
       )
     } else if (this.canDoubleJump) {
       this.canDoubleJump = false
       ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(
-        Player.VELOCITY_Y * multiplier
+        this.jumpStrength * multiplier
       )
     }
   }
@@ -79,9 +74,9 @@ export default class Player extends Character {
     } else if (
       (<Phaser.Physics.Arcade.Body>this.container.body).velocity.x > 0
     ) {
-      this.sprite.anims.play('right', false)
+      this.sprite.anims.play('right', true)
     } else {
-      this.sprite.anims.play('idle', false)
+      this.sprite.anims.play('idle', true)
     }
   }
 

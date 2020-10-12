@@ -1,12 +1,12 @@
 /* eslint-disable indent */
 import 'phaser'
-import { CharacterConfig } from '../util'
+import { CharacterConfig, Direction } from '../util'
 
 export default abstract class Character {
-  protected static readonly VELOCITY_X = 400
-  protected static readonly VELOCITY_Y = 900
-  protected static readonly GRAVITY = 500
-
+  protected abstract moveSpeed: number
+  protected abstract jumpStrength: number
+  protected abstract gravity: number
+  protected direction: Direction
   protected currentHp: number
   protected maxHp: number
   protected damage: number
@@ -19,6 +19,7 @@ export default abstract class Character {
     this.container = null
     this.currentHp = this.maxHp = maxHp
     this.damage = damage
+    this.direction = Direction.Neutral
   }
 
   public getSprite(): Phaser.Physics.Arcade.Sprite {
@@ -66,9 +67,23 @@ export default abstract class Character {
     this.setGravity(planetGravity)
 
     this.container.setData('damage', this.damage)
+    ;(<Phaser.Physics.Arcade.Body>this.container.body).onWorldBounds = true
   }
 
-  public abstract run(multiplier: number): void
+  public run(multiplier: number): void {
+    if (!this.container) return
+
+    const velocityX = this.moveSpeed * multiplier
+    ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityX(velocityX)
+
+    if (velocityX > 0) {
+      this.direction = Direction.Right
+    } else if (velocityX < 0) {
+      this.direction = Direction.Left
+    } else {
+      this.direction = Direction.Neutral
+    }
+  }
 
   public abstract jump(multiplier: number): void
 
@@ -89,7 +104,7 @@ export default abstract class Character {
   public setGravity(multiplier: number): void {
     if (!this.container) return
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setGravityY(
-      Character.GRAVITY * multiplier
+      this.gravity * multiplier
     )
   }
 
