@@ -101,7 +101,10 @@ export default abstract class Character {
 
     if (this.currentHp <= 0) {
       this.currentHp = 0
-      this.die()
+
+      if (this.die) {
+        this.die()
+      }
     }
   }
 
