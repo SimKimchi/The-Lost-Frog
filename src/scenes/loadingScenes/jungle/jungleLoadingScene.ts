@@ -77,7 +77,6 @@ export default class JungleLoadingScene extends LoadingScene {
         this.input.on(
           'pointerdown',
           function (this: JungleLoadingScene) {
-            console.log('change scene!')
             this.goToScene()
           },
           this
@@ -100,7 +99,6 @@ export default class JungleLoadingScene extends LoadingScene {
   }
 
   protected goToScene(): void {
-    const newScene = this.scene.start('JunglePlanetScene')
-    console.log(newScene)
+    this.scene.start('JunglePlanetScene')
   }
 }

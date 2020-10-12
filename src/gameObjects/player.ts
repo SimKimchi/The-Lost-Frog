@@ -112,6 +112,7 @@ export default class Player extends Character {
       this.tongueSprite.x = 0
       this.tongueSprite.y = -Player.ATTACK_RANGE
     } else if (direction === Direction.Down) {
+      this.jump(-0.75)
       this.tongueSprite.x = 0
       this.tongueSprite.y = Player.ATTACK_RANGE
     }
