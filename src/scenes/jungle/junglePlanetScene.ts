@@ -101,6 +101,15 @@ export default class JunglePlanetScene extends PlanetScene {
     this.handleAttack()
   }
 
+  protected initializeSounds(): void {
+    this.game.sound
+      .add('volcanoTheme', {
+        volume: 0.6,
+        loop: true
+      })
+      .play()
+  }
+
   private platformCollision(
     enemyContainers: Phaser.GameObjects.Container[]
   ): void {
@@ -117,7 +126,10 @@ export default class JunglePlanetScene extends PlanetScene {
       this.frog.getContainer(),
       enemyContainers,
       (_frog, enemy) => {
-        this.frog.takeDamage(enemy.getData('damage'))
+        if (!this.frog.getIsInvulnerable()) {
+          this.frog.takeDamage(enemy.getData('damage'))
+          this.frog.invulnerable(this)
+        }
       }
     )
 
@@ -140,15 +152,6 @@ export default class JunglePlanetScene extends PlanetScene {
           touchingRight
         )
     )
-  }
-
-  protected initializeSounds(): void {
-    this.game.sound
-      .add('volcanoTheme', {
-        volume: 0.6,
-        loop: true
-      })
-      .play()
   }
 
   private frogAttackCollision(): void {
