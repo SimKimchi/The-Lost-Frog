@@ -1,16 +1,13 @@
 import 'phaser'
-import { PlatformSet } from '../../gameObjects/platforms'
-import assets from './assets'
-import { Direction, getRandomInt } from '../../util'
-import PlanetScene from '../PlanetScene'
-import CharacterConfigFatory from '../../factories/characterConfigFactory'
-import EnemyFatory from '../../factories/enemyFactory'
+import { PlatformSet } from '../../../gameObjects/platforms'
+
+import { Direction, getRandomInt } from '../../../util'
+import PlanetScene from '../planetScene'
+import CharacterConfigFatory from '../../../factories/characterConfigFactory'
+import EnemyFatory from '../../../factories/enemyFactory'
 
 export default class JunglePlanetScene extends PlanetScene {
   constructor() {
-    const sceneConfig: Phaser.Types.Scenes.SettingsConfig = {
-      key: 'Jungle'
-    }
     const platformMatrix: PlatformSet[][] = [
       [
         { x: 400, y: 568 },
@@ -19,18 +16,7 @@ export default class JunglePlanetScene extends PlanetScene {
         { x: 750, y: 220 }
       ]
     ]
-    super(sceneConfig, 1, 1, platformMatrix)
-  }
-
-  public preload(): void {
-    this.load.audio('volcanoTheme', assets.sounds.volcano_theme)
-    this.load.image('sky', assets.images.sky)
-    this.load.image('platform', assets.images.platform)
-    this.load.image('bomb', assets.images.bomb)
-    this.load.spritesheet('dude', assets.images.dude, {
-      frameWidth: 32,
-      frameHeight: 48
-    })
+    super('JunglePlanetScene', 1, 1, platformMatrix)
   }
 
   public create(): void {
@@ -51,8 +37,7 @@ export default class JunglePlanetScene extends PlanetScene {
   }
 
   protected initializeStaticAssets(): void {
-    this.add.image(480, 320, 'sky').setDepth(-1)
-    this.add.image(300, 620, 'bomb')
+    this.add.image(480, 320, 'sky').setDisplaySize(960, 640).setDepth(-1)
     this.platforms.initializeStaticGroup(this, this.platformMatrix[0])
   }
 
@@ -159,9 +144,9 @@ export default class JunglePlanetScene extends PlanetScene {
       this.physics.add.overlap(
         this.frog.getAttackSprite(),
         this.enemies[key].getContainer(),
-        (_frog, enemy) => {
+        (frog) => {
           if (this.frog.getAttackSprite().visible) {
-            this.enemies[key].takeDamage(_frog.getData('damage'))
+            this.enemies[key].takeDamage(frog.getData('damage'))
             this.enemies[key].getSprite().setTint(0xff0000)
             this.time.addEvent({
               delay: 200,
