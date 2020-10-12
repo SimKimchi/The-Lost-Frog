@@ -35,11 +35,15 @@ export default abstract class Character {
     planetGravity: number,
     config: CharacterConfig
   ): void {
-    this.sprite = scene.add.sprite(0, 0, config.spriteKey)
+    this.sprite = scene.add.sprite(
+      config.spriteOffsetX,
+      config.spriteOffsetY,
+      config.spriteKey
+    )
     this.container = scene.add.container(config.spawnX, config.spawnY, [
       this.sprite
     ])
-    this.container.setSize(32, 48)
+    this.container.setSize(config.containerSizeX, config.containerSizeY)
     scene.physics.world.enable(this.container)
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setCollideWorldBounds(
       config.collideWorldBounds
@@ -48,12 +52,13 @@ export default abstract class Character {
     for (const animation of config.animations) {
       scene.anims.create({
         key: animation.key,
-        frames: animation.frame
-          ? [{ key: config.spriteKey, frame: animation.frame }]
-          : scene.anims.generateFrameNumbers(config.spriteKey, {
-              start: animation.frameStart,
-              end: animation.frameEnd
-            }),
+        frames:
+          animation.frame !== undefined
+            ? [{ key: config.spriteKey, frame: animation.frame }]
+            : scene.anims.generateFrameNumbers(config.spriteKey, {
+                start: animation.frameStart,
+                end: animation.frameEnd
+              }),
         frameRate: animation.frameRate,
         repeat: animation.repeat
       })

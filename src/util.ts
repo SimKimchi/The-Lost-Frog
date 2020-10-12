@@ -12,6 +12,10 @@ export type CharacterConfig = {
   collideWorldBounds: boolean
   spriteKey: string
   animations: AnimationConfig[]
+  containerSizeX: number
+  containerSizeY: number
+  spriteOffsetX: number
+  spriteOffsetY: number
 }
 
 export type AnimationConfig = {
@@ -29,6 +33,11 @@ export type HotKeys = {
   S: Phaser.Input.Keyboard.Key
   D: Phaser.Input.Keyboard.Key
   E: Phaser.Input.Keyboard.Key
+  W: Phaser.Input.Keyboard.Key
+  UP: Phaser.Input.Keyboard.Key
+  DOWN: Phaser.Input.Keyboard.Key
+  LEFT: Phaser.Input.Keyboard.Key
+  RIGHT: Phaser.Input.Keyboard.Key
 }
 
 export function getRandomInt(max: number): number {
