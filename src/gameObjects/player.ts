@@ -6,6 +6,7 @@ export default class Player extends Character {
   private static readonly ATTACK_RANGE = 50
   private static readonly ATTACK_DURATION = 200
   private static readonly ATTACK_COOLDOWN = 400
+  private static readonly INVULNERABLE_TIME = 1000
 
   protected moveSpeed = 400
   protected jumpStrength = 670
@@ -14,11 +15,13 @@ export default class Player extends Character {
   private canDoubleJump = false
   private tongueSprite: Phaser.Physics.Arcade.Sprite | null
   private inAttackCooldown: boolean
+  private isInvulnerable: boolean
 
   constructor() {
     super(5, 1)
     this.tongueSprite = null
     this.inAttackCooldown = false
+    this.isInvulnerable = false
   }
 
   public init(
@@ -47,6 +50,10 @@ export default class Player extends Character {
     }
 
     return Player.instance
+  }
+
+  public getIsInvulnerable(): boolean {
+    return this.isInvulnerable
   }
 
   public jump(multiplier: number): void {
@@ -91,6 +98,12 @@ export default class Player extends Character {
     this.renderAttack(direction)
     this.setAttackDuration(scene)
     this.setAttackCooldown(scene)
+  }
+
+  public invulnerable(scene: Phaser.Scene): void {
+    this.isInvulnerable = true
+    this.flickerSprite(scene)
+    this.setInvulnerableDuration(scene)
   }
 
   private renderAttack(direction: Direction): void {
@@ -139,5 +152,33 @@ export default class Player extends Character {
 
   private resetAttackCooldown(player: Player): void {
     player.inAttackCooldown = false
+  }
+
+  private flickerSprite(scene: Phaser.Scene): void {
+    scene.tweens.add({
+      targets: this.sprite,
+      duration: Player.INVULNERABLE_TIME / 20,
+      repeat: 10,
+      repeatDelay: Player.INVULNERABLE_TIME / 20,
+      props: {
+        alpha: 0.2
+      },
+      onComplete: () => {
+        if (!this.sprite) return
+
+        this.sprite.alpha = 1
+      }
+    })
+  }
+
+  private setInvulnerableDuration(scene: Phaser.Scene): void {
+    scene.time.addEvent({
+      delay: Player.INVULNERABLE_TIME,
+      args: [this],
+      callback: (player: Player) => {
+        player.isInvulnerable = false
+      },
+      callbackScope: scene
+    })
   }
 }

@@ -86,6 +86,15 @@ export default class JunglePlanetScene extends PlanetScene {
     this.handleAttack()
   }
 
+  protected initializeSounds(): void {
+    this.game.sound
+      .add('volcanoTheme', {
+        volume: 0.6,
+        loop: true
+      })
+      .play()
+  }
+
   private platformCollision(
     enemyContainers: Phaser.GameObjects.Container[]
   ): void {
@@ -102,7 +111,10 @@ export default class JunglePlanetScene extends PlanetScene {
       this.frog.getContainer(),
       enemyContainers,
       (_frog, enemy) => {
-        this.frog.takeDamage(enemy.getData('damage'))
+        if (!this.frog.getIsInvulnerable()) {
+          this.frog.takeDamage(enemy.getData('damage'))
+          this.frog.invulnerable(this)
+        }
       }
     )
 
@@ -127,23 +139,14 @@ export default class JunglePlanetScene extends PlanetScene {
     )
   }
 
-  protected initializeSounds(): void {
-    this.music = this.game.sound.add('volcanoTheme', {
-      volume: 0.6,
-      loop: true
-    })
-
-    this.music.play()
-  }
-
   private frogAttackCollision(): void {
     for (const key in this.enemies) {
       this.physics.add.overlap(
         this.frog.getAttackSprite(),
         this.enemies[key].getContainer(),
-        (_frog, enemy) => {
+        (frog) => {
           if (this.frog.getAttackSprite().visible) {
-            this.enemies[key].takeDamage(_frog.getData('damage'))
+            this.enemies[key].takeDamage(frog.getData('damage'))
             this.enemies[key].getSprite().setTint(0xff0000)
             this.time.addEvent({
               delay: 200,
