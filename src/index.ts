@@ -29,6 +29,10 @@ export class TheLostFrogGame extends Phaser.Game {
     this.highScore += score
   }
 
+  public resetScore(): void {
+    this.highScore = 0
+  }
+
   public displayScore(): string {
     return `Highscore: ${this.highScore}`
   }

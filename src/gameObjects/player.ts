@@ -7,7 +7,7 @@ export default class Player extends Character {
   private static readonly ATTACK_DURATION = 150
   private static readonly ATTACK_COOLDOWN = 400
 
-  protected readonly invulnerableTime = 500
+  protected readonly invulnerableTime = 1000
   protected readonly moveSpeed = 400
   protected readonly jumpStrength = 670
   protected readonly gravity = 500
@@ -15,11 +15,13 @@ export default class Player extends Character {
   private canDoubleJump = false
   private tongueSprite: Phaser.Physics.Arcade.Sprite | null
   private inAttackCooldown: boolean
+  protected die: (() => void) | null
 
-  constructor() {
+  private constructor(die: () => void) {
     super(5, 1)
     this.tongueSprite = null
     this.inAttackCooldown = false
+    this.die = die
   }
 
   public init(
@@ -42,10 +44,8 @@ export default class Player extends Character {
     return this.tongueSprite as Phaser.Physics.Arcade.Sprite
   }
 
-  public static getPlayer(): Player {
-    if (!Player.instance) {
-      Player.instance = new Player()
-    }
+  public static getPlayer(die: () => void): Player {
+    Player.instance = new Player(die)
 
     return Player.instance
   }
@@ -64,6 +64,15 @@ export default class Player extends Character {
         this.jumpStrength * multiplier
       )
     }
+  }
+
+  public bounce(multiplier: number): void {
+    if (!this.container) return
+
+    this.canDoubleJump = true
+    ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(
+      -this.jumpStrength * multiplier * 0.75
+    )
   }
 
   public updateAnimation(): void {
@@ -112,7 +121,6 @@ export default class Player extends Character {
       this.tongueSprite.x = 0
       this.tongueSprite.y = -Player.ATTACK_RANGE
     } else if (direction === Direction.Down) {
-      this.jump(-0.75)
       this.tongueSprite.x = 0
       this.tongueSprite.y = Player.ATTACK_RANGE
     }
@@ -151,9 +159,9 @@ export default class Player extends Character {
   private flickerSprite(scene: Phaser.Scene): void {
     scene.tweens.add({
       targets: this.sprite,
-      duration: this.invulnerableTime / 20,
-      repeat: 10,
-      repeatDelay: this.invulnerableTime / 20,
+      duration: this.invulnerableTime / 10,
+      repeat: 5,
+      repeatDelay: this.invulnerableTime / 10,
       props: {
         alpha: 0.2
       },

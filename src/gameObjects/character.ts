@@ -7,6 +7,7 @@ export default abstract class Character {
   protected abstract jumpStrength: number
   protected abstract gravity: number
   protected abstract invulnerableTime: number
+  protected abstract die: (() => void) | null
   protected direction: Direction
   protected currentHp: number
   protected maxHp: number
@@ -95,15 +96,13 @@ export default abstract class Character {
 
   public abstract updateAnimation(): void
 
-  public takeDamage(damage: number, _deathCallbackFn: () => void): void {
+  public takeDamage(damage: number): void {
     this.currentHp -= damage
-    if (this.currentHp < 0) {
-      this.currentHp = 0
-    }
-  }
 
-  public isDead(): boolean {
-    return this.currentHp === 0
+    if (this.currentHp <= 0) {
+      this.currentHp = 0
+      this.die()
+    }
   }
 
   public setGravity(multiplier: number): void {

@@ -3,12 +3,17 @@ import { Direction } from '../util'
 import Character from './character'
 
 export default class Enemy extends Character {
+  public scoreWorth: number
   protected readonly invulnerableTime = 200
   protected readonly moveSpeed = 100
   protected readonly jumpStrength = 400
   protected readonly gravity = 100
-  constructor(maxHp: number, damage: number) {
+  protected die: (() => void) | null
+
+  constructor(maxHp: number, damage: number, scoreWorth: number) {
     super(maxHp, damage)
+    this.scoreWorth = scoreWorth
+    this.die = null
   }
 
   public jump(multiplier: number): void {
@@ -44,15 +49,6 @@ export default class Enemy extends Character {
     this.updateAnimation()
   }
 
-  public takeDamage(damage: number, deathCallbackFn: () => void): void {
-    super.takeDamage(damage, deathCallbackFn)
-
-    if (this.isDead()) {
-      this.container?.destroy()
-      deathCallbackFn()
-    }
-  }
-
   public makeInvulnerable(scene: Phaser.Scene): void {
     super.makeInvulnerable(scene)
     if (!this.sprite) return
@@ -61,5 +57,9 @@ export default class Enemy extends Character {
       delay: this.invulnerableTime,
       callback: () => this.sprite?.clearTint()
     })
+  }
+
+  public setDeathBehavior(deathBehavior: () => void): void {
+    this.die = deathBehavior
   }
 }

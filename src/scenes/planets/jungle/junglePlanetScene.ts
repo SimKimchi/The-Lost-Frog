@@ -1,11 +1,9 @@
 import 'phaser'
 import { PlatformSet } from '../../../gameObjects/platforms'
-
-import { Direction, getRandomInt } from '../../../util'
+import { getRandomInt } from '../../../util'
 import PlanetScene from '../planetScene'
 import CharacterConfigFactory from '../../../factories/characterConfigFactory'
 import EnemyFactory from '../../../factories/enemyFactory'
-import { TheLostFrogGame } from '../../..'
 
 export default class JunglePlanetScene extends PlanetScene {
   constructor() {
@@ -18,23 +16,6 @@ export default class JunglePlanetScene extends PlanetScene {
       ]
     ]
     super('JunglePlanetScene', 1, 1, platformMatrix)
-  }
-
-  public create(): void {
-    super.create()
-
-    this.initializeStaticAssets()
-    this.initializeCharacters()
-    this.initializeEnemyBehavior()
-    this.initializeCollisions()
-    this.initializeSounds()
-  }
-
-  public update(): void {
-    super.update()
-
-    this.triggerKeyboardActions()
-    this.frog.updateAnimation()
   }
 
   protected initializeStaticAssets(): void {
@@ -88,111 +69,11 @@ export default class JunglePlanetScene extends PlanetScene {
   }
 
   protected initializeSounds(): void {
-    this.game.sound
-      .add('volcanoTheme', {
-        volume: 0.6,
-        loop: true
-      })
-      .play()
-  }
+    this.music = this.game.sound.add('volcanoTheme', {
+      volume: 0.6,
+      loop: true
+    })
 
-  private platformCollision(
-    enemyContainers: Phaser.GameObjects.Container[]
-  ): void {
-    this.physics.add.collider(
-      [this.frog.getContainer(), ...enemyContainers],
-      this.platforms.getStaticGroup()
-    )
-  }
-
-  private enemyCollision(
-    enemyContainers: Phaser.GameObjects.Container[]
-  ): void {
-    this.physics.add.overlap(
-      this.frog.getContainer(),
-      enemyContainers,
-      (_frog, enemy) => {
-        if (!this.frog.isInvulnerable()) {
-          this.frog.takeDamage(enemy.getData('damage'), () =>
-            this.physics.pause()
-          )
-          this.frog.makeInvulnerable(this)
-        }
-      }
-    )
-
-    this.physics.world.setBoundsCollision(true, true, false, true)
-
-    this.physics.world.on(
-      'worldbounds',
-      (
-        body: Phaser.Physics.Arcade.Body,
-        touchingUp: boolean,
-        touchingDown: boolean,
-        touchingLeft: boolean,
-        touchingRight: boolean
-      ) =>
-        this.onBodyTouchesWorldBound(
-          body,
-          touchingUp,
-          touchingDown,
-          touchingLeft,
-          touchingRight
-        )
-    )
-  }
-
-  private frogAttackCollision(): void {
-    for (const key in this.enemies) {
-      this.physics.add.overlap(
-        this.frog.getAttackSprite(),
-        this.enemies[key].getContainer(),
-        () => {
-          if (
-            this.frog.getAttackSprite().visible &&
-            !this.enemies[key].isInvulnerable()
-          ) {
-            this.enemies[key].takeDamage(
-              this.frog.getContainer().getData('damage'),
-              () => (this.game as TheLostFrogGame).increaseScore(100)
-            )
-            this.enemies[key].makeInvulnerable(this)
-          }
-        }
-      )
-    }
-  }
-
-  private handleMovement(): void {
-    if (!this.hotKeys) return
-
-    if (this.hotKeys.A.isDown) {
-      this.frog.run(-this.velocityXModifier)
-    } else if (this.hotKeys.D.isDown) {
-      this.frog.run(this.velocityXModifier)
-    } else {
-      this.frog.run(0)
-    }
-    if (Phaser.Input.Keyboard.JustDown(this.hotKeys.SPACE)) {
-      this.frog.jump(-this.velocityYModifier)
-    }
-  }
-
-  private handleAttack(): void {
-    if (!this.hotKeys) return
-
-    let direction = Direction.Neutral
-    if (Phaser.Input.Keyboard.JustDown(this.hotKeys.UP)) {
-      direction = Direction.Up
-    } else if (Phaser.Input.Keyboard.JustDown(this.hotKeys.DOWN)) {
-      direction = Direction.Down
-    } else if (Phaser.Input.Keyboard.JustDown(this.hotKeys.LEFT)) {
-      direction = Direction.Left
-    } else if (Phaser.Input.Keyboard.JustDown(this.hotKeys.RIGHT)) {
-      direction = Direction.Right
-    }
-    if (direction !== Direction.Neutral) {
-      this.frog.attack(this, direction)
-    }
+    this.music.play()
   }
 }

@@ -7,8 +7,8 @@ export default class JungleLoadingScene extends LoadingScene {
   }
 
   public preload(): void {
-    const width = this.cameras.main.width
-    const height = this.cameras.main.height
+    const width = this.game.scale.width
+    const height = this.game.scale.height
 
     const progressBar = this.add.graphics()
     const progressBox = this.add

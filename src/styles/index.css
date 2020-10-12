@@ -11,8 +11,7 @@ body {
   background-color: #c1d1af;
 }
 h1 {
-  padding-top: 10px;
-  padding-bottom: 20px;
+  padding: 10px 0;
 }
 h2 {
   padding-top: 10px;
@@ -20,6 +19,6 @@ h2 {
 h5 {
   padding-left: 15px;
 }
-p {
+span {
   font-size: 12px;
 }
