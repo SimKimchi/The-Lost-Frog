@@ -1,20 +1,19 @@
 import 'phaser'
-import JunglePlanetScene from './scenes/jungle/junglePlanetScene'
+import JungleLoadingScene from './scenes/loadingScenes/jungle/jungleLoadingScene'
+import JunglePlanetScene from './scenes/planets/jungle/junglePlanetScene'
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  backgroundColor: '#66a166',
   width: 960,
   height: 640,
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 1500 },
-      debug: false
+      gravity: { y: 1500 }
     }
   },
   parent: 'game-container',
-  scene: JunglePlanetScene
+  scene: [JungleLoadingScene, JunglePlanetScene]
 }
 
 export class TheLostFrogGame extends Phaser.Game {

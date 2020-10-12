@@ -4,7 +4,7 @@ import { CharacterConfig } from '../util'
 
 export default class Player extends Character {
   protected moveSpeed = 400
-  protected jumpStrength = 900
+  protected jumpStrength = 670
   protected gravity = 500
   private static instance: Player
   private canDoubleJump = false

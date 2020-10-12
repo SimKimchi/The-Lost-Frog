@@ -1,9 +1,9 @@
-import { TheLostFrogGame } from '..'
-import Character from '../gameObjects/character'
-import Enemy from '../gameObjects/enemy'
-import Platforms, { PlatformSet } from '../gameObjects/platforms'
-import Player from '../gameObjects/player'
-import { HotKeys } from '../util'
+import { TheLostFrogGame } from '../..'
+import Character from '../../gameObjects/character'
+import Enemy from '../../gameObjects/enemy'
+import Platforms, { PlatformSet } from '../../gameObjects/platforms'
+import Player from '../../gameObjects/player'
+import { HotKeys } from '../../util'
 
 export default abstract class PlanetScene extends Phaser.Scene {
   protected velocityXModifier: number
@@ -16,14 +16,15 @@ export default abstract class PlanetScene extends Phaser.Scene {
   protected hotKeys: HotKeys | null
   protected displayScore: Phaser.GameObjects.Text | null
   protected displayHp: Phaser.GameObjects.Text | null
+  protected music: Phaser.Sound.BaseSound | null
 
   constructor(
-    sceneConfig: Phaser.Types.Scenes.SettingsConfig,
+    planetSceneName: string,
     gravityXModifier: number,
     gravityYModifier: number,
     platformMatrix: PlatformSet[][]
   ) {
-    super(sceneConfig)
+    super(planetSceneName)
     this.velocityXModifier = gravityXModifier
     this.velocityYModifier = gravityYModifier
     this.platformMatrix = platformMatrix
@@ -33,9 +34,8 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.displayScore = null
     this.displayHp = null
     this.enemies = []
+    this.music = null
   }
-
-  public abstract preload(): void
   public create(): void {
     this.hotKeys = this.input.keyboard.addKeys('SPACE,A,S,D,E') as HotKeys
 
