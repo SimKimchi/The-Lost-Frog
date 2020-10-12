@@ -36,7 +36,9 @@ export default abstract class PlanetScene extends Phaser.Scene {
 
   public abstract preload(): void
   public create(): void {
-    this.hotKeys = this.input.keyboard.addKeys('SPACE,A,S,D,E') as HotKeys
+    this.hotKeys = this.input.keyboard.addKeys(
+      'SPACE,A,S,D,E,W,UP,DOWN,LEFT,RIGHT'
+    ) as HotKeys
 
     this.initializeTexts()
   }

@@ -51,12 +51,13 @@ export default abstract class Character {
     for (const animation of config.animations) {
       scene.anims.create({
         key: animation.key,
-        frames: animation.frame
-          ? [{ key: config.spriteKey, frame: animation.frame }]
-          : scene.anims.generateFrameNumbers(config.spriteKey, {
-              start: animation.frameStart,
-              end: animation.frameEnd
-            }),
+        frames:
+          animation.frame !== undefined
+            ? [{ key: config.spriteKey, frame: animation.frame }]
+            : scene.anims.generateFrameNumbers(config.spriteKey, {
+                start: animation.frameStart,
+                end: animation.frameEnd
+              }),
         frameRate: animation.frameRate,
         repeat: animation.repeat
       })

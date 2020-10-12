@@ -66,29 +66,9 @@ export default class JunglePlanetScene extends PlanetScene {
     const enemyContainers = this.enemies.map((enemy) => {
       return enemy.getContainer()
     })
-    this.physics.add.collider(
-      [this.frog.getContainer(), ...enemyContainers],
-      this.platforms.getStaticGroup()
-    )
-    this.physics.add.collider(
-      this.frog.getContainer(),
-      enemyContainers,
-      (_frog, enemy) => {
-        this.frog.takeDamage(enemy.getData('damage'))
-      }
-    )
-
-    for (const key in this.enemies) {
-      console.log(this.frog.getAttackSprite())
-      this.physics.add.collider(
-        this.frog.getAttackSprite(),
-        this.enemies[key].getContainer(),
-        (_frog, enemy) => {
-          this.enemies[key].takeDamage(_frog.getData('damage'))
-          this.enemies[key].getSprite().setTint(0xff0000)
-        }
-      )
-    }
+    this.platformCollision(enemyContainers)
+    this.enemyCollision(enemyContainers)
+    this.frogAttackCollision()
   }
 
   protected spawnEnemies(numberOfEnemies: number): void {
@@ -102,28 +82,80 @@ export default class JunglePlanetScene extends PlanetScene {
   }
 
   protected triggerKeyboardActions(): void {
-    if (!this.hotKeys) {
-      return
+    this.handleMovement()
+    this.handleAttack()
+  }
+
+  private platformCollision(
+    enemyContainers: Phaser.GameObjects.Container[]
+  ): void {
+    this.physics.add.collider(
+      [this.frog.getContainer(), ...enemyContainers],
+      this.platforms.getStaticGroup()
+    )
+  }
+
+  private enemyCollision(
+    enemyContainers: Phaser.GameObjects.Container[]
+  ): void {
+    this.physics.add.collider(
+      this.frog.getContainer(),
+      enemyContainers,
+      (_frog, enemy) => {
+        this.frog.takeDamage(enemy.getData('damage'))
+      }
+    )
+  }
+
+  private frogAttackCollision(): void {
+    for (const key in this.enemies) {
+      this.physics.add.overlap(
+        this.frog.getAttackSprite(),
+        this.enemies[key].getContainer(),
+        (_frog, enemy) => {
+          if (this.frog.getAttackSprite().visible) {
+            this.enemies[key].takeDamage(_frog.getData('damage'))
+            this.enemies[key].getSprite().setTint(0xff0000)
+            this.time.addEvent({
+              delay: 200,
+              callback: () => this.enemies[key].getSprite().clearTint()
+            })
+          }
+        }
+      )
     }
-    let direction = Direction.Right
+  }
+
+  private handleMovement(): void {
+    if (!this.hotKeys) return
 
     if (this.hotKeys.A.isDown) {
       this.frog.run(-this.velocityXModifier)
-      direction = Direction.Left
     } else if (this.hotKeys.D.isDown) {
       this.frog.run(this.velocityXModifier)
-      direction = Direction.Right
-    } else if (this.hotKeys.S.isDown) {
-      direction = Direction.Down
     } else {
       this.frog.run(0)
     }
     if (Phaser.Input.Keyboard.JustDown(this.hotKeys.SPACE)) {
       this.frog.jump(-this.velocityYModifier)
-      direction = Direction.Up
     }
-    if (this.hotKeys.E.isDown) {
-      //this.frog.attack(this, direction)
+  }
+
+  private handleAttack(): void {
+    if (!this.hotKeys) return
+
+    let direction = Direction.Neutral
+    if (Phaser.Input.Keyboard.JustDown(this.hotKeys.UP)) {
+      direction = Direction.Up
+    } else if (Phaser.Input.Keyboard.JustDown(this.hotKeys.DOWN)) {
+      direction = Direction.Down
+    } else if (Phaser.Input.Keyboard.JustDown(this.hotKeys.LEFT)) {
+      direction = Direction.Left
+    } else if (Phaser.Input.Keyboard.JustDown(this.hotKeys.RIGHT)) {
+      direction = Direction.Right
+    }
+    if (direction !== Direction.Neutral) {
+      this.frog.attack(this, direction)
     }
   }
 }
