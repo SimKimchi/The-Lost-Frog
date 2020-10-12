@@ -6,13 +6,14 @@ export default abstract class Character {
   protected abstract moveSpeed: number
   protected abstract jumpStrength: number
   protected abstract gravity: number
+  protected abstract invulnerableTime: number
   protected direction: Direction
   protected currentHp: number
   protected maxHp: number
   protected damage: number
   protected sprite: Phaser.GameObjects.Sprite | null
-
   protected container: Phaser.GameObjects.Container | null
+  protected invulnerable: boolean
 
   constructor(maxHp: number, damage: number) {
     this.sprite = null
@@ -20,6 +21,7 @@ export default abstract class Character {
     this.currentHp = this.maxHp = maxHp
     this.damage = damage
     this.direction = Direction.Neutral
+    this.invulnerable = false
   }
 
   public getSprite(): Phaser.Physics.Arcade.Sprite {
@@ -28,6 +30,10 @@ export default abstract class Character {
 
   public getContainer(): Phaser.GameObjects.Container {
     return this.container as Phaser.GameObjects.Container
+  }
+
+  public isInvulnerable(): boolean {
+    return this.invulnerable
   }
 
   public init(
@@ -89,9 +95,8 @@ export default abstract class Character {
 
   public abstract updateAnimation(): void
 
-  public takeDamage(damage: number): void {
+  public takeDamage(damage: number, _deathCallbackFn: () => void): void {
     this.currentHp -= damage
-
     if (this.currentHp < 0) {
       this.currentHp = 0
     }
@@ -106,6 +111,18 @@ export default abstract class Character {
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setGravityY(
       this.gravity * multiplier
     )
+  }
+
+  public makeInvulnerable(scene: Phaser.Scene): void {
+    this.invulnerable = true
+    scene.time.addEvent({
+      delay: this.invulnerableTime,
+      args: [this],
+      callback: (character: Character) => {
+        character.invulnerable = false
+      },
+      callbackScope: scene
+    })
   }
 
   protected isGrounded(): boolean {

@@ -4,24 +4,22 @@ import { CharacterConfig, Direction } from '../util'
 
 export default class Player extends Character {
   private static readonly ATTACK_RANGE = 50
-  private static readonly ATTACK_DURATION = 200
+  private static readonly ATTACK_DURATION = 150
   private static readonly ATTACK_COOLDOWN = 400
-  private static readonly INVULNERABLE_TIME = 1000
 
-  protected moveSpeed = 400
-  protected jumpStrength = 670
-  protected gravity = 500
+  protected readonly invulnerableTime = 500
+  protected readonly moveSpeed = 400
+  protected readonly jumpStrength = 670
+  protected readonly gravity = 500
   private static instance: Player
   private canDoubleJump = false
   private tongueSprite: Phaser.Physics.Arcade.Sprite | null
   private inAttackCooldown: boolean
-  private isInvulnerable: boolean
 
   constructor() {
     super(5, 1)
     this.tongueSprite = null
     this.inAttackCooldown = false
-    this.isInvulnerable = false
   }
 
   public init(
@@ -50,10 +48,6 @@ export default class Player extends Character {
     }
 
     return Player.instance
-  }
-
-  public getIsInvulnerable(): boolean {
-    return this.isInvulnerable
   }
 
   public jump(multiplier: number): void {
@@ -100,10 +94,9 @@ export default class Player extends Character {
     this.setAttackCooldown(scene)
   }
 
-  public invulnerable(scene: Phaser.Scene): void {
-    this.isInvulnerable = true
+  public makeInvulnerable(scene: Phaser.Scene): void {
+    super.makeInvulnerable(scene)
     this.flickerSprite(scene)
-    this.setInvulnerableDuration(scene)
   }
 
   private renderAttack(direction: Direction): void {
@@ -157,9 +150,9 @@ export default class Player extends Character {
   private flickerSprite(scene: Phaser.Scene): void {
     scene.tweens.add({
       targets: this.sprite,
-      duration: Player.INVULNERABLE_TIME / 20,
+      duration: this.invulnerableTime / 20,
       repeat: 10,
-      repeatDelay: Player.INVULNERABLE_TIME / 20,
+      repeatDelay: this.invulnerableTime / 20,
       props: {
         alpha: 0.2
       },
@@ -168,17 +161,6 @@ export default class Player extends Character {
 
         this.sprite.alpha = 1
       }
-    })
-  }
-
-  private setInvulnerableDuration(scene: Phaser.Scene): void {
-    scene.time.addEvent({
-      delay: Player.INVULNERABLE_TIME,
-      args: [this],
-      callback: (player: Player) => {
-        player.isInvulnerable = false
-      },
-      callbackScope: scene
     })
   }
 }

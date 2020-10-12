@@ -1,18 +1,18 @@
 import Enemy from '../gameObjects/enemy'
-import CharacterConfigFatory from './characterConfigFactory'
+import CharacterConfigFactory from './characterConfigFactory'
 
-export default abstract class EnemyFatory {
+export default abstract class EnemyFactory {
   public static createLizard(
     scene: Phaser.Scene,
     planetGravity: number,
     spawnX: number,
     spawnY: number
   ): Enemy {
-    const lizard = new Enemy()
+    const lizard = new Enemy(3, 1)
     lizard.init(
       scene,
       planetGravity,
-      CharacterConfigFatory.getLizardConfig(spawnX, spawnY)
+      CharacterConfigFactory.getLizardConfig(spawnX, spawnY)
     )
 
     return lizard

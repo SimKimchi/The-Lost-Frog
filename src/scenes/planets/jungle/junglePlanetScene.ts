@@ -3,8 +3,9 @@ import { PlatformSet } from '../../../gameObjects/platforms'
 
 import { Direction, getRandomInt } from '../../../util'
 import PlanetScene from '../planetScene'
-import CharacterConfigFatory from '../../../factories/characterConfigFactory'
-import EnemyFatory from '../../../factories/enemyFactory'
+import CharacterConfigFactory from '../../../factories/characterConfigFactory'
+import EnemyFactory from '../../../factories/enemyFactory'
+import { TheLostFrogGame } from '../../..'
 
 export default class JunglePlanetScene extends PlanetScene {
   constructor() {
@@ -45,7 +46,7 @@ export default class JunglePlanetScene extends PlanetScene {
     this.frog.init(
       this,
       this.velocityYModifier,
-      CharacterConfigFatory.getPlayerConfig()
+      CharacterConfigFactory.getPlayerConfig()
     )
     this.spawnEnemies(5)
   }
@@ -76,7 +77,7 @@ export default class JunglePlanetScene extends PlanetScene {
       const spawnX = getRandomInt(900)
       const spawnY = getRandomInt(300)
       this.enemies.push(
-        EnemyFatory.createLizard(this, this.velocityYModifier, spawnX, spawnY)
+        EnemyFactory.createLizard(this, this.velocityYModifier, spawnX, spawnY)
       )
     }
   }
@@ -111,9 +112,11 @@ export default class JunglePlanetScene extends PlanetScene {
       this.frog.getContainer(),
       enemyContainers,
       (_frog, enemy) => {
-        if (!this.frog.getIsInvulnerable()) {
-          this.frog.takeDamage(enemy.getData('damage'))
-          this.frog.invulnerable(this)
+        if (!this.frog.isInvulnerable()) {
+          this.frog.takeDamage(enemy.getData('damage'), () =>
+            this.physics.pause()
+          )
+          this.frog.makeInvulnerable(this)
         }
       }
     )
@@ -144,14 +147,16 @@ export default class JunglePlanetScene extends PlanetScene {
       this.physics.add.overlap(
         this.frog.getAttackSprite(),
         this.enemies[key].getContainer(),
-        (frog) => {
-          if (this.frog.getAttackSprite().visible) {
-            this.enemies[key].takeDamage(frog.getData('damage'))
-            this.enemies[key].getSprite().setTint(0xff0000)
-            this.time.addEvent({
-              delay: 200,
-              callback: () => this.enemies[key].getSprite().clearTint()
-            })
+        () => {
+          if (
+            this.frog.getAttackSprite().visible &&
+            !this.enemies[key].isInvulnerable()
+          ) {
+            this.enemies[key].takeDamage(
+              this.frog.getContainer().getData('damage'),
+              () => (this.game as TheLostFrogGame).increaseScore(100)
+            )
+            this.enemies[key].makeInvulnerable(this)
           }
         }
       )
