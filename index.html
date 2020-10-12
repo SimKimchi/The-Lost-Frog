@@ -10,35 +10,49 @@
       crossorigin="anonymous"
     />
     <meta charset="utf-8" />
-    <title>The Lost Frog!</title>
+    <title>The Lost Frog</title>
     <link rel="stylesheet" href="src/styles/index.css" type="text/css" />
     <script src="src/index.ts"></script>
   </head>
   <body>
     <div class="container">
       <div class="row">
-        <h1>The Lost Frog!</h1>
+        <div class="col">
+          <h1>The Lost Frog</h1>
+        </div>
       </div>
       <div class="row">
-        <div class="col">
+        <div class="col text-center">
           <div id="game-container"></div>
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <div class="row">
-            <h3>Game keys:</h3>
-          </div>
-          <div class="row">
-            <ul>
-              <li><strong>A</strong> : Left</li>
-              <li><strong>D</strong> : Right</li>
-              <li><strong>Space</strong> : Jump</li>
-            </ul>
-          </div>
+            <h2>Controls</h3>
         </div>
-        <div class="col align-self-end">
-          <p class="text-right">Thanks for playing!</p>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <h5>Movement:</h5>
+          <ul>
+            <li><strong>A</strong> : Run left</li>
+            <li><strong>D</strong> : Run right</li>
+            <li><strong>Space</strong> : Jump</li>
+          </ul>
+        </div>
+        <div class="col-3">
+          <h5>Actions:</h5>
+          <ul>
+            <li><strong>Up</strong> : Attack up</li>
+            <li><strong>Down</strong> : Attack down</li>
+            <li><strong>Left</strong> : Attack left</li>
+            <li><strong>Right</strong> : Attack right</li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col text-center">
+          <p><strong>Thanks for playing!</strong></p>
         </div>
       </div>
     </div>

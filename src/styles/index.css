@@ -1,3 +1,25 @@
+html,
+body,
+.container {
+  height: 100%;
+}
 body {
-  font-family: Arial;
+  font-family: 'Comic Sans ms';
+  background-color: #668c39;
+}
+.container {
+  background-color: #c1d1af;
+}
+h1 {
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+h2 {
+  padding-top: 10px;
+}
+h5 {
+  padding-left: 15px;
+}
+p {
+  font-size: 12px;
 }
