@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import 'phaser'
 import Character from './character'
 import { CharacterConfig } from '../util'
@@ -68,9 +67,9 @@ export default class Player extends Character {
     } else if (
       (<Phaser.Physics.Arcade.Body>this.container.body).velocity.x > 0
     ) {
-      this.sprite.anims.play('right', false)
+      this.sprite.anims.play('right', true)
     } else {
-      this.sprite.anims.play('idle', false)
+      this.sprite.anims.play('idle', true)
     }
   }
 

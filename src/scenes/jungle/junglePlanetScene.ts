@@ -5,8 +5,6 @@ import { Direction, getRandomInt } from '../../util'
 import PlanetScene from '../PlanetScene'
 import CharacterConfigFatory from '../../factories/characterConfigFactory'
 import EnemyFatory from '../../factories/enemyFactory'
-import Character from '../../gameObjects/character'
-import Enemy from '../../gameObjects/enemy'
 
 export default class JunglePlanetScene extends PlanetScene {
   constructor() {
@@ -25,6 +23,7 @@ export default class JunglePlanetScene extends PlanetScene {
   }
 
   public preload(): void {
+    this.load.audio('volcanoTheme', assets.sounds.volcano_theme)
     this.load.image('sky', assets.images.sky)
     this.load.image('platform', assets.images.platform)
     this.load.image('bomb', assets.images.bomb)
@@ -41,28 +40,7 @@ export default class JunglePlanetScene extends PlanetScene {
     this.initializeCharacters()
     this.initializeEnemyBehavior()
     this.initializeCollisions()
-
-    this.physics.world.setBoundsCollision(true, true, false, true)
-
-    this.physics.world.on(
-      'worldbounds',
-      (
-        body: Phaser.Physics.Arcade.Body,
-        touchingUp: boolean,
-        touchingDown: boolean,
-        touchingLeft: boolean,
-        touchingRight: boolean
-      ) =>
-        this.onBodyTouchesWorldBound(
-          body,
-          touchingUp,
-          touchingDown,
-          touchingLeft,
-          touchingRight
-        )
-    )
-
-    this.playMusic()
+    this.initializeSounds()
   }
 
   public update(): void {
@@ -87,6 +65,18 @@ export default class JunglePlanetScene extends PlanetScene {
     this.spawnEnemies(5)
   }
 
+  protected initializeEnemyBehavior(): void {
+    for (const enemy of this.enemies) {
+      const direction = getRandomInt(2)
+      if (direction === 1) {
+        enemy.run(-this.velocityXModifier)
+      } else {
+        enemy.run(this.velocityXModifier)
+      }
+      enemy.updateAnimation()
+    }
+  }
+
   protected initializeCollisions(): void {
     const enemyContainers = this.enemies.map((enemy) => {
       return enemy.getContainer()
@@ -95,6 +85,7 @@ export default class JunglePlanetScene extends PlanetScene {
       [this.frog.getContainer(), ...enemyContainers],
       this.platforms.getStaticGroup()
     )
+
     this.physics.add.overlap(
       this.frog.getContainer(),
       enemyContainers,
@@ -102,6 +93,35 @@ export default class JunglePlanetScene extends PlanetScene {
         this.frog.takeDamage(enemy.getData('damage'))
       }
     )
+
+    this.physics.world.setBoundsCollision(true, true, false, true)
+
+    this.physics.world.on(
+      'worldbounds',
+      (
+        body: Phaser.Physics.Arcade.Body,
+        touchingUp: boolean,
+        touchingDown: boolean,
+        touchingLeft: boolean,
+        touchingRight: boolean
+      ) =>
+        this.onBodyTouchesWorldBound(
+          body,
+          touchingUp,
+          touchingDown,
+          touchingLeft,
+          touchingRight
+        )
+    )
+  }
+
+  protected initializeSounds(): void {
+    this.game.sound
+      .add('volcanoTheme', {
+        volume: 0.6,
+        loop: true
+      })
+      .play()
   }
 
   protected spawnEnemies(numberOfEnemies: number): void {
@@ -137,72 +157,6 @@ export default class JunglePlanetScene extends PlanetScene {
     }
     if (this.hotKeys.E.isDown) {
       //this.frog.attack(this, direction)
-    }
-  }
-
-  protected initializeEnemyBehavior(): void {
-    for (const enemy of this.enemies) {
-      const direction = getRandomInt(2)
-      if (direction === 1) {
-        enemy.run(-this.velocityXModifier)
-      } else {
-        enemy.run(this.velocityXModifier)
-      }
-    }
-  }
-
-  protected playMusic(): void {
-    this.songLoader = this.load.audio(
-      'volcanoTheme',
-      assets.sounds.volcano_theme
-    )
-    this.songLoader.on('filecomplete', () => {
-      this.music = this.sound.add('volcanoTheme', {
-        volume: 0.5,
-        loop: true
-      })
-      if (!this.sound.locked) {
-        // already unlocked so play
-        this.music.play()
-      } else {
-        // wait for 'unlocked' to fire and then play
-        this.sound.once(Phaser.Sound.Events.UNLOCKED, () => {
-          this.music?.play()
-        })
-      }
-    })
-    this.songLoader.start()
-  }
-
-  public onBodyTouchesWorldBound(
-    e: Phaser.Physics.Arcade.Body,
-    _touchingUp: boolean,
-    _touchingDown: boolean,
-    touchingLeft: boolean,
-    touchingRight: boolean
-  ): void {
-    if (!touchingLeft && !touchingRight) {
-      return
-    }
-
-    const character = this.findCharacterByContainer(
-      e.gameObject as Phaser.GameObjects.Container
-    )
-
-    if (character && character instanceof Enemy) {
-      ;(character as Enemy).turnAround()
-    }
-  }
-
-  public findCharacterByContainer(
-    container: Phaser.GameObjects.Container
-  ): Character | undefined {
-    if (this.frog.getContainer() === container) {
-      return this.frog
-    } else {
-      const enemy = this.enemies.find((x) => x.getContainer() === container)
-
-      return enemy
     }
   }
 }

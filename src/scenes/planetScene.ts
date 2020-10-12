@@ -1,4 +1,5 @@
 import { TheLostFrogGame } from '..'
+import Character from '../gameObjects/character'
 import Enemy from '../gameObjects/enemy'
 import Platforms, { PlatformSet } from '../gameObjects/platforms'
 import Player from '../gameObjects/player'
@@ -15,8 +16,6 @@ export default abstract class PlanetScene extends Phaser.Scene {
   protected hotKeys: HotKeys | null
   protected displayScore: Phaser.GameObjects.Text | null
   protected displayHp: Phaser.GameObjects.Text | null
-  public music: Phaser.Sound.BaseSound | null
-  public songLoader: Phaser.Loader.LoaderPlugin | null
 
   constructor(
     sceneConfig: Phaser.Types.Scenes.SettingsConfig,
@@ -34,8 +33,6 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.displayScore = null
     this.displayHp = null
     this.enemies = []
-    this.music = null
-    this.songLoader = null
   }
 
   public abstract preload(): void
@@ -67,11 +64,38 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.displayScore?.setText((this.game as TheLostFrogGame).displayScore())
   }
 
+  protected onBodyTouchesWorldBound(
+    body: Phaser.Physics.Arcade.Body,
+    _touchingUp: boolean,
+    _touchingDown: boolean,
+    touchingLeft: boolean,
+    touchingRight: boolean
+  ): void {
+    if (!touchingLeft && !touchingRight) {
+      return
+    }
+
+    const character = this.findCharacterByContainer(
+      [this.frog, ...this.enemies],
+      body.gameObject as Phaser.GameObjects.Container
+    )
+
+    if (character && character instanceof Enemy) {
+      ;(character as Enemy).turnAround()
+    }
+  }
+
+  protected findCharacterByContainer(
+    characters: Character[],
+    container: Phaser.GameObjects.Container
+  ): Character | undefined {
+    return characters.find((x) => x.getContainer() === container)
+  }
+
   protected abstract triggerKeyboardActions(): void
   protected abstract initializeEnemyBehavior(): void
   protected abstract initializeStaticAssets(): void
   protected abstract initializeCharacters(): void
   protected abstract initializeCollisions(): void
   protected abstract spawnEnemies(numberOfEnemies: number): void
-  protected abstract playMusic(): void
 }
