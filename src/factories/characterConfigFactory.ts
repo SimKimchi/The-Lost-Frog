@@ -9,19 +9,19 @@ export default abstract class CharacterConfigFactory {
       collideWorldBounds: true,
       animations: [
         {
-          key: 'left',
+          key: 'frog_left',
           frameStart: 0,
           frameEnd: 3,
           frameRate: 10,
           repeat: -1
         },
         {
-          key: 'idle',
+          key: 'frog_idle',
           frame: 4,
           frameRate: 20
         },
         {
-          key: 'right',
+          key: 'frog_right',
           frameStart: 5,
           frameEnd: 8,
           frameRate: 10,
@@ -42,31 +42,31 @@ export default abstract class CharacterConfigFactory {
     return {
       spawnX,
       spawnY,
-      spriteKey: 'dude',
+      spriteKey: 'enemy_lizard',
       collideWorldBounds: true,
       animations: [
         {
-          key: 'left',
+          key: 'lizard_left',
           frameStart: 0,
-          frameEnd: 3,
-          frameRate: 10,
+          frameEnd: 4,
+          frameRate: 6,
           repeat: -1
         },
         {
-          key: 'idle',
-          frame: 4,
+          key: 'lizard_idle',
+          frame: 1,
           frameRate: 20
         },
         {
-          key: 'right',
-          frameStart: 5,
-          frameEnd: 8,
-          frameRate: 10,
+          key: 'lizard_right',
+          frameStart: 0,
+          frameEnd: 4,
+          frameRate: 6,
           repeat: -1
         }
       ],
       containerSizeX: 32,
-      containerSizeY: 48,
+      containerSizeY: 16,
       spriteOffsetX: 0,
       spriteOffsetY: 0
     }

@@ -15,14 +15,16 @@ export default abstract class Character {
   protected sprite: Phaser.GameObjects.Sprite | null
   protected container: Phaser.GameObjects.Container | null
   protected invulnerable: boolean
+  protected assetPrefix: string
 
-  constructor(maxHp: number, damage: number) {
+  constructor(maxHp: number, damage: number, assetPrefix: string) {
     this.sprite = null
     this.container = null
     this.currentHp = this.maxHp = maxHp
     this.damage = damage
     this.direction = Direction.Neutral
     this.invulnerable = false
+    this.assetPrefix = assetPrefix
   }
 
   public getSprite(): Phaser.Physics.Arcade.Sprite {
@@ -50,6 +52,8 @@ export default abstract class Character {
     this.container = scene.add.container(config.spawnX, config.spawnY, [
       this.sprite
     ])
+    // ! TODO: Scaler x2 le size de la hitbox et du display (pour que les pixels paraîssent plus). Donc 32x32 -> 64x64
+    // ! Même chose pour les plateformes
     this.container.setSize(config.containerSizeX, config.containerSizeY)
     scene.physics.world.enable(this.container)
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setCollideWorldBounds(

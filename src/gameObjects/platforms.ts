@@ -19,13 +19,14 @@ export default class Platforms {
 
   public initializeStaticGroup(
     scene: Phaser.Scene,
-    platformSet: PlatformSet[]
+    platformSet: PlatformSet[],
+    assetKey: string
   ): void {
     this.platforms = scene.physics.add.staticGroup()
 
     for (const platform of platformSet) {
       this.platforms
-        .create(platform.x, platform.y, 'platform')
+        .create(platform.x, platform.y, assetKey)
         .setScale(platform.scale)
     }
   }

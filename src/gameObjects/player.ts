@@ -18,7 +18,7 @@ export default class Player extends Character {
   protected die: (() => void) | null
 
   private constructor(die: () => void) {
-    super(5, 1)
+    super(5, 1, 'frog')
     this.tongueSprite = null
     this.inAttackCooldown = false
     this.die = die
@@ -80,13 +80,13 @@ export default class Player extends Character {
 
     // TODO: Implement 'jump' and 'fall' animations when we'll have them
     if ((<Phaser.Physics.Arcade.Body>this.container.body).velocity.x < 0) {
-      this.sprite.anims.play('left', true)
+      this.sprite.anims.play(`${this.assetPrefix}_left`, true)
     } else if (
       (<Phaser.Physics.Arcade.Body>this.container.body).velocity.x > 0
     ) {
-      this.sprite.anims.play('right', true)
+      this.sprite.anims.play(`${this.assetPrefix}_right`, true)
     } else {
-      this.sprite.anims.play('idle', true)
+      this.sprite.anims.play(`${this.assetPrefix}_idle`, true)
     }
   }
 

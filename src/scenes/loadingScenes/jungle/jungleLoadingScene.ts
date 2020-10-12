@@ -1,5 +1,5 @@
 import LoadingScene from '../loadingScene'
-import assets from '../../../assets/jungle'
+import jungleAssets from '../../../assets/jungle'
 
 export default class JungleLoadingScene extends LoadingScene {
   constructor() {
@@ -87,11 +87,23 @@ export default class JungleLoadingScene extends LoadingScene {
   }
 
   public create(): void {
-    this.load.audio('volcanoTheme', assets.sounds.volcano_theme)
-    this.load.image('sky', assets.images.sky)
-    this.load.image('platform', assets.images.platform)
-    this.load.image('bomb', assets.images.bomb)
-    this.load.spritesheet('dude', assets.images.dude, {
+    this.load.audio('volcanoTheme', jungleAssets.sounds.volcano_theme)
+    this.load.image('background_1', jungleAssets.images.background_1)
+    this.load.image('background_2', jungleAssets.images.background_2)
+    this.load.image('background_3', jungleAssets.images.background_3)
+    this.load.image('background_4', jungleAssets.images.background_4)
+    this.load.image('background_5', jungleAssets.images.background_5)
+    this.load.image('platform_h1', jungleAssets.images.platform_h1)
+    this.load.image('platform_v1', jungleAssets.images.platform_v1)
+    this.load.image('platform_v2', jungleAssets.images.platform_v2)
+    this.load.image('platform_v3', jungleAssets.images.platform_v3)
+    this.load.image('platform', jungleAssets.images.platform)
+    this.load.image('bomb', jungleAssets.images.bomb)
+    this.load.spritesheet('enemy_lizard', jungleAssets.images.enemy_lizard, {
+      frameWidth: 32,
+      frameHeight: 16
+    })
+    this.load.spritesheet('dude', jungleAssets.images.dude, {
       frameWidth: 32,
       frameHeight: 48
     })

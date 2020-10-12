@@ -1,5 +1,6 @@
 import { TheLostFrogGame } from '..'
 import Enemy from '../gameObjects/enemy'
+import { CharacterConfig } from '../util'
 import CharacterConfigFactory from './characterConfigFactory'
 
 export default abstract class EnemyFactory {
@@ -9,23 +10,23 @@ export default abstract class EnemyFactory {
     spawnX: number,
     spawnY: number
   ): Enemy {
-    const lizard = new Enemy(3, 1, 100)
+    const lizard = new Enemy(3, 1, 100, 'lizard')
 
-    return this.createEnemy(scene, planetGravity, spawnX, spawnY, lizard)
+    const config: CharacterConfig = CharacterConfigFactory.getLizardConfig(
+      spawnX,
+      spawnY
+    )
+
+    return this.createEnemy(scene, planetGravity, lizard, config)
   }
 
   private static createEnemy(
     scene: Phaser.Scene,
     planetGravity: number,
-    spawnX: number,
-    spawnY: number,
-    enemy: Enemy
+    enemy: Enemy,
+    config: CharacterConfig
   ): Enemy {
-    enemy.init(
-      scene,
-      planetGravity,
-      CharacterConfigFactory.getLizardConfig(spawnX, spawnY)
-    )
+    enemy.init(scene, planetGravity, config)
 
     enemy.setDeathBehavior(this.getEnemyDeathBehavior(enemy, scene))
 

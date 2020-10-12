@@ -10,8 +10,13 @@ export default class Enemy extends Character {
   protected readonly gravity = 100
   protected die: (() => void) | null
 
-  constructor(maxHp: number, damage: number, scoreWorth: number) {
-    super(maxHp, damage)
+  constructor(
+    maxHp: number,
+    damage: number,
+    scoreWorth: number,
+    assetPrefix: string
+  ) {
+    super(maxHp, damage, assetPrefix)
     this.scoreWorth = scoreWorth
     this.die = null
   }
@@ -30,13 +35,13 @@ export default class Enemy extends Character {
     if (!this.sprite || !this.container) return
 
     if ((<Phaser.Physics.Arcade.Body>this.container.body).velocity.x < 0) {
-      this.sprite.anims.play('left', true)
+      this.sprite.anims.play(`${this.assetPrefix}_left`, true)
     } else if (
       (<Phaser.Physics.Arcade.Body>this.container.body).velocity.x > 0
     ) {
-      this.sprite.anims.play('right', true)
+      this.sprite.anims.play(`${this.assetPrefix}_right`, true)
     } else {
-      this.sprite.anims.play('idle', true)
+      this.sprite.anims.play(`${this.assetPrefix}_idle`, true)
     }
   }
 

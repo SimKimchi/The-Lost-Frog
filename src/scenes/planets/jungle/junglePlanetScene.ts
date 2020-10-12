@@ -7,20 +7,51 @@ import EnemyFactory from '../../../factories/enemyFactory'
 
 export default class JunglePlanetScene extends PlanetScene {
   constructor() {
-    const platformMatrix: PlatformSet[][] = [
-      [
+    // ! TODO: Tasser ça de d'là
+    const platformArrayDictionary: { [key: string]: PlatformSet[] } = {
+      platform_h1: [
         { x: 400, y: 568 },
+        { x: 464, y: 568 },
+        { x: 528, y: 568 },
+        { x: 592, y: 568 },
         { x: 600, y: 400 },
+        { x: 664, y: 400 },
+        { x: 728, y: 400 },
         { x: 50, y: 250 },
-        { x: 750, y: 220 }
-      ]
-    ]
-    super('JunglePlanetScene', 1, 1, platformMatrix)
+        { x: 114, y: 250 },
+        { x: 178, y: 250 },
+        { x: 750, y: 220 },
+        { x: 814, y: 220 }
+      ],
+      platform_v1: [{ x: 432, y: 534 }],
+      platform_v2: [],
+      platform_v3: []
+    }
+    super('JunglePlanetScene', 1, 1, platformArrayDictionary)
   }
 
   protected initializeStaticAssets(): void {
-    this.add.image(480, 320, 'sky').setDisplaySize(960, 640).setDepth(-1)
-    this.platforms.initializeStaticGroup(this, this.platformMatrix[0])
+    const containerWidth = this.game.scale.width / 2
+    const containerHeight = this.game.scale.height / 2
+
+    this.add.image(containerWidth, containerHeight, 'background_5')
+    this.add.image(containerWidth, containerHeight, 'background_4')
+    this.add.image(containerWidth, containerHeight, 'background_3')
+    this.add.image(containerWidth, containerHeight, 'background_2')
+    this.add.image(containerWidth, containerHeight, 'background_1')
+
+    this.platforms.initializeStaticGroup(
+      this,
+      this.platformArrayDictionary['platform_h1'],
+      'platform_h1'
+    )
+
+    // TODO: Initialiser plusieurs groupes de platformes selon l'asset
+    // this.platforms.initializeStaticGroup(
+    //   this,
+    //   this.platformArrayDictionary['platform_v1'],
+    //   'platform_v1'
+    // )
   }
 
   protected initializeCharacters(): void {

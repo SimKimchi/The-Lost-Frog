@@ -8,7 +8,7 @@ import { Direction, HotKeys } from '../../util'
 export default abstract class PlanetScene extends Phaser.Scene {
   protected velocityXModifier: number
   protected velocityYModifier: number
-  protected platformMatrix: PlatformSet[][]
+  protected platformArrayDictionary: { [key: string]: PlatformSet[] }
 
   protected frog: Player
   protected enemies: Enemy[]
@@ -22,12 +22,12 @@ export default abstract class PlanetScene extends Phaser.Scene {
     planetSceneName: string,
     gravityXModifier: number,
     gravityYModifier: number,
-    platformMatrix: PlatformSet[][]
+    platformArrayDictionary: { [key: string]: PlatformSet[] }
   ) {
     super(planetSceneName)
     this.velocityXModifier = gravityXModifier
     this.velocityYModifier = gravityYModifier
-    this.platformMatrix = platformMatrix
+    this.platformArrayDictionary = platformArrayDictionary
     this.frog = Player.getPlayer(() => {
       this.playerDeath()
     })
@@ -225,7 +225,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
   private displayGameOver(): void {
     const gameOverText = this.add.text(0, 0, 'Game over!', {
       font: '45px monospace',
-      fill: '#000000'
+      fill: '#FFFFFF'
     })
     gameOverText.setPosition(
       this.game.scale.width / 2 - gameOverText.width / 2,
@@ -233,7 +233,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     )
     const retryText = this.add.text(0, 0, 'Try again?', {
       font: '25px monospace',
-      fill: '#000000'
+      fill: '#FFFFFF'
     })
     retryText.setPosition(
       this.game.scale.width / 2 - retryText.width / 2,
