@@ -1,18 +1,15 @@
 import { TheLostFrogGame } from '../..'
 import Character from '../../gameObjects/character'
 import Enemy from '../../gameObjects/enemy'
-import Platforms, { PlatformSet } from '../../gameObjects/platforms'
 import Player from '../../gameObjects/player'
-import { Direction, HotKeys } from '../../util'
+import { Direction, HotKeys, Platform } from '../../util'
 
 export default abstract class PlanetScene extends Phaser.Scene {
   protected velocityXModifier: number
   protected velocityYModifier: number
-  protected platformArrayDictionary: { [key: string]: PlatformSet[] }
-
   protected frog: Player
   protected enemies: Enemy[]
-  protected platforms: Platforms
+  protected platformGroup: Phaser.Physics.Arcade.StaticGroup | null
   protected hotKeys: HotKeys | null
   protected displayScore: Phaser.GameObjects.Text | null
   protected displayHp: Phaser.GameObjects.Text | null
@@ -21,17 +18,15 @@ export default abstract class PlanetScene extends Phaser.Scene {
   constructor(
     planetSceneName: string,
     gravityXModifier: number,
-    gravityYModifier: number,
-    platformArrayDictionary: { [key: string]: PlatformSet[] }
+    gravityYModifier: number
   ) {
     super(planetSceneName)
     this.velocityXModifier = gravityXModifier
     this.velocityYModifier = gravityYModifier
-    this.platformArrayDictionary = platformArrayDictionary
     this.frog = Player.getPlayer(() => {
       this.playerDeath()
     })
-    this.platforms = new Platforms()
+    this.platformGroup = null
     this.hotKeys = null
     this.displayScore = null
     this.displayHp = null
@@ -43,7 +38,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.frog = Player.getPlayer(() => {
       this.playerDeath()
     })
-    this.platforms = new Platforms()
+    this.platformGroup = null
     this.hotKeys = null
     this.displayScore = null
     this.displayHp = null
@@ -64,6 +59,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.initializeCollisions()
     this.initializeSounds()
     this.initializeTexts()
+    this.setDebug(false)
   }
   public update(): void {
     this.updateTexts()
@@ -94,7 +90,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
 
   protected initializeCamera(): void {
     this.cameras.main
-      .startFollow(this.frog.getContainer(), false, 0.1, 0.05, 0, 80)
+      .startFollow(this.frog.getContainer(), false, 0.1, 0.05, 0, 70)
       .setBounds(0, 0, 1920, 640)
       .setZoom(1.4)
   }
@@ -168,9 +164,11 @@ export default abstract class PlanetScene extends Phaser.Scene {
   protected platformCollision(
     enemyContainers: Phaser.GameObjects.Container[]
   ): void {
+    if (!this.platformGroup) return
+
     this.physics.add.collider(
       [this.frog.getContainer(), ...enemyContainers],
-      this.platforms.getStaticGroup()
+      this.platformGroup
     )
   }
 
@@ -227,6 +225,11 @@ export default abstract class PlanetScene extends Phaser.Scene {
     }
   }
 
+  private initializeStaticAssets(): void {
+    this.initializeBackground()
+    this.initializePlatforms()
+  }
+
   private playerDeath(): void {
     this.physics.pause()
     this.music?.pause()
@@ -271,9 +274,34 @@ export default abstract class PlanetScene extends Phaser.Scene {
 
   protected abstract triggerKeyboardActions(): void
   protected abstract initializeEnemyBehavior(): void
-  protected abstract initializeStaticAssets(): void
+  protected abstract initializePlatforms(): void
+  protected abstract initializeBackground(): void
   protected abstract initializeCharacters(): void
   protected abstract initializeCollisions(): void
   protected abstract spawnEnemies(numberOfEnemies: number): void
   protected abstract initializeSounds(): void
+
+  private setDebug(debug: boolean) {
+    if (!debug) {
+      return
+    }
+
+    this.add.grid(
+      this.game.scale.width,
+      this.game.scale.height / 2,
+      1920,
+      640,
+      64,
+      64,
+      0x000000,
+      0,
+      0x000000,
+      1
+    )
+    for (let x = 0; x < this.game.scale.width / 32; x++) {
+      for (let y = 0; y < this.game.scale.height / 64; y++) {
+        this.add.text(x * 64, y * 64, `${x}-${y}`)
+      }
+    }
+  }
 }

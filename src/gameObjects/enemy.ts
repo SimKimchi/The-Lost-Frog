@@ -5,7 +5,7 @@ import Character from './character'
 export default class Enemy extends Character {
   public scoreWorth: number
   protected readonly invulnerableTime = 200
-  protected readonly moveSpeed = 100
+  protected readonly moveSpeed = 75
   protected readonly jumpStrength = 400
   protected readonly gravity = 100
   protected die: (() => void) | null

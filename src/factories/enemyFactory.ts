@@ -1,7 +1,7 @@
 import { TheLostFrogGame } from '..'
 import Enemy from '../gameObjects/enemy'
 import { CharacterConfig } from '../util'
-import CharacterConfigFactory from './characterConfigFactory'
+import CharacterConfigProvider from '../providers/characterConfigProvider'
 
 export default abstract class EnemyFactory {
   public static createLizard(
@@ -12,7 +12,7 @@ export default abstract class EnemyFactory {
   ): Enemy {
     const lizard = new Enemy(3, 1, 100, 'lizard')
 
-    const config: CharacterConfig = CharacterConfigFactory.getLizardConfig(
+    const config: CharacterConfig = CharacterConfigProvider.getLizardConfig(
       spawnX,
       spawnY
     )

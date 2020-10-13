@@ -1,6 +1,6 @@
 import { CharacterConfig } from '../util'
 
-export default abstract class CharacterConfigFactory {
+export default abstract class CharacterConfigProvider {
   public static getPlayerConfig(): CharacterConfig {
     return {
       spawnX: 100,

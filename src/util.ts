@@ -18,6 +18,16 @@ export type CharacterConfig = {
   spriteOffsetY: number
 }
 
+export type PlatformConfig = {
+  width: number
+  height: number
+  spriteKey: string
+  checkUpCollision: boolean
+  checkDownCollision: boolean
+  checkLeftCollision: boolean
+  checkRightCollision: boolean
+}
+
 export type AnimationConfig = {
   key: string
   assetKey: string
@@ -26,6 +36,15 @@ export type AnimationConfig = {
   frameEnd?: number
   frameRate?: number
   repeat?: number
+}
+
+export type Platform = {
+  x: number
+  y: number
+  xOffSet?: number
+  yOffSet?: number
+  config: PlatformConfig
+  scale?: number
 }
 
 export type HotKeys = {
@@ -44,3 +63,6 @@ export type HotKeys = {
 export function getRandomInt(max: number): number {
   return Math.floor(Math.random() * Math.floor(max)) + 1
 }
+
+export const gridWidth = 64
+export const gridHeight = 64

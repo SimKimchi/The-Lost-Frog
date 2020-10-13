@@ -79,6 +79,10 @@ export default abstract class Character {
 
     this.container.setData('damage', this.damage)
     ;(<Phaser.Physics.Arcade.Body>this.container.body).onWorldBounds = true
+    ;(<Phaser.Physics.Arcade.Body>this.container.body).setMaxVelocity(
+      this.moveSpeed,
+      this.jumpStrength
+    )
   }
 
   public run(multiplier: number): void {

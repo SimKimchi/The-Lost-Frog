@@ -8,9 +8,9 @@ export default class Player extends Character {
   private static readonly ATTACK_COOLDOWN = 400
 
   protected readonly invulnerableTime = 1000
-  protected readonly moveSpeed = 400
-  protected readonly jumpStrength = 670
-  protected readonly gravity = 500
+  protected readonly moveSpeed = 250
+  protected readonly jumpStrength = 550
+  protected readonly gravity = 200
   private static instance: Player
   private canDoubleJump = false
   private tongueSprite: Phaser.Physics.Arcade.Sprite | null
