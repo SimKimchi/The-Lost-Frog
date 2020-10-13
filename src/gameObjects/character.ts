@@ -65,8 +65,8 @@ export default abstract class Character {
         key: animation.key,
         frames:
           animation.frame !== undefined
-            ? [{ key: config.spriteKey, frame: animation.frame }]
-            : scene.anims.generateFrameNumbers(config.spriteKey, {
+            ? [{ key: animation.assetKey, frame: animation.frame }]
+            : scene.anims.generateFrameNumbers(animation.assetKey, {
                 start: animation.frameStart,
                 end: animation.frameEnd
               }),

@@ -31,14 +31,11 @@ export default class JunglePlanetScene extends PlanetScene {
   }
 
   protected initializeStaticAssets(): void {
-    const containerWidth = this.game.scale.width / 2
-    const containerHeight = this.game.scale.height / 2
-
-    this.add.image(containerWidth, containerHeight, 'background_5')
-    this.add.image(containerWidth, containerHeight, 'background_4')
-    this.add.image(containerWidth, containerHeight, 'background_3')
-    this.add.image(containerWidth, containerHeight, 'background_2')
-    this.add.image(containerWidth, containerHeight, 'background_1')
+    this.add.image(0, 0, 'background_5').setOrigin(0).setScrollFactor(0)
+    this.add.image(0, 0, 'background_4').setOrigin(0).setScrollFactor(0.25)
+    this.add.image(0, 0, 'background_3').setOrigin(0).setScrollFactor(0.5)
+    this.add.image(0, 0, 'background_2').setOrigin(0).setScrollFactor(0.75)
+    this.add.image(0, 0, 'background_1').setOrigin(0).setScrollFactor(1)
 
     this.platforms.initializeStaticGroup(
       this,

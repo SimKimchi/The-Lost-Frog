@@ -56,8 +56,10 @@ export default abstract class PlanetScene extends Phaser.Scene {
       'SPACE,A,S,D,E,W,UP,DOWN,LEFT,RIGHT'
     ) as HotKeys
 
+    this.initializeWorld()
     this.initializeStaticAssets()
     this.initializeCharacters()
+    this.initializeCamera()
     this.initializeEnemyBehavior()
     this.initializeCollisions()
     this.initializeSounds()
@@ -70,18 +72,31 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.frog.updateAnimation()
   }
 
+  protected initializeWorld(): void {
+    this.physics.world.setBounds(0, 0, 1920, 640)
+    this.physics.world.setBoundsCollision(true, true, false, true)
+  }
+
   protected initializeTexts(): void {
-    this.displayScore = this.add.text(
-      25,
-      25,
-      (this.game as TheLostFrogGame).displayScore(),
-      {
-        fontFamiy: 'Consolas'
-      }
-    )
-    this.displayHp = this.add.text(25, 45, this.frog.displayHp(), {
-      fontFamiy: 'Consolas'
-    })
+    this.displayHp = this.add
+      .text(150, 110, this.frog.displayHp(), {
+        font: ' 20px monospace',
+        fill: '#FFFFFF'
+      })
+      .setScrollFactor(0, 0)
+    this.displayScore = this.add
+      .text(150, 140, (this.game as TheLostFrogGame).displayScore(), {
+        font: '20px monospace',
+        fill: '#FFFFFF'
+      })
+      .setScrollFactor(0, 0)
+  }
+
+  protected initializeCamera(): void {
+    this.cameras.main
+      .startFollow(this.frog.getContainer(), false, 0.1, 0.05, 0, 80)
+      .setBounds(0, 0, 1920, 640)
+      .setZoom(1.4)
   }
 
   protected updateTexts(): void {
@@ -173,8 +188,6 @@ export default abstract class PlanetScene extends Phaser.Scene {
       }
     )
 
-    this.physics.world.setBoundsCollision(true, true, false, true)
-
     this.physics.world.on(
       'worldbounds',
       (
@@ -223,18 +236,22 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   private displayGameOver(): void {
-    const gameOverText = this.add.text(0, 0, 'Game over!', {
-      font: '45px monospace',
-      fill: '#FFFFFF'
-    })
+    const gameOverText = this.add
+      .text(0, 0, 'Game over!', {
+        font: '45px monospace',
+        fill: '#FFFFFF'
+      })
+      .setScrollFactor(0, 0)
     gameOverText.setPosition(
       this.game.scale.width / 2 - gameOverText.width / 2,
       this.game.scale.height / 2 - gameOverText.height / 2
     )
-    const retryText = this.add.text(0, 0, 'Try again?', {
-      font: '25px monospace',
-      fill: '#FFFFFF'
-    })
+    const retryText = this.add
+      .text(0, 0, 'Try again?', {
+        font: '25px monospace',
+        fill: '#FFFFFF'
+      })
+      .setScrollFactor(0, 0)
     retryText.setPosition(
       this.game.scale.width / 2 - retryText.width / 2,
       this.game.scale.height / 2 - retryText.height / 2 + 50

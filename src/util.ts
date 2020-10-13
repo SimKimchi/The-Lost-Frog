@@ -20,6 +20,7 @@ export type CharacterConfig = {
 
 export type AnimationConfig = {
   key: string
+  assetKey: string
   frame?: number
   frameStart?: number
   frameEnd?: number

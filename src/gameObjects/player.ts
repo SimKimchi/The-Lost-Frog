@@ -86,7 +86,11 @@ export default class Player extends Character {
     ) {
       this.sprite.anims.play(`${this.assetPrefix}_right`, true)
     } else {
-      this.sprite.anims.play(`${this.assetPrefix}_idle`, true)
+      if (this.direction === Direction.Left) {
+        this.sprite.anims.play(`${this.assetPrefix}_idle_left`, true)
+      } else {
+        this.sprite.anims.play(`${this.assetPrefix}_idle_right`, true)
+      }
     }
   }
 

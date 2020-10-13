@@ -10,18 +10,21 @@ export default abstract class CharacterConfigFactory {
       animations: [
         {
           key: 'frog_left',
+          assetKey: 'dude',
           frameStart: 0,
           frameEnd: 3,
           frameRate: 10,
           repeat: -1
         },
         {
-          key: 'frog_idle',
+          key: 'frog_idle_right',
+          assetKey: 'dude',
           frame: 4,
           frameRate: 20
         },
         {
           key: 'frog_right',
+          assetKey: 'dude',
           frameStart: 5,
           frameEnd: 8,
           frameRate: 10,
@@ -47,6 +50,7 @@ export default abstract class CharacterConfigFactory {
       animations: [
         {
           key: 'lizard_left',
+          assetKey: 'enemy_lizard',
           frameStart: 0,
           frameEnd: 4,
           frameRate: 6,
@@ -54,11 +58,13 @@ export default abstract class CharacterConfigFactory {
         },
         {
           key: 'lizard_idle',
+          assetKey: 'enemy_lizard',
           frame: 1,
           frameRate: 20
         },
         {
           key: 'lizard_right',
+          assetKey: 'enemy_lizard',
           frameStart: 0,
           frameEnd: 4,
           frameRate: 6,

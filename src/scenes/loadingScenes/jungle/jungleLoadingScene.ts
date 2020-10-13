@@ -107,6 +107,14 @@ export default class JungleLoadingScene extends LoadingScene {
       frameWidth: 32,
       frameHeight: 48
     })
+    this.load.spritesheet(
+      'frog_idle_right',
+      jungleAssets.images.frog_idle_right,
+      {
+        frameWidth: 256,
+        frameHeight: 256
+      }
+    )
     this.load.start()
   }
 
