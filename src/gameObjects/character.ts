@@ -8,6 +8,7 @@ export default abstract class Character {
   protected abstract gravity: number
   protected abstract invulnerableTime: number
   protected abstract die: (() => void) | null
+  protected abstract knockback: number
   protected direction: Direction
   protected currentHp: number
   protected maxHp: number
@@ -112,6 +113,31 @@ export default abstract class Character {
         this.die()
       }
     }
+  }
+
+  public triggerKnockback(scene: Phaser.Scene, direction: Direction): void {
+    if (!this.container) return
+
+    let props = {}
+    if (direction === Direction.Right || direction === Direction.Left) {
+      const currentX = (<Phaser.Physics.Arcade.Body>this.container.body).x
+      props = {
+        x:
+          direction === Direction.Right
+            ? currentX + this.knockback
+            : currentX - this.knockback
+      }
+    } else if (direction === Direction.Up) {
+      const currentY = (<Phaser.Physics.Arcade.Body>this.container.body).y
+      props = {
+        y: currentY - this.knockback / 2
+      }
+    }
+    scene.tweens.add({
+      targets: this.container,
+      duration: 100,
+      props
+    })
   }
 
   public setGravity(multiplier: number): void {

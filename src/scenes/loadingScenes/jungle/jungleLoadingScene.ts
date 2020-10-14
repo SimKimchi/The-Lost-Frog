@@ -99,10 +99,22 @@ export default class JungleLoadingScene extends LoadingScene {
     this.load.image('platform_v3', jungleAssets.images.platform_v3)
     this.load.image('platform', jungleAssets.images.platform)
     this.load.image('bomb', jungleAssets.images.bomb)
-    this.load.spritesheet('enemy_lizard', jungleAssets.images.enemy_lizard, {
-      frameWidth: 32,
-      frameHeight: 16
-    })
+    this.load.spritesheet(
+      'enemy_lizard_left',
+      jungleAssets.images.enemy_lizard_left,
+      {
+        frameWidth: 32,
+        frameHeight: 16
+      }
+    )
+    this.load.spritesheet(
+      'enemy_lizard_right',
+      jungleAssets.images.enemy_lizard_right,
+      {
+        frameWidth: 32,
+        frameHeight: 16
+      }
+    )
     this.load.spritesheet('dude', jungleAssets.images.dude, {
       frameWidth: 32,
       frameHeight: 48

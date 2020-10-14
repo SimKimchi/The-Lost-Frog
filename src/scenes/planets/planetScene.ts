@@ -188,9 +188,13 @@ export default abstract class PlanetScene extends Phaser.Scene {
       enemyContainers,
       (_frog, enemy) => {
         if (this.frog.isInvulnerable()) return
-
-        this.frog.takeDamage(enemy.getData('damage'))
         this.frog.makeInvulnerable(this)
+        const direction =
+          enemy.body.position.x >= this.frog.getContainer().body.position.x
+            ? Direction.Left
+            : Direction.Right
+        this.frog.triggerKnockback(this, direction)
+        this.frog.takeDamage(enemy.getData('damage'))
       }
     )
 
@@ -227,11 +231,14 @@ export default abstract class PlanetScene extends Phaser.Scene {
           if (attackSprite.getData('direction') === Direction.Down) {
             this.frog.bounce(1.25)
           }
-
+          this.enemies[key].makeInvulnerable(this)
+          this.enemies[key].triggerKnockback(
+            this,
+            attackSprite.getData('direction')
+          )
           this.enemies[key].takeDamage(
             this.frog.getContainer().getData('damage')
           )
-          this.enemies[key].makeInvulnerable(this)
         }
       )
     }

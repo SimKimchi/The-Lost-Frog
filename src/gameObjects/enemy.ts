@@ -9,6 +9,7 @@ export default class Enemy extends Character {
   protected readonly jumpStrength = 400
   protected readonly gravity = 100
   protected die: (() => void) | null
+  protected readonly knockback = 50
 
   constructor(
     maxHp: number,

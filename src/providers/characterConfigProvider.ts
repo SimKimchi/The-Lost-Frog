@@ -50,7 +50,7 @@ export default abstract class CharacterConfigProvider {
       animations: [
         {
           key: 'lizard_left',
-          assetKey: 'enemy_lizard',
+          assetKey: 'enemy_lizard_left',
           frameStart: 0,
           frameEnd: 4,
           frameRate: 6,
@@ -58,13 +58,13 @@ export default abstract class CharacterConfigProvider {
         },
         {
           key: 'lizard_idle',
-          assetKey: 'enemy_lizard',
+          assetKey: 'enemy_lizard_left',
           frame: 1,
           frameRate: 20
         },
         {
           key: 'lizard_right',
-          assetKey: 'enemy_lizard',
+          assetKey: 'enemy_lizard_right',
           frameStart: 0,
           frameEnd: 4,
           frameRate: 6,

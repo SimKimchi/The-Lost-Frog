@@ -16,6 +16,7 @@ export default class Player extends Character {
   private tongueSprite: Phaser.Physics.Arcade.Sprite | null
   private inAttackCooldown: boolean
   protected die: (() => void) | null
+  protected readonly knockback = 42.5
 
   private constructor(die: () => void) {
     super(5, 1, 'frog')
