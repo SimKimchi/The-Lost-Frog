@@ -1,6 +1,11 @@
 import 'phaser'
+import IceLoadingScene from './scenes/loadingScenes/ice/iceLoadingScene'
 import JungleLoadingScene from './scenes/loadingScenes/jungle/jungleLoadingScene'
+import VolcanoLoadingScene from './scenes/loadingScenes/volcano/volcanoLoadingScene'
+import IcePlanetScene from './scenes/planets/ice/icePlanetScene'
 import JunglePlanetScene from './scenes/planets/jungle/junglePlanetScene'
+import VolcanoPlanetScene from './scenes/planets/volcano/volcanoPlanetScene'
+import { getRandomInt } from './util'
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
@@ -12,8 +17,16 @@ const config: Phaser.Types.Core.GameConfig = {
       gravity: { y: 1500 }
     }
   },
-  parent: 'game-container',
-  scene: [JungleLoadingScene, JunglePlanetScene]
+  parent: 'game-container'
+  // TODO: Ceci sera la bonne manière d'insérer les scène et de démarrer la preimère.
+  /*scene: [
+    JungleLoadingScene,
+    JunglePlanetScene,
+    IceLoadingScene,
+    IcePlanetScene,
+    VolcanoLoadingScene,
+    VolcanoPlanetScene
+  ]*/
 }
 
 export class TheLostFrogGame extends Phaser.Game {
@@ -38,4 +51,19 @@ export class TheLostFrogGame extends Phaser.Game {
   }
 }
 
-new TheLostFrogGame(config)
+const game = new TheLostFrogGame(config)
+
+// TODO: Enlever ça. C'est là juste pour tester les différentes planètes.
+game.scene.add('JungleLoadingScene', JungleLoadingScene)
+game.scene.add('JunglePlanetScene', JunglePlanetScene)
+game.scene.add('IceLoadingScene', IceLoadingScene)
+game.scene.add('IcePlanetScene', IcePlanetScene)
+game.scene.add('VolcanoLoadingScene', VolcanoLoadingScene)
+game.scene.add('VolcanoPlanetScene', VolcanoPlanetScene)
+
+const possibleStartingScenes = [
+  'JungleLoadingScene',
+  'IceLoadingScene',
+  'VolcanoLoadingScene'
+]
+game.scene.start(possibleStartingScenes[getRandomInt(3) - 1])

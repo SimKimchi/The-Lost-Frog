@@ -2,7 +2,7 @@ import { TheLostFrogGame } from '../..'
 import Character from '../../gameObjects/character'
 import Enemy from '../../gameObjects/enemy'
 import Player from '../../gameObjects/player'
-import { Direction, HotKeys, Platform } from '../../util'
+import { Direction, HotKeys } from '../../util'
 
 export default abstract class PlanetScene extends Phaser.Scene {
   protected velocityXModifier: number
