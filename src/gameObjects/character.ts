@@ -52,8 +52,6 @@ export default abstract class Character {
     this.container = scene.add.container(config.spawnX, config.spawnY, [
       this.sprite
     ])
-    // ! TODO: Scaler x2 le size de la hitbox et du display (pour que les pixels paraîssent plus). Donc 32x32 -> 64x64
-    // ! Même chose pour les plateformes
     this.container.setSize(config.containerSizeX, config.containerSizeY)
     scene.physics.world.enable(this.container)
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setCollideWorldBounds(

@@ -166,10 +166,18 @@ export default abstract class PlanetScene extends Phaser.Scene {
   ): void {
     if (!this.platformGroup) return
 
-    this.physics.add.collider(
-      [this.frog.getContainer(), ...enemyContainers],
-      this.platformGroup
-    )
+    this.physics.add.collider([this.frog.getContainer()], this.platformGroup)
+    this.physics.add.collider(enemyContainers, this.platformGroup, (enemy) => {
+      if (
+        (enemy.body as Phaser.Physics.Arcade.Body).touching.left ||
+        (enemy.body as Phaser.Physics.Arcade.Body).touching.right
+      ) {
+        ;(this.findCharacterByContainer(
+          this.enemies,
+          enemy as Phaser.GameObjects.Container
+        ) as Enemy).turnAround()
+      }
+    })
   }
 
   protected enemyCollision(
@@ -179,10 +187,10 @@ export default abstract class PlanetScene extends Phaser.Scene {
       this.frog.getContainer(),
       enemyContainers,
       (_frog, enemy) => {
-        if (!this.frog.isInvulnerable()) {
-          this.frog.takeDamage(enemy.getData('damage'))
-          this.frog.makeInvulnerable(this)
-        }
+        if (this.frog.isInvulnerable()) return
+
+        this.frog.takeDamage(enemy.getData('damage'))
+        this.frog.makeInvulnerable(this)
       }
     )
 
@@ -214,6 +222,10 @@ export default abstract class PlanetScene extends Phaser.Scene {
         () => {
           if (!attackSprite.visible || this.enemies[key].isInvulnerable()) {
             return
+          }
+
+          if (attackSprite.getData('direction') === Direction.Down) {
+            this.frog.bounce(1.25)
           }
 
           this.enemies[key].takeDamage(

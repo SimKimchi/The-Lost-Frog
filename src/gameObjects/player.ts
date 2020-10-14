@@ -128,6 +128,8 @@ export default class Player extends Character {
       this.tongueSprite.x = 0
       this.tongueSprite.y = Player.ATTACK_RANGE
     }
+
+    this.tongueSprite.setData('direction', direction)
     this.tongueSprite.setVisible(true)
   }
 
