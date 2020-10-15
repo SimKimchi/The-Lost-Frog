@@ -1,12 +1,14 @@
 import { TheLostFrogGame } from '../..'
+import EnemyFactory from '../../factories/enemyFactory'
 import Character from '../../gameObjects/character'
 import Enemy from '../../gameObjects/enemy'
 import Player from '../../gameObjects/player'
-import { Direction, HotKeys } from '../../util'
+import CharacterConfigProvider from '../../providers/characterConfigProvider'
+import { Direction, EnemySpawn, HotKeys } from '../../util'
 
 export default abstract class PlanetScene extends Phaser.Scene {
-  protected velocityXModifier: number
-  protected velocityYModifier: number
+  public velocityXModifier: number
+  public velocityYModifier: number
   protected frog: Player
   protected enemies: Enemy[]
   protected platformGroup: Phaser.Physics.Arcade.StaticGroup | null
@@ -14,6 +16,8 @@ export default abstract class PlanetScene extends Phaser.Scene {
   protected displayScore: Phaser.GameObjects.Text | null
   protected displayHp: Phaser.GameObjects.Text | null
   protected music: Phaser.Sound.BaseSound | null
+  protected abstract enemyWaves: EnemySpawn[][]
+  protected currentEnemyWave: number
 
   constructor(
     planetSceneName: string,
@@ -32,6 +36,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.displayHp = null
     this.enemies = []
     this.music = null
+    this.currentEnemyWave = 0
   }
 
   public init(): void {
@@ -44,6 +49,11 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.displayHp = null
     this.enemies = []
     this.music = null
+    this.currentEnemyWave = 0
+
+    this.events.on('enemyKilled', () => {
+      this.onEnemyDeath()
+    })
   }
 
   public create(): void {
@@ -54,9 +64,8 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.initializeWorld()
     this.initializeStaticAssets()
     this.initializeCharacters()
+    this.setPlayerPlatformCollisions()
     this.initializeCamera()
-    this.initializeEnemyBehavior()
-    this.initializeCollisions()
     this.initializeSounds()
     this.initializeTexts()
     this.setDebug(false)
@@ -161,12 +170,13 @@ export default abstract class PlanetScene extends Phaser.Scene {
     }
   }
 
-  protected platformCollision(
-    enemyContainers: Phaser.GameObjects.Container[]
-  ): void {
+  protected setEnemyPlatformCollisions(): void {
     if (!this.platformGroup) return
 
-    this.physics.add.collider([this.frog.getContainer()], this.platformGroup)
+    const enemyContainers = this.enemies.map((enemy) => {
+      return enemy.getContainer()
+    })
+
     this.physics.add.collider(enemyContainers, this.platformGroup, (enemy) => {
       if (
         (enemy.body as Phaser.Physics.Arcade.Body).touching.left ||
@@ -180,9 +190,11 @@ export default abstract class PlanetScene extends Phaser.Scene {
     })
   }
 
-  protected enemyCollision(
-    enemyContainers: Phaser.GameObjects.Container[]
-  ): void {
+  protected setPlayerCollisionsWithEnemies(): void {
+    const enemyContainers = this.enemies.map((enemy) => {
+      return enemy.getContainer()
+    })
+
     this.physics.add.overlap(
       this.frog.getContainer(),
       enemyContainers,
@@ -217,7 +229,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     )
   }
 
-  protected frogAttackCollision(): void {
+  protected setPlayerAttackCollisions(): void {
     const attackSprite = this.frog.getAttackSprite()
     for (const key in this.enemies) {
       this.physics.add.overlap(
@@ -242,6 +254,47 @@ export default abstract class PlanetScene extends Phaser.Scene {
         }
       )
     }
+  }
+
+  protected onEnemyDeath(): void {
+    if (!this.enemies.every((x) => x.getContainer().body === undefined)) return
+
+    if (this.currentEnemyWave === this.enemyWaves.length - 1) {
+      this.goToNextPlanet()
+    } else {
+      this.startNextWave()
+    }
+  }
+
+  protected abstract goToNextPlanet(): void
+
+  private setPlayerPlatformCollisions(): void {
+    if (!this.platformGroup) return
+
+    this.physics.add.collider([this.frog.getContainer()], this.platformGroup)
+  }
+
+  private startNextWave(): void {
+    this.spawnEnemies(this.enemyWaves[++this.currentEnemyWave])
+  }
+
+  protected spawnEnemies(enemySpawns: EnemySpawn[]): void {
+    this.enemies = []
+
+    for (const enemySpawn of enemySpawns) {
+      this.enemies.push(
+        EnemyFactory.createEnemyByType(
+          enemySpawn.type,
+          this as PlanetScene,
+          enemySpawn.spawnX,
+          enemySpawn.spawnY
+        )
+      )
+    }
+
+    this.setEnemyPlatformCollisions()
+    this.setPlayerCollisionsWithEnemies()
+    this.setPlayerAttackCollisions()
   }
 
   private initializeStaticAssets(): void {
@@ -291,13 +344,22 @@ export default abstract class PlanetScene extends Phaser.Scene {
     )
   }
 
-  protected abstract triggerKeyboardActions(): void
-  protected abstract initializeEnemyBehavior(): void
+  private triggerKeyboardActions(): void {
+    this.handleMovement()
+    this.handleAttack()
+  }
+
+  private initializeCharacters(): void {
+    this.frog.init(
+      this,
+      this.velocityYModifier,
+      CharacterConfigProvider.getPlayerConfig()
+    )
+    this.spawnEnemies(this.enemyWaves[this.currentEnemyWave])
+  }
+
   protected abstract initializePlatforms(): void
   protected abstract initializeBackground(): void
-  protected abstract initializeCharacters(): void
-  protected abstract initializeCollisions(): void
-  protected abstract spawnEnemies(numberOfEnemies: number): void
   protected abstract initializeSounds(): void
 
   private setDebug(debug: boolean) {

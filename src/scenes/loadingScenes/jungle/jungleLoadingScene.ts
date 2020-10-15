@@ -1,5 +1,6 @@
 import LoadingScene from '../loadingScene'
 import jungleAssets from '../../../assets/jungle'
+import iceAssets from '../../../assets/ice'
 import volcanoAssets from '../../../assets/volcano'
 
 export default class JungleLoadingScene extends LoadingScene {
@@ -89,11 +90,51 @@ export default class JungleLoadingScene extends LoadingScene {
 
   public create(): void {
     this.load.audio('volcanoTheme', volcanoAssets.sounds.volcano_theme)
-    this.load.image('background_1', jungleAssets.images.background_1)
-    this.load.image('background_2', jungleAssets.images.background_2)
-    this.load.image('background_3', jungleAssets.images.background_3)
-    this.load.image('background_4', jungleAssets.images.background_4)
-    this.load.image('background_5', jungleAssets.images.background_5)
+    this.load.image(
+      'background_jungle_1',
+      jungleAssets.images.background_jungle_1
+    )
+    this.load.image(
+      'background_jungle_2',
+      jungleAssets.images.background_jungle_2
+    )
+    this.load.image(
+      'background_jungle_3',
+      jungleAssets.images.background_jungle_3
+    )
+    this.load.image(
+      'background_jungle_4',
+      jungleAssets.images.background_jungle_4
+    )
+    this.load.image(
+      'background_jungle_5',
+      jungleAssets.images.background_jungle_5
+    )
+    this.load.image('background_ice_1', iceAssets.images.background_ice_1)
+    this.load.image('background_ice_2', iceAssets.images.background_ice_2)
+    this.load.image('background_ice_3', iceAssets.images.background_ice_3)
+    this.load.image('background_ice_4', iceAssets.images.background_ice_4)
+    this.load.image('background_ice_5', iceAssets.images.background_ice_5)
+    this.load.image(
+      'background_volcano_1',
+      volcanoAssets.images.background_volcano_1
+    )
+    this.load.image(
+      'background_volcano_2',
+      volcanoAssets.images.background_volcano_2
+    )
+    this.load.image(
+      'background_volcano_3',
+      volcanoAssets.images.background_volcano_3
+    )
+    this.load.image(
+      'background_volcano_4',
+      volcanoAssets.images.background_volcano_4
+    )
+    this.load.image(
+      'background_volcano_5',
+      volcanoAssets.images.background_volcano_5
+    )
     this.load.image('platform_h1', jungleAssets.images.platform_h1)
     this.load.image('platform_v1', jungleAssets.images.platform_v1)
     this.load.image('platform_v2', jungleAssets.images.platform_v2)
@@ -132,6 +173,6 @@ export default class JungleLoadingScene extends LoadingScene {
   }
 
   protected goToScene(): void {
-    this.scene.start('JunglePlanetScene')
+    this.game.scene.switch('JungleLoadingScene', 'JunglePlanetScene')
   }
 }

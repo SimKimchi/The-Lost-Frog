@@ -66,3 +66,15 @@ export function getRandomInt(max: number): number {
 
 export const gridWidth = 64
 export const gridHeight = 64
+
+export enum EnemyType {
+  Lizard,
+  Owl,
+  Fox
+}
+
+export type EnemySpawn = {
+  type: EnemyType
+  spawnX: number
+  spawnY: number
+}

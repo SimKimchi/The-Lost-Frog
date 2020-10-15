@@ -1,12 +1,36 @@
+/* eslint-disable indent */
 import { TheLostFrogGame } from '..'
 import Enemy from '../gameObjects/enemy'
-import { CharacterConfig } from '../util'
+import { CharacterConfig, EnemyType, getRandomInt } from '../util'
 import CharacterConfigProvider from '../providers/characterConfigProvider'
+import PlanetScene from '../scenes/planets/planetScene'
 
 export default abstract class EnemyFactory {
-  public static createLizard(
-    scene: Phaser.Scene,
-    planetGravity: number,
+  public static createEnemyByType(
+    type: EnemyType,
+    scene: PlanetScene,
+    spawnX: number,
+    spawnY: number
+  ): Enemy {
+    let enemy: Enemy
+    switch (type) {
+      case EnemyType.Lizard:
+        enemy = EnemyFactory.createLizard(scene, spawnX, spawnY)
+        break
+      case EnemyType.Owl:
+        // TODO: Implémenter la création du owl
+        enemy = EnemyFactory.createLizard(scene, spawnX, spawnY)
+        break
+      case EnemyType.Fox:
+        // TODO: Implémenter la création du fox
+        enemy = EnemyFactory.createLizard(scene, spawnX, spawnY)
+        break
+    }
+    return enemy
+  }
+
+  private static createLizard(
+    scene: PlanetScene,
     spawnX: number,
     spawnY: number
   ): Enemy {
@@ -17,17 +41,18 @@ export default abstract class EnemyFactory {
       spawnY
     )
 
-    return this.createEnemy(scene, planetGravity, lizard, config)
+    return this.createEnemy(scene, scene.velocityYModifier, lizard, config)
   }
 
   private static createEnemy(
-    scene: Phaser.Scene,
+    scene: PlanetScene,
     planetGravity: number,
     enemy: Enemy,
     config: CharacterConfig
   ): Enemy {
     enemy.init(scene, planetGravity, config)
 
+    this.initializeEnemyBehavior(enemy, scene)
     enemy.setDeathBehavior(this.getEnemyDeathBehavior(enemy, scene))
 
     return enemy
@@ -40,6 +65,20 @@ export default abstract class EnemyFactory {
     return () => {
       ;(scene.game as TheLostFrogGame).increaseScore(enemy.scoreWorth)
       enemy.getContainer().destroy()
+      scene.events.emit('enemyKilled')
     }
+  }
+
+  private static initializeEnemyBehavior(
+    enemy: Enemy,
+    scene: PlanetScene
+  ): void {
+    const direction = getRandomInt(2)
+    if (direction === 1) {
+      enemy.run(-scene.velocityXModifier)
+    } else {
+      enemy.run(scene.velocityXModifier)
+    }
+    enemy.updateAnimation()
   }
 }

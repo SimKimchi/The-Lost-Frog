@@ -1,70 +1,54 @@
 import 'phaser'
-import { getRandomInt } from '../../../util'
+import { EnemySpawn, EnemyType } from '../../../util'
 import PlanetScene from '../planetScene'
-import CharacterConfigProvider from '../../../providers/characterConfigProvider'
-import EnemyFactory from '../../../factories/enemyFactory'
 import PlatformGroupFactory from '../../../factories/platformGroupFactory'
 
 export default class IcePlanetScene extends PlanetScene {
+  // TODO: Tasser ça de d'là
+  protected enemyWaves: EnemySpawn[][] = [
+    [
+      { type: EnemyType.Lizard, spawnX: 100, spawnY: 100 },
+      { type: EnemyType.Lizard, spawnX: 300, spawnY: 200 },
+      { type: EnemyType.Lizard, spawnX: 500, spawnY: 300 },
+      { type: EnemyType.Lizard, spawnX: 900, spawnY: 400 },
+      { type: EnemyType.Lizard, spawnX: 1300, spawnY: 500 },
+      { type: EnemyType.Lizard, spawnX: 1600, spawnY: 600 },
+      { type: EnemyType.Lizard, spawnX: 1800, spawnY: 600 }
+    ],
+    [
+      { type: EnemyType.Lizard, spawnX: 100, spawnY: 100 },
+      { type: EnemyType.Lizard, spawnX: 300, spawnY: 200 },
+      { type: EnemyType.Lizard, spawnX: 500, spawnY: 300 },
+      { type: EnemyType.Lizard, spawnX: 900, spawnY: 400 },
+      { type: EnemyType.Lizard, spawnX: 1300, spawnY: 500 },
+      { type: EnemyType.Lizard, spawnX: 1600, spawnY: 600 },
+      { type: EnemyType.Lizard, spawnX: 1800, spawnY: 600 }
+    ],
+    [
+      { type: EnemyType.Lizard, spawnX: 100, spawnY: 100 },
+      { type: EnemyType.Lizard, spawnX: 300, spawnY: 200 },
+      { type: EnemyType.Lizard, spawnX: 500, spawnY: 300 },
+      { type: EnemyType.Lizard, spawnX: 900, spawnY: 400 },
+      { type: EnemyType.Lizard, spawnX: 1300, spawnY: 500 },
+      { type: EnemyType.Lizard, spawnX: 1600, spawnY: 600 },
+      { type: EnemyType.Lizard, spawnX: 1800, spawnY: 600 }
+    ]
+  ]
+
   constructor() {
     super('IcePlanetScene', 1, 1)
   }
 
   protected initializeBackground(): void {
-    this.add.image(0, 0, 'background_5').setOrigin(0).setScrollFactor(0)
-    this.add.image(0, 0, 'background_4').setOrigin(0).setScrollFactor(0.25)
-    this.add.image(0, 0, 'background_3').setOrigin(0).setScrollFactor(0.5)
-    this.add.image(0, 0, 'background_2').setOrigin(0).setScrollFactor(0.75)
-    this.add.image(0, 0, 'background_1').setOrigin(0).setScrollFactor(1)
+    this.add.image(0, 0, 'background_ice_5').setOrigin(0).setScrollFactor(0)
+    this.add.image(0, 0, 'background_ice_4').setOrigin(0).setScrollFactor(0.25)
+    this.add.image(0, 0, 'background_ice_3').setOrigin(0).setScrollFactor(0.5)
+    this.add.image(0, 0, 'background_ice_2').setOrigin(0).setScrollFactor(0.75)
+    this.add.image(0, 0, 'background_ice_1').setOrigin(0).setScrollFactor(1)
   }
 
   protected initializePlatforms(): void {
     this.platformGroup = PlatformGroupFactory.createIcePlatformGroup(this)
-  }
-
-  protected initializeCharacters(): void {
-    this.frog.init(
-      this,
-      this.velocityYModifier,
-      CharacterConfigProvider.getPlayerConfig()
-    )
-    this.spawnEnemies(5)
-  }
-
-  protected initializeEnemyBehavior(): void {
-    for (const enemy of this.enemies) {
-      const direction = getRandomInt(2)
-      if (direction === 1) {
-        enemy.run(-this.velocityXModifier)
-      } else {
-        enemy.run(this.velocityXModifier)
-      }
-      enemy.updateAnimation()
-    }
-  }
-
-  protected initializeCollisions(): void {
-    const enemyContainers = this.enemies.map((enemy) => {
-      return enemy.getContainer()
-    })
-    this.platformCollision(enemyContainers)
-    this.enemyCollision(enemyContainers)
-    this.frogAttackCollision()
-  }
-
-  protected spawnEnemies(numberOfEnemies: number): void {
-    for (let i = 0; i < numberOfEnemies; i++) {
-      const spawnX = getRandomInt(900)
-      const spawnY = getRandomInt(300)
-      this.enemies.push(
-        EnemyFactory.createLizard(this, this.velocityYModifier, spawnX, spawnY)
-      )
-    }
-  }
-
-  protected triggerKeyboardActions(): void {
-    this.handleMovement()
-    this.handleAttack()
   }
 
   protected initializeSounds(): void {
@@ -74,5 +58,10 @@ export default class IcePlanetScene extends PlanetScene {
     })
 
     this.music.play()
+  }
+
+  protected goToNextPlanet(): void {
+    this.sound.removeAll()
+    this.game.scene.switch('IcePlanetScene', 'VolcanoLoadingScene')
   }
 }
