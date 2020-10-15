@@ -89,6 +89,7 @@ export default class JungleLoadingScene extends LoadingScene {
   }
 
   public create(): void {
+    this.load.audio('iceTheme', iceAssets.sounds.ice_theme)
     this.load.audio('volcanoTheme', volcanoAssets.sounds.volcano_theme)
     this.load.image(
       'background_jungle_1',
