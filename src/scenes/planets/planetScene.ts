@@ -68,6 +68,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.initializeCamera()
     this.initializeSounds()
     this.initializeTexts()
+    this.setEnemyWorldCollisions()
     this.setDebug(false)
   }
   public update(): void {
@@ -193,23 +194,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     })
   }
 
-  protected setPlayerCollisionsWithEnemies(): void {
-    const enemyContainers = this.enemies.map((enemy) => {
-      return enemy.getContainer()
-    })
-
-    this.physics.add.overlap(
-      this.frog.getContainer(),
-      enemyContainers,
-      (frog, enemy) => {
-        const direction =
-          enemy.body.position.x >= frog.body.position.x
-            ? Direction.Left
-            : Direction.Right
-        this.frog.handleHit(this, direction, enemy.getData('damage'))
-      }
-    )
-
+  protected setEnemyWorldCollisions(): void {
     this.physics.world.on(
       'worldbounds',
       (
@@ -226,6 +211,24 @@ export default abstract class PlanetScene extends Phaser.Scene {
           touchingLeft,
           touchingRight
         )
+    )
+  }
+
+  protected setPlayerCollisionsWithEnemies(): void {
+    const enemyContainers = this.enemies.map((enemy) => {
+      return enemy.getContainer()
+    })
+
+    this.physics.add.overlap(
+      this.frog.getContainer(),
+      enemyContainers,
+      (frog, enemy) => {
+        const direction =
+          enemy.body.position.x >= frog.body.position.x
+            ? Direction.Left
+            : Direction.Right
+        this.frog.handleHit(this, direction, enemy.getData('damage'))
+      }
     )
   }
 
