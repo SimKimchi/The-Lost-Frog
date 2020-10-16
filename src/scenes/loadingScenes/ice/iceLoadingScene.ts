@@ -33,6 +33,13 @@ export default class IceLoadingScene extends LoadingScene {
       },
       this
     )
+    this.input.keyboard.on(
+      'keydown',
+      function (this: IceLoadingScene) {
+        this.goToScene()
+      },
+      this
+    )
   }
 
   public create(): void {
