@@ -2,6 +2,7 @@ import LoadingScene from '../loadingScene'
 import jungleAssets from '../../../assets/jungle'
 import iceAssets from '../../../assets/ice'
 import volcanoAssets from '../../../assets/volcano'
+import genericAssets from '../../../assets/generic'
 
 export default class JungleLoadingScene extends LoadingScene {
   constructor() {
@@ -91,6 +92,10 @@ export default class JungleLoadingScene extends LoadingScene {
   public create(): void {
     this.load.audio('iceTheme', iceAssets.sounds.ice_theme)
     this.load.audio('volcanoTheme', volcanoAssets.sounds.volcano_theme)
+    this.load.audio('hurt', genericAssets.sounds.hurt)
+    this.load.audio('hit', genericAssets.sounds.hit)
+    this.load.audio('jump', genericAssets.sounds.jump)
+    this.load.audio('double_jump', genericAssets.sounds.double_jump)
     this.load.image(
       'background_jungle_1',
       jungleAssets.images.background_jungle_1
@@ -170,6 +175,7 @@ export default class JungleLoadingScene extends LoadingScene {
         frameHeight: 256
       }
     )
+
     this.load.start()
   }
 

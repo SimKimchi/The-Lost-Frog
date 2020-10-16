@@ -148,7 +148,10 @@ export default abstract class PlanetScene extends Phaser.Scene {
       this.frog.run(0)
     }
     if (Phaser.Input.Keyboard.JustDown(this.hotKeys.SPACE)) {
-      this.frog.jump(-this.velocityYModifier)
+      const jumpSound = this.sound.get('jump')
+      const doubleJumpSound = this.sound.get('double_jump')
+
+      this.frog.jump(-this.velocityYModifier, jumpSound, doubleJumpSound)
     }
   }
 
@@ -198,15 +201,12 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.physics.add.overlap(
       this.frog.getContainer(),
       enemyContainers,
-      (_frog, enemy) => {
-        if (this.frog.isInvulnerable()) return
-        this.frog.makeInvulnerable(this)
+      (frog, enemy) => {
         const direction =
-          enemy.body.position.x >= this.frog.getContainer().body.position.x
+          enemy.body.position.x >= frog.body.position.x
             ? Direction.Left
             : Direction.Right
-        this.frog.triggerKnockback(this, direction)
-        this.frog.takeDamage(enemy.getData('damage'))
+        this.frog.handleHit(this, direction, enemy.getData('damage'))
       }
     )
 
@@ -236,19 +236,13 @@ export default abstract class PlanetScene extends Phaser.Scene {
         attackSprite,
         this.enemies[key].getContainer(),
         () => {
-          if (!attackSprite.visible || this.enemies[key].isInvulnerable()) {
-            return
-          }
-
+          if (!attackSprite.visible) return
           if (attackSprite.getData('direction') === Direction.Down) {
             this.frog.bounce(1.25)
           }
-          this.enemies[key].makeInvulnerable(this)
-          this.enemies[key].triggerKnockback(
+          this.enemies[key].handleHit(
             this,
-            attackSprite.getData('direction')
-          )
-          this.enemies[key].takeDamage(
+            attackSprite.getData('direction'),
             this.frog.getContainer().getData('damage')
           )
         }
@@ -360,7 +354,12 @@ export default abstract class PlanetScene extends Phaser.Scene {
 
   protected abstract initializePlatforms(): void
   protected abstract initializeBackground(): void
-  protected abstract initializeSounds(): void
+  protected initializeSounds(): void {
+    this.sound.add('hit', { volume: 0.3 })
+    this.sound.add('hurt', { volume: 0.3 })
+    this.sound.add('jump', { volume: 0.3 })
+    this.sound.add('double_jump', { volume: 0.3 })
+  }
 
   private setDebug(debug: boolean) {
     if (!debug) {

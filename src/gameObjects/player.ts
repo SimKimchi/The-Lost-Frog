@@ -51,7 +51,11 @@ export default class Player extends Character {
     return Player.instance
   }
 
-  public jump(multiplier: number): void {
+  public jump(
+    multiplier: number,
+    jumpSound: Phaser.Sound.BaseSound,
+    doubleJumpSound: Phaser.Sound.BaseSound
+  ): void {
     if (!this.container) return
 
     if (this.isGrounded()) {
@@ -59,11 +63,13 @@ export default class Player extends Character {
       ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(
         this.jumpStrength * multiplier
       )
+      jumpSound.play()
     } else if (this.canDoubleJump) {
       this.canDoubleJump = false
       ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(
         this.jumpStrength * multiplier
       )
+      doubleJumpSound.play()
     }
   }
 
@@ -108,7 +114,17 @@ export default class Player extends Character {
     this.setAttackCooldown(scene)
   }
 
-  public makeInvulnerable(scene: Phaser.Scene): void {
+  public handleHit(
+    scene: Phaser.Scene,
+    direction: Direction,
+    damage: number
+  ): void {
+    if (this.isInvulnerable()) return
+    super.handleHit(scene, direction, damage)
+    scene.sound.get('hurt').play()
+  }
+
+  protected makeInvulnerable(scene: Phaser.Scene): void {
     super.makeInvulnerable(scene)
     this.flickerSprite(scene)
   }

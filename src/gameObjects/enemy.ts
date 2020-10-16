@@ -55,7 +55,21 @@ export default class Enemy extends Character {
     this.updateAnimation()
   }
 
-  public makeInvulnerable(scene: Phaser.Scene): void {
+  public setDeathBehavior(deathBehavior: () => void): void {
+    this.die = deathBehavior
+  }
+
+  public handleHit(
+    scene: Phaser.Scene,
+    direction: Direction,
+    damage: number
+  ): void {
+    if (this.isInvulnerable()) return
+    super.handleHit(scene, direction, damage)
+    scene.sound.get('hit').play()
+  }
+
+  protected makeInvulnerable(scene: Phaser.Scene): void {
     super.makeInvulnerable(scene)
     if (!this.sprite) return
     this.sprite.setTint(0xff0000)
@@ -63,9 +77,5 @@ export default class Enemy extends Character {
       delay: this.invulnerableTime,
       callback: () => this.sprite?.clearTint()
     })
-  }
-
-  public setDeathBehavior(deathBehavior: () => void): void {
-    this.die = deathBehavior
   }
 }

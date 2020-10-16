@@ -2,6 +2,7 @@
 import 'phaser'
 import { CharacterConfig, Direction } from '../util'
 
+// TODO Ajouter scene comme champ privé
 export default abstract class Character {
   protected abstract moveSpeed: number
   protected abstract jumpStrength: number
@@ -27,6 +28,14 @@ export default abstract class Character {
     this.invulnerable = false
     this.assetPrefix = assetPrefix
   }
+
+  public abstract jump(
+    multiplier: number,
+    jumpSound: Phaser.Sound.BaseSound,
+    doubleJumpSound: Phaser.Sound.BaseSound
+  ): void
+
+  public abstract updateAnimation(): void
 
   public getSprite(): Phaser.Physics.Arcade.Sprite {
     return this.sprite as Phaser.Physics.Arcade.Sprite
@@ -99,11 +108,19 @@ export default abstract class Character {
     }
   }
 
-  public abstract jump(multiplier: number): void
+  public handleHit(
+    scene: Phaser.Scene,
+    direction: Direction,
+    damage: number
+  ): void {
+    if (this.isInvulnerable()) return
 
-  public abstract updateAnimation(): void
+    this.makeInvulnerable(scene)
+    this.triggerKnockback(scene, direction)
+    this.takeDamage(damage)
+  }
 
-  public takeDamage(damage: number): void {
+  protected takeDamage(damage: number): void {
     this.currentHp -= damage
 
     if (this.currentHp <= 0) {
@@ -115,7 +132,7 @@ export default abstract class Character {
     }
   }
 
-  public triggerKnockback(scene: Phaser.Scene, direction: Direction): void {
+  protected triggerKnockback(scene: Phaser.Scene, direction: Direction): void {
     if (!this.container) return
 
     let props = {}
@@ -147,7 +164,7 @@ export default abstract class Character {
     )
   }
 
-  public makeInvulnerable(scene: Phaser.Scene): void {
+  protected makeInvulnerable(scene: Phaser.Scene): void {
     this.invulnerable = true
     scene.time.addEvent({
       delay: this.invulnerableTime,

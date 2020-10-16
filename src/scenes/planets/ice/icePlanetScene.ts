@@ -52,7 +52,8 @@ export default class IcePlanetScene extends PlanetScene {
   }
 
   protected initializeSounds(): void {
-    this.music = this.game.sound.add('iceTheme', {
+    super.initializeSounds()
+    this.music = this.sound.add('iceTheme', {
       volume: 0.6,
       loop: true
     })

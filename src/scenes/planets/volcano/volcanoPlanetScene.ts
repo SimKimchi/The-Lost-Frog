@@ -61,7 +61,8 @@ export default class VolcanoPlanetScene extends PlanetScene {
   }
 
   protected initializeSounds(): void {
-    this.music = this.game.sound.add('volcanoTheme', {
+    super.initializeSounds()
+    this.music = this.sound.add('volcanoTheme', {
       volume: 0.6,
       loop: true
     })

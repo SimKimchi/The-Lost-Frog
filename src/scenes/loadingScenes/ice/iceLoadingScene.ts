@@ -1,4 +1,5 @@
 import LoadingScene from '../loadingScene'
+import genericAssets from '../../../assets/generic'
 
 export default class IceLoadingScene extends LoadingScene {
   constructor() {
