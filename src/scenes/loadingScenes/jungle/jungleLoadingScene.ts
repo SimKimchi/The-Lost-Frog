@@ -83,6 +83,13 @@ export default class JungleLoadingScene extends LoadingScene {
           },
           this
         )
+        this.input.keyboard.on(
+          'keydown',
+          function (this: JungleLoadingScene) {
+            this.goToScene()
+          },
+          this
+        )
       },
       this
     )

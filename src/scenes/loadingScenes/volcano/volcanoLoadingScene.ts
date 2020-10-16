@@ -32,6 +32,13 @@ export default class VolcanoLoadingScene extends LoadingScene {
       },
       this
     )
+    this.input.keyboard.on(
+      'keydown',
+      function (this: VolcanoLoadingScene) {
+        this.goToScene()
+      },
+      this
+    )
   }
 
   public create(): void {
