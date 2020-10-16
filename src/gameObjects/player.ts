@@ -120,8 +120,9 @@ export default class Player extends Character {
     damage: number
   ): void {
     if (this.isInvulnerable()) return
-    super.handleHit(scene, direction, damage)
+
     scene.sound.get('hurt').play()
+    super.handleHit(scene, direction, damage)
   }
 
   protected makeInvulnerable(scene: Phaser.Scene): void {

@@ -65,8 +65,8 @@ export default class Enemy extends Character {
     damage: number
   ): void {
     if (this.isInvulnerable()) return
-    super.handleHit(scene, direction, damage)
     scene.sound.get('hit').play()
+    super.handleHit(scene, direction, damage)
   }
 
   protected makeInvulnerable(scene: Phaser.Scene): void {

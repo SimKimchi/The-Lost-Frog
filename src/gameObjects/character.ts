@@ -113,8 +113,6 @@ export default abstract class Character {
     direction: Direction,
     damage: number
   ): void {
-    if (this.isInvulnerable()) return
-
     this.makeInvulnerable(scene)
     this.triggerKnockback(scene, direction)
     this.takeDamage(damage)
