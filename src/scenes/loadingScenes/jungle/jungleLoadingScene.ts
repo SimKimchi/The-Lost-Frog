@@ -1,8 +1,8 @@
 import LoadingScene from '../loadingScene'
+import genericAssets from '../../../assets/generic'
 import jungleAssets from '../../../assets/jungle'
 import iceAssets from '../../../assets/ice'
 import volcanoAssets from '../../../assets/volcano'
-import genericAssets from '../../../assets/generic'
 
 export default class JungleLoadingScene extends LoadingScene {
   constructor() {
@@ -103,6 +103,8 @@ export default class JungleLoadingScene extends LoadingScene {
     this.load.audio('hit', genericAssets.sounds.hit)
     this.load.audio('jump', genericAssets.sounds.jump)
     this.load.audio('double_jump', genericAssets.sounds.double_jump)
+    this.load.image('button_mute', genericAssets.images.button_mute)
+    this.load.image('button_sound', genericAssets.images.button_sound)
     this.load.image(
       'background_jungle_1',
       jungleAssets.images.background_jungle_1

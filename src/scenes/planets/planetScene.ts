@@ -355,10 +355,43 @@ export default abstract class PlanetScene extends Phaser.Scene {
   protected abstract initializePlatforms(): void
   protected abstract initializeBackground(): void
   protected initializeSounds(): void {
-    this.sound.add('hit', { volume: 0.3 })
-    this.sound.add('hurt', { volume: 0.3 })
-    this.sound.add('jump', { volume: 0.3 })
-    this.sound.add('double_jump', { volume: 0.3 })
+    this.sound.add('hit', { volume: 0.1 })
+    this.sound.add('hurt', { volume: 0.1 })
+    this.sound.add('jump', { volume: 0.1 })
+    this.sound.add('double_jump', { volume: 0.1 })
+
+    const soundButton = this.add
+      .sprite(790, 120, 'button_sound')
+      .setScrollFactor(0, 0)
+      .setInteractive()
+      .on(
+        'pointerdown',
+        () => {
+          this.sound.mute = true
+          soundButton.setVisible(false)
+          mutedButton.setVisible(true)
+        },
+        this
+      )
+      .setSize(32, 32)
+      .setDisplaySize(32, 32)
+
+    const mutedButton = this.add
+      .sprite(790, 120, 'button_mute')
+      .setScrollFactor(0, 0)
+      .setInteractive()
+      .on(
+        'pointerdown',
+        () => {
+          this.sound.mute = false
+          mutedButton.setVisible(false)
+          soundButton.setVisible(true)
+        },
+        this
+      )
+      .setSize(32, 32)
+      .setDisplaySize(32, 32)
+      .setVisible(false)
   }
 
   private setDebug(debug: boolean) {
