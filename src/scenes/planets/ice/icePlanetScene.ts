@@ -1,39 +1,11 @@
 import 'phaser'
-import { EnemySpawn, EnemyType } from '../../../util'
+import { EnemySpawn } from '../../../util'
 import PlanetScene from '../planetScene'
 import PlatformGroupFactory from '../../../factories/platformGroupFactory'
+import PlanetWaveConfigProvider from '../../../providers/planetWaveConfigProvider'
 
 export default class IcePlanetScene extends PlanetScene {
-  // TODO: Tasser ça de d'là
-  protected enemyWaves: EnemySpawn[][] = [
-    [
-      { type: EnemyType.Lizard, spawnX: 100, spawnY: 100 },
-      { type: EnemyType.Lizard, spawnX: 300, spawnY: 200 },
-      { type: EnemyType.Lizard, spawnX: 500, spawnY: 300 },
-      { type: EnemyType.Lizard, spawnX: 900, spawnY: 400 },
-      { type: EnemyType.Lizard, spawnX: 1300, spawnY: 500 },
-      { type: EnemyType.Lizard, spawnX: 1600, spawnY: 600 },
-      { type: EnemyType.Lizard, spawnX: 1800, spawnY: 600 }
-    ],
-    [
-      { type: EnemyType.Lizard, spawnX: 100, spawnY: 100 },
-      { type: EnemyType.Lizard, spawnX: 300, spawnY: 200 },
-      { type: EnemyType.Lizard, spawnX: 500, spawnY: 300 },
-      { type: EnemyType.Lizard, spawnX: 900, spawnY: 400 },
-      { type: EnemyType.Lizard, spawnX: 1300, spawnY: 500 },
-      { type: EnemyType.Lizard, spawnX: 1600, spawnY: 600 },
-      { type: EnemyType.Lizard, spawnX: 1800, spawnY: 600 }
-    ],
-    [
-      { type: EnemyType.Lizard, spawnX: 100, spawnY: 100 },
-      { type: EnemyType.Lizard, spawnX: 300, spawnY: 200 },
-      { type: EnemyType.Lizard, spawnX: 500, spawnY: 300 },
-      { type: EnemyType.Lizard, spawnX: 900, spawnY: 400 },
-      { type: EnemyType.Lizard, spawnX: 1300, spawnY: 500 },
-      { type: EnemyType.Lizard, spawnX: 1600, spawnY: 600 },
-      { type: EnemyType.Lizard, spawnX: 1800, spawnY: 600 }
-    ]
-  ]
+  protected enemyWaves: EnemySpawn[][] = PlanetWaveConfigProvider.getIceWaveConfig()
 
   constructor() {
     super('IcePlanetScene', 1, 1, 0.97)
