@@ -17,7 +17,6 @@ export default abstract class PlanetScene extends Phaser.Scene {
   protected platformGroup: Phaser.Physics.Arcade.StaticGroup | null
   protected displayScore: Phaser.GameObjects.Text | null
   protected displayHp: Phaser.GameObjects.Text | null
-  protected music: Phaser.Sound.BaseSound | null
   protected abstract enemyWaves: EnemySpawn[][]
   protected currentEnemyWave: number
   protected inputHelper: InputHelper | null
@@ -41,7 +40,6 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.displayScore = null
     this.displayHp = null
     this.enemies = []
-    this.music = null
     this.currentEnemyWave = 0
     this.inputHelper = null
     this.soundHelper = null
@@ -56,7 +54,6 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.displayScore = null
     this.displayHp = null
     this.enemies = []
-    this.music = null
     this.currentEnemyWave = 0
     this.inputHelper = new InputHelper(this.input.keyboard)
     this.soundHelper = new SoundHelper(this.sound)
@@ -177,7 +174,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
 
   private playerDeath(): void {
     this.physics.pause()
-    this.music?.pause()
+    this.soundHelper?.pauseMusic()
 
     this.displayGameOver()
     this.allowRetry()
