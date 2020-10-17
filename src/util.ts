@@ -2,8 +2,7 @@ export enum Direction {
   Up,
   Down,
   Left,
-  Right,
-  Neutral
+  Right
 }
 
 export type CharacterConfig = {

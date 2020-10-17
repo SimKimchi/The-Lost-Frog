@@ -1,6 +1,7 @@
 import 'phaser'
 import Character from './character'
 import { CharacterConfig, Direction } from '../util'
+import PlanetScene from '../scenes/planets/planetScene'
 
 export default class Player extends Character {
   private static readonly ATTACK_RANGE = 50
@@ -26,7 +27,7 @@ export default class Player extends Character {
   }
 
   public init(
-    scene: Phaser.Scene,
+    scene: PlanetScene,
     planetGravity: number,
     config: CharacterConfig
   ): void {
@@ -86,19 +87,21 @@ export default class Player extends Character {
     if (!this.container || !this.sprite) return
 
     // TODO: Implement 'jump' and 'fall' animations when we'll have them
-    if ((<Phaser.Physics.Arcade.Body>this.container.body).velocity.x < 0) {
-      this.sprite.anims.play(`${this.assetPrefix}_left`, true)
-    } else if (
-      (<Phaser.Physics.Arcade.Body>this.container.body).velocity.x > 0
-    ) {
-      this.sprite.anims.play(`${this.assetPrefix}_right`, true)
-    } else {
+    if (this.idle) {
       if (this.direction === Direction.Left) {
         this.sprite.anims.play(`${this.assetPrefix}_idle_left`, true)
       } else {
         this.sprite.anims.play(`${this.assetPrefix}_idle_right`, true)
       }
+    } else {
+      if (this.direction === Direction.Left) {
+        this.sprite.anims.play(`${this.assetPrefix}_run_left`, true)
+      } else {
+        this.sprite.anims.play(`${this.assetPrefix}_run_right`, true)
+      }
     }
+
+    this.sprite.setDisplaySize(64, 64)
   }
 
   public displayHp(): string {

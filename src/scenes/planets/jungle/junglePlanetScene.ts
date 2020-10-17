@@ -36,7 +36,7 @@ export default class JunglePlanetScene extends PlanetScene {
   ]
 
   constructor() {
-    super('JunglePlanetScene', 1, 1)
+    super('JunglePlanetScene', 1, 1, 0.6)
   }
 
   protected initializeBackground(): void {

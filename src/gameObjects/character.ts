@@ -1,5 +1,6 @@
 /* eslint-disable indent */
 import 'phaser'
+import PlanetScene from '../scenes/planets/planetScene'
 import { CharacterConfig, Direction } from '../util'
 
 // TODO Ajouter scene comme champ privé
@@ -10,10 +11,11 @@ export default abstract class Character {
   protected abstract invulnerableTime: number
   protected abstract die: (() => void) | null
   protected abstract knockback: number
-  protected direction: Direction
   protected currentHp: number
   protected maxHp: number
   protected damage: number
+  protected direction: Direction
+  protected idle: boolean
   protected sprite: Phaser.GameObjects.Sprite | null
   protected container: Phaser.GameObjects.Container | null
   protected invulnerable: boolean
@@ -24,9 +26,10 @@ export default abstract class Character {
     this.container = null
     this.currentHp = this.maxHp = maxHp
     this.damage = damage
-    this.direction = Direction.Neutral
+    this.direction = Direction.Right
     this.invulnerable = false
     this.assetPrefix = assetPrefix
+    this.idle = true
   }
 
   public abstract jump(
@@ -50,7 +53,7 @@ export default abstract class Character {
   }
 
   public init(
-    scene: Phaser.Scene,
+    scene: PlanetScene,
     planetGravity: number,
     config: CharacterConfig
   ): void {
@@ -91,21 +94,38 @@ export default abstract class Character {
       this.moveSpeed,
       this.jumpStrength
     )
+    ;(<Phaser.Physics.Arcade.Body>this.container.body).useDamping = true
   }
 
   public run(multiplier: number): void {
     if (!this.container) return
+    if (multiplier === 0) throw new Error('Call stop() instead.')
 
     const velocityX = this.moveSpeed * multiplier
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityX(velocityX)
+    ;(<Phaser.Physics.Arcade.Body>this.container.body).setDragX(0)
 
     if (velocityX > 0) {
       this.direction = Direction.Right
     } else if (velocityX < 0) {
       this.direction = Direction.Left
-    } else {
-      this.direction = Direction.Neutral
     }
+
+    this.idle = false
+  }
+
+  public stop(planetFrictionModifier: number): void {
+    if (!this.container) return
+
+    if (!this.isGrounded()) {
+      ;(<Phaser.Physics.Arcade.Body>this.container.body).setDragX(0.8)
+    } else {
+      ;(<Phaser.Physics.Arcade.Body>this.container.body).setDragX(
+        planetFrictionModifier
+      )
+    }
+
+    this.idle = true
   }
 
   public handleHit(

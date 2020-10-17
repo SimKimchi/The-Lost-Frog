@@ -36,7 +36,7 @@ export default class IcePlanetScene extends PlanetScene {
   ]
 
   constructor() {
-    super('IcePlanetScene', 1, 1)
+    super('IcePlanetScene', 1, 1, 0.97)
   }
 
   protected initializeBackground(): void {

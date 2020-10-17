@@ -9,7 +9,21 @@ export default abstract class CharacterConfigProvider {
       collideWorldBounds: true,
       animations: [
         {
-          key: 'frog_left',
+          key: 'frog_idle_left',
+          assetKey: 'frog_idle_anim',
+          frameStart: 6,
+          frameEnd: 11,
+          frameRate: 8
+        },
+        {
+          key: 'frog_idle_right',
+          assetKey: 'frog_idle_anim',
+          frameStart: 0,
+          frameEnd: 5,
+          frameRate: 8
+        },
+        {
+          key: 'frog_run_left',
           assetKey: 'dude',
           frameStart: 0,
           frameEnd: 3,
@@ -17,13 +31,7 @@ export default abstract class CharacterConfigProvider {
           repeat: -1
         },
         {
-          key: 'frog_idle_right',
-          assetKey: 'dude',
-          frame: 4,
-          frameRate: 20
-        },
-        {
-          key: 'frog_right',
+          key: 'frog_run_right',
           assetKey: 'dude',
           frameStart: 5,
           frameEnd: 8,

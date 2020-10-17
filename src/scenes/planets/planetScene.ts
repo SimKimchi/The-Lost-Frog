@@ -9,6 +9,7 @@ import { Direction, EnemySpawn, HotKeys } from '../../util'
 export default abstract class PlanetScene extends Phaser.Scene {
   public velocityXModifier: number
   public velocityYModifier: number
+  public planetFrictionModifier: number
   protected frog: Player
   protected enemies: Enemy[]
   protected platformGroup: Phaser.Physics.Arcade.StaticGroup | null
@@ -21,12 +22,14 @@ export default abstract class PlanetScene extends Phaser.Scene {
 
   constructor(
     planetSceneName: string,
-    gravityXModifier: number,
-    gravityYModifier: number
+    velocityXModifier: number,
+    velocityYModifier: number,
+    planetFriction: number
   ) {
     super(planetSceneName)
-    this.velocityXModifier = gravityXModifier
-    this.velocityYModifier = gravityYModifier
+    this.velocityXModifier = velocityXModifier
+    this.velocityYModifier = velocityYModifier
+    this.planetFrictionModifier = planetFriction
     this.frog = Player.getPlayer(() => {
       this.playerDeath()
     })
@@ -146,7 +149,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     } else if (this.hotKeys.D.isDown) {
       this.frog.run(this.velocityXModifier)
     } else {
-      this.frog.run(0)
+      this.frog.stop(this.planetFrictionModifier)
     }
     if (Phaser.Input.Keyboard.JustDown(this.hotKeys.SPACE)) {
       const jumpSound = this.sound.get('jump')
@@ -159,7 +162,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
   protected handleAttack(): void {
     if (!this.hotKeys) return
 
-    let direction = Direction.Neutral
+    let direction
     if (Phaser.Input.Keyboard.JustDown(this.hotKeys.UP)) {
       direction = Direction.Up
     } else if (Phaser.Input.Keyboard.JustDown(this.hotKeys.DOWN)) {
@@ -169,7 +172,8 @@ export default abstract class PlanetScene extends Phaser.Scene {
     } else if (Phaser.Input.Keyboard.JustDown(this.hotKeys.RIGHT)) {
       direction = Direction.Right
     }
-    if (direction !== Direction.Neutral) {
+
+    if (direction !== undefined) {
       this.frog.attack(this, direction)
     }
   }

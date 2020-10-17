@@ -36,7 +36,7 @@ export default class VolcanoPlanetScene extends PlanetScene {
   ]
 
   constructor() {
-    super('VolcanoPlanetScene', 1, 1)
+    super('VolcanoPlanetScene', 1, 1, 0.3)
   }
 
   protected initializeBackground(): void {
