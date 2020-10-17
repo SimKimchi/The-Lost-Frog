@@ -54,7 +54,7 @@ export default class JungleLoadingScene extends LoadingScene {
     assetText.setOrigin(0.5, 0.5)
 
     this.load.on('progress', function (value: number) {
-      percentText.setText(`${value * 100}%`)
+      percentText.setText(`${Math.round(value * 100)}%`)
       progressBar
         .clear()
         .fillStyle(0xffffff, 1)

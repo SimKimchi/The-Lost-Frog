@@ -63,13 +63,16 @@ export default class Enemy extends Character {
 
   public handleHit(direction: Direction, damage: number): void {
     if (this.isInvulnerable()) return
-    this.scene.sound.get('hit').play()
+
+    this.scene.soundHelper?.playEnemyHitSound()
     super.handleHit(direction, damage)
   }
 
   protected makeInvulnerable(): void {
     super.makeInvulnerable()
+
     if (!this.sprite) return
+
     this.sprite.setTint(0xff0000)
     this.scene.time.addEvent({
       delay: this.invulnerableTime,

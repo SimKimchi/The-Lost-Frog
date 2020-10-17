@@ -34,12 +34,10 @@ export default class VolcanoPlanetScene extends PlanetScene {
 
   protected initializeSounds(): void {
     super.initializeSounds()
-    this.music = this.sound.add('volcanoTheme', {
-      volume: 0.6,
-      loop: true
-    })
 
-    this.music.play()
+    if (!this.soundHelper) return
+
+    this.soundHelper.setPlanetTheme('volcanoTheme')
   }
 
   protected goToNextPlanet(): void {

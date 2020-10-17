@@ -48,11 +48,7 @@ export default class Player extends Character {
     return this.tongueSprite as Phaser.Physics.Arcade.Sprite
   }
 
-  public jump(
-    multiplier: number,
-    jumpSound: Phaser.Sound.BaseSound,
-    doubleJumpSound: Phaser.Sound.BaseSound
-  ): void {
+  public jump(multiplier: number): void {
     if (!this.container) return
 
     if (this.isGrounded()) {
@@ -60,13 +56,13 @@ export default class Player extends Character {
       ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(
         this.jumpStrength * multiplier
       )
-      jumpSound.play()
+      this.scene.soundHelper?.playPlayerJumpSound()
     } else if (this.canDoubleJump) {
       this.canDoubleJump = false
       ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(
         this.jumpStrength * multiplier
       )
-      doubleJumpSound.play()
+      this.scene.soundHelper?.playPlayerDoubleJumpSound()
     }
   }
 

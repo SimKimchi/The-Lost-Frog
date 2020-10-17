@@ -25,12 +25,10 @@ export default class IcePlanetScene extends PlanetScene {
 
   protected initializeSounds(): void {
     super.initializeSounds()
-    this.music = this.sound.add('iceTheme', {
-      volume: 0.6,
-      loop: true
-    })
 
-    this.music.play()
+    if (!this.soundHelper) return
+
+    this.soundHelper.setPlanetTheme('iceTheme')
   }
 
   protected goToNextPlanet(): void {

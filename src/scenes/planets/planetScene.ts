@@ -1,11 +1,12 @@
 import { TheLostFrogGame } from '../..'
 import EnemyFactory from '../../factories/enemyFactory'
-import Character from '../../gameObjects/character'
 import Enemy from '../../gameObjects/enemy'
 import Player from '../../gameObjects/player'
+import CollisionHelper from '../../helpers/collisionHelper'
 import InputHelper from '../../helpers/inputHelper'
+import SoundHelper from '../../helpers/soundHelper'
 import CharacterConfigProvider from '../../providers/characterConfigProvider'
-import { Direction, EnemySpawn } from '../../util'
+import { EnemySpawn } from '../../util'
 
 export default abstract class PlanetScene extends Phaser.Scene {
   public velocityXModifier: number
@@ -20,6 +21,8 @@ export default abstract class PlanetScene extends Phaser.Scene {
   protected abstract enemyWaves: EnemySpawn[][]
   protected currentEnemyWave: number
   protected inputHelper: InputHelper | null
+  public soundHelper: SoundHelper | null
+  protected collisionHelper: CollisionHelper | null
 
   constructor(
     planetSceneName: string,
@@ -41,6 +44,8 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.music = null
     this.currentEnemyWave = 0
     this.inputHelper = null
+    this.soundHelper = null
+    this.collisionHelper = null
   }
 
   public init(): void {
@@ -54,21 +59,22 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.music = null
     this.currentEnemyWave = 0
     this.inputHelper = new InputHelper(this.input.keyboard)
+    this.soundHelper = new SoundHelper(this.sound)
+    this.collisionHelper = new CollisionHelper(this.physics, this.player)
 
-    this.events.on('enemyKilled', () => {
-      this.onEnemyDeath()
-    })
+    this.events.on('enemyKilled', this.onEnemyDeath, this)
   }
 
   public create(): void {
-    this.initializeWorld()
-    this.initializeStaticAssets()
-    this.initializeCharacters()
-    this.setPlayerPlatformCollisions()
-    this.initializeCamera()
-    this.initializeSounds()
-    this.initializeTexts()
-    this.setEnemyWorldCollisions()
+    this.initializeWorld() // No helper - too short
+    this.initializeBackground() // No helper - abstract
+    this.initializePlatforms() // No helper - abstract
+    this.initializeCharacters() // Has helper for collisions
+    this.initializeCollisions() // Has helper
+    this.initializeCamera() // No helper - too short
+    this.initializeSounds() // Has helper
+    this.initializeTexts() // No helper - too short
+    this.addMuteButtons()
     this.setDebug(false)
   }
   public update(): void {
@@ -78,15 +84,41 @@ export default abstract class PlanetScene extends Phaser.Scene {
       this.player,
       this.velocityXModifier,
       this.velocityYModifier,
-      this.planetFrictionModifier,
-      this.sound
+      this.planetFrictionModifier
     )
     this.player.updateAnimation()
   }
 
+  protected abstract initializeBackground(): void
+  protected abstract initializePlatforms(): void
+  protected abstract goToNextPlanet(): void
+
   protected initializeWorld(): void {
     this.physics.world.setBounds(0, 0, 1920, 640)
     this.physics.world.setBoundsCollision(true, true, false, true)
+  }
+
+  protected initializeCharacters(): void {
+    this.player.init(
+      this.velocityYModifier,
+      CharacterConfigProvider.getPlayerConfig()
+    )
+    this.spawnEnemies(this.enemyWaves[this.currentEnemyWave])
+  }
+
+  protected initializeCollisions(): void {
+    this.collisionHelper?.initializeCollisions(this.platformGroup)
+  }
+
+  protected initializeCamera(): void {
+    this.cameras.main
+      .startFollow(this.player.getContainer(), false, 0.1, 0.05, 0, 70)
+      .setBounds(0, 0, 1920, 640)
+      .setZoom(1.4)
+  }
+
+  protected initializeSounds(): void {
+    this.soundHelper?.addGenericSounds()
   }
 
   protected initializeTexts(): void {
@@ -104,125 +136,12 @@ export default abstract class PlanetScene extends Phaser.Scene {
       .setScrollFactor(0, 0)
   }
 
-  protected initializeCamera(): void {
-    this.cameras.main
-      .startFollow(this.player.getContainer(), false, 0.1, 0.05, 0, 70)
-      .setBounds(0, 0, 1920, 640)
-      .setZoom(1.4)
-  }
-
-  protected updateTexts(): void {
+  private updateTexts(): void {
     this.displayHp?.setText(this.player.displayHp())
     this.displayScore?.setText((this.game as TheLostFrogGame).displayScore())
   }
 
-  protected onBodyTouchesWorldBound(
-    body: Phaser.Physics.Arcade.Body,
-    _touchingUp: boolean,
-    _touchingDown: boolean,
-    touchingLeft: boolean,
-    touchingRight: boolean
-  ): void {
-    if (!touchingLeft && !touchingRight) {
-      return
-    }
-
-    const character = this.findCharacterByContainer(
-      [this.player, ...this.enemies],
-      body.gameObject as Phaser.GameObjects.Container
-    )
-
-    if (character && character instanceof Enemy) {
-      ;(character as Enemy).turnAround()
-    }
-  }
-
-  protected findCharacterByContainer(
-    characters: Character[],
-    container: Phaser.GameObjects.Container
-  ): Character | undefined {
-    return characters.find((x) => x.getContainer() === container)
-  }
-
-  protected setEnemyPlatformCollisions(): void {
-    if (!this.platformGroup) return
-
-    const enemyContainers = this.enemies.map((enemy) => {
-      return enemy.getContainer()
-    })
-
-    this.physics.add.collider(enemyContainers, this.platformGroup, (enemy) => {
-      if (
-        (enemy.body as Phaser.Physics.Arcade.Body).touching.left ||
-        (enemy.body as Phaser.Physics.Arcade.Body).touching.right
-      ) {
-        ;(this.findCharacterByContainer(
-          this.enemies,
-          enemy as Phaser.GameObjects.Container
-        ) as Enemy).turnAround()
-      }
-    })
-  }
-
-  protected setEnemyWorldCollisions(): void {
-    this.physics.world.on(
-      'worldbounds',
-      (
-        body: Phaser.Physics.Arcade.Body,
-        touchingUp: boolean,
-        touchingDown: boolean,
-        touchingLeft: boolean,
-        touchingRight: boolean
-      ) =>
-        this.onBodyTouchesWorldBound(
-          body,
-          touchingUp,
-          touchingDown,
-          touchingLeft,
-          touchingRight
-        )
-    )
-  }
-
-  protected setPlayerCollisionsWithEnemies(): void {
-    const enemyContainers = this.enemies.map((enemy) => {
-      return enemy.getContainer()
-    })
-
-    this.physics.add.overlap(
-      this.player.getContainer(),
-      enemyContainers,
-      (frog, enemy) => {
-        const direction =
-          enemy.body.position.x >= frog.body.position.x
-            ? Direction.Left
-            : Direction.Right
-        this.player.handleHit(direction, enemy.getData('damage'))
-      }
-    )
-  }
-
-  protected setPlayerAttackCollisions(): void {
-    const attackSprite = this.player.getAttackSprite()
-    for (const key in this.enemies) {
-      this.physics.add.overlap(
-        attackSprite,
-        this.enemies[key].getContainer(),
-        () => {
-          if (!attackSprite.visible) return
-          if (attackSprite.getData('direction') === Direction.Down) {
-            this.player.bounce(1.25)
-          }
-          this.enemies[key].handleHit(
-            attackSprite.getData('direction'),
-            this.player.getContainer().getData('damage')
-          )
-        }
-      )
-    }
-  }
-
-  protected onEnemyDeath(): void {
+  private onEnemyDeath(): void {
     if (!this.enemies.every((x) => x.getContainer().body === undefined)) return
 
     if (this.currentEnemyWave === this.enemyWaves.length - 1) {
@@ -232,19 +151,11 @@ export default abstract class PlanetScene extends Phaser.Scene {
     }
   }
 
-  protected abstract goToNextPlanet(): void
-
-  private setPlayerPlatformCollisions(): void {
-    if (!this.platformGroup) return
-
-    this.physics.add.collider([this.player.getContainer()], this.platformGroup)
-  }
-
   private startNextWave(): void {
     this.spawnEnemies(this.enemyWaves[++this.currentEnemyWave])
   }
 
-  protected spawnEnemies(enemySpawns: EnemySpawn[]): void {
+  private spawnEnemies(enemySpawns: EnemySpawn[]): void {
     this.enemies = []
 
     for (const enemySpawn of enemySpawns) {
@@ -258,14 +169,10 @@ export default abstract class PlanetScene extends Phaser.Scene {
       )
     }
 
-    this.setEnemyPlatformCollisions()
-    this.setPlayerCollisionsWithEnemies()
-    this.setPlayerAttackCollisions()
-  }
-
-  private initializeStaticAssets(): void {
-    this.initializeBackground()
-    this.initializePlatforms()
+    this.collisionHelper?.setCollisionsAfterEnemySpawn(
+      this.platformGroup,
+      this.enemies
+    )
   }
 
   private playerDeath(): void {
@@ -303,29 +210,22 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.input.on(
       'pointerdown',
       function (this: PlanetScene) {
-        this.scene.restart()
+        this.scene.restart() // TODO tester this.restart
+        ;(this.game as TheLostFrogGame).resetScore()
+      },
+      this
+    )
+    this.input.keyboard.on(
+      'keydown',
+      function (this: PlanetScene) {
+        this.scene.restart() // TODO tester this.restart
         ;(this.game as TheLostFrogGame).resetScore()
       },
       this
     )
   }
 
-  private initializeCharacters(): void {
-    this.player.init(
-      this.velocityYModifier,
-      CharacterConfigProvider.getPlayerConfig()
-    )
-    this.spawnEnemies(this.enemyWaves[this.currentEnemyWave])
-  }
-
-  protected abstract initializePlatforms(): void
-  protected abstract initializeBackground(): void
-  protected initializeSounds(): void {
-    this.sound.add('hit', { volume: 0.1 })
-    this.sound.add('hurt', { volume: 0.1 })
-    this.sound.add('jump', { volume: 0.1 })
-    this.sound.add('double_jump', { volume: 0.1 })
-
+  private addMuteButtons(): void {
     const soundButton = this.add
       .sprite(790, 120, 'button_sound')
       .setScrollFactor(0, 0)
@@ -333,7 +233,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
       .on(
         'pointerdown',
         () => {
-          this.sound.mute = true
+          this.soundHelper?.mute()
           soundButton.setVisible(false)
           mutedButton.setVisible(true)
         },
@@ -349,7 +249,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
       .on(
         'pointerdown',
         () => {
-          this.sound.mute = false
+          this.soundHelper?.unmute()
           mutedButton.setVisible(false)
           soundButton.setVisible(true)
         },

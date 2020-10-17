@@ -14,15 +14,13 @@ export default class InputHelper {
     player: Player,
     velocityXModifier: number,
     velocityYModifier: number,
-    planetFrictionModifier: number,
-    sound: Phaser.Sound.BaseSoundManager
+    planetFrictionModifier: number
   ): void {
     this.handleMovement(
       player,
       velocityXModifier,
       velocityYModifier,
-      planetFrictionModifier,
-      sound
+      planetFrictionModifier
     )
     this.handleAttack(player)
   }
@@ -31,8 +29,7 @@ export default class InputHelper {
     player: Player,
     velocityXModifier: number,
     velocityYModifier: number,
-    planetFrictionModifier: number,
-    sound: Phaser.Sound.BaseSoundManager
+    planetFrictionModifier: number
   ): void {
     if (!this.hotKeys) return
 
@@ -44,10 +41,7 @@ export default class InputHelper {
       player.stop(planetFrictionModifier)
     }
     if (Phaser.Input.Keyboard.JustDown(this.hotKeys.SPACE)) {
-      const jumpSound = sound.get('jump')
-      const doubleJumpSound = sound.get('double_jump')
-
-      player.jump(-velocityYModifier, jumpSound, doubleJumpSound)
+      player.jump(-velocityYModifier)
     }
   }
 
