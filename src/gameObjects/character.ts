@@ -21,10 +21,14 @@ export default abstract class Character {
   protected invulnerable: boolean
   protected assetPrefix: string
   protected scene: PlanetScene
+  protected spriteWidth: number
+  protected spriteHeight: number
 
   constructor(
     maxHp: number,
     damage: number,
+    bodyWidth: number,
+    bodyHeight: number,
     assetPrefix: string,
     scene: PlanetScene
   ) {
@@ -32,6 +36,8 @@ export default abstract class Character {
     this.container = null
     this.currentHp = this.maxHp = maxHp
     this.damage = damage
+    this.spriteWidth = bodyWidth
+    this.spriteHeight = bodyHeight
     this.direction = Direction.Right
     this.invulnerable = false
     this.assetPrefix = assetPrefix
@@ -68,7 +74,7 @@ export default abstract class Character {
     this.container = this.scene.add.container(config.spawnX, config.spawnY, [
       this.sprite
     ])
-    this.container.setSize(config.containerSizeX, config.containerSizeY)
+    this.container.setSize(config.hitAreaWidth, config.hitAreaHeight)
     this.scene.physics.world.enable(this.container)
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setCollideWorldBounds(
       config.collideWorldBounds

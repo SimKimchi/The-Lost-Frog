@@ -39,8 +39,8 @@ export default abstract class CharacterConfigProvider {
           repeat: -1
         }
       ],
-      containerSizeX: 32,
-      containerSizeY: 48,
+      hitAreaWidth: 28,
+      hitAreaHeight: 45,
       spriteOffsetX: 0,
       spriteOffsetY: 0
     }
@@ -79,8 +79,8 @@ export default abstract class CharacterConfigProvider {
           repeat: -1
         }
       ],
-      containerSizeX: 32,
-      containerSizeY: 16,
+      hitAreaWidth: 48,
+      hitAreaHeight: 24,
       spriteOffsetX: 0,
       spriteOffsetY: 0
     }
