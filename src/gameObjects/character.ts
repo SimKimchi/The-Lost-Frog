@@ -20,8 +20,14 @@ export default abstract class Character {
   protected container: Phaser.GameObjects.Container | null
   protected invulnerable: boolean
   protected assetPrefix: string
+  protected scene: PlanetScene
 
-  constructor(maxHp: number, damage: number, assetPrefix: string) {
+  constructor(
+    maxHp: number,
+    damage: number,
+    assetPrefix: string,
+    scene: PlanetScene
+  ) {
     this.sprite = null
     this.container = null
     this.currentHp = this.maxHp = maxHp
@@ -30,6 +36,7 @@ export default abstract class Character {
     this.invulnerable = false
     this.assetPrefix = assetPrefix
     this.idle = true
+    this.scene = scene
   }
 
   public abstract jump(
@@ -52,32 +59,28 @@ export default abstract class Character {
     return this.invulnerable
   }
 
-  public init(
-    scene: PlanetScene,
-    planetGravity: number,
-    config: CharacterConfig
-  ): void {
-    this.sprite = scene.add.sprite(
+  public init(planetGravity: number, config: CharacterConfig): void {
+    this.sprite = this.scene.add.sprite(
       config.spriteOffsetX,
       config.spriteOffsetY,
       config.spriteKey
     )
-    this.container = scene.add.container(config.spawnX, config.spawnY, [
+    this.container = this.scene.add.container(config.spawnX, config.spawnY, [
       this.sprite
     ])
     this.container.setSize(config.containerSizeX, config.containerSizeY)
-    scene.physics.world.enable(this.container)
+    this.scene.physics.world.enable(this.container)
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setCollideWorldBounds(
       config.collideWorldBounds
     )
 
     for (const animation of config.animations) {
-      scene.anims.create({
+      this.scene.anims.create({
         key: animation.key,
         frames:
           animation.frame !== undefined
             ? [{ key: animation.assetKey, frame: animation.frame }]
-            : scene.anims.generateFrameNumbers(animation.assetKey, {
+            : this.scene.anims.generateFrameNumbers(animation.assetKey, {
                 start: animation.frameStart,
                 end: animation.frameEnd
               }),
@@ -128,13 +131,9 @@ export default abstract class Character {
     this.idle = true
   }
 
-  public handleHit(
-    scene: Phaser.Scene,
-    direction: Direction,
-    damage: number
-  ): void {
-    this.makeInvulnerable(scene)
-    this.triggerKnockback(scene, direction)
+  public handleHit(direction: Direction, damage: number): void {
+    this.makeInvulnerable()
+    this.triggerKnockback(direction)
     this.takeDamage(damage)
   }
 
@@ -150,7 +149,7 @@ export default abstract class Character {
     }
   }
 
-  protected triggerKnockback(scene: Phaser.Scene, direction: Direction): void {
+  protected triggerKnockback(direction: Direction): void {
     if (!this.container) return
 
     let props = {}
@@ -168,7 +167,7 @@ export default abstract class Character {
         y: currentY - this.knockback / 2
       }
     }
-    scene.tweens.add({
+    this.scene.tweens.add({
       targets: this.container,
       duration: 100,
       props
@@ -182,15 +181,15 @@ export default abstract class Character {
     )
   }
 
-  protected makeInvulnerable(scene: Phaser.Scene): void {
+  protected makeInvulnerable(): void {
     this.invulnerable = true
-    scene.time.addEvent({
+    this.scene.time.addEvent({
       delay: this.invulnerableTime,
       args: [this],
       callback: (character: Character) => {
         character.invulnerable = false
       },
-      callbackScope: scene
+      callbackScope: this.scene
     })
   }
 

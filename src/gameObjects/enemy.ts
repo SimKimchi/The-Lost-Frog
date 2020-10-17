@@ -1,4 +1,5 @@
 import 'phaser'
+import PlanetScene from '../scenes/planets/planetScene'
 import { Direction } from '../util'
 import Character from './character'
 
@@ -15,9 +16,10 @@ export default class Enemy extends Character {
     maxHp: number,
     damage: number,
     scoreWorth: number,
-    assetPrefix: string
+    assetPrefix: string,
+    scene: PlanetScene
   ) {
-    super(maxHp, damage, assetPrefix)
+    super(maxHp, damage, assetPrefix, scene)
     this.scoreWorth = scoreWorth
     this.die = null
   }
@@ -59,21 +61,17 @@ export default class Enemy extends Character {
     this.die = deathBehavior
   }
 
-  public handleHit(
-    scene: Phaser.Scene,
-    direction: Direction,
-    damage: number
-  ): void {
+  public handleHit(direction: Direction, damage: number): void {
     if (this.isInvulnerable()) return
-    scene.sound.get('hit').play()
-    super.handleHit(scene, direction, damage)
+    this.scene.sound.get('hit').play()
+    super.handleHit(direction, damage)
   }
 
-  protected makeInvulnerable(scene: Phaser.Scene): void {
-    super.makeInvulnerable(scene)
+  protected makeInvulnerable(): void {
+    super.makeInvulnerable()
     if (!this.sprite) return
     this.sprite.setTint(0xff0000)
-    scene.time.addEvent({
+    this.scene.time.addEvent({
       delay: this.invulnerableTime,
       callback: () => this.sprite?.clearTint()
     })

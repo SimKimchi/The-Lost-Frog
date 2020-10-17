@@ -30,7 +30,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.velocityXModifier = velocityXModifier
     this.velocityYModifier = velocityYModifier
     this.planetFrictionModifier = planetFriction
-    this.frog = Player.getPlayer(() => {
+    this.frog = Player.getPlayer(this, () => {
       this.playerDeath()
     })
     this.platformGroup = null
@@ -43,7 +43,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   public init(): void {
-    this.frog = Player.getPlayer(() => {
+    this.frog = Player.getPlayer(this, () => {
       this.playerDeath()
     })
     this.platformGroup = null
@@ -174,7 +174,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     }
 
     if (direction !== undefined) {
-      this.frog.attack(this, direction)
+      this.frog.attack(direction)
     }
   }
 
@@ -231,7 +231,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
           enemy.body.position.x >= frog.body.position.x
             ? Direction.Left
             : Direction.Right
-        this.frog.handleHit(this, direction, enemy.getData('damage'))
+        this.frog.handleHit(direction, enemy.getData('damage'))
       }
     )
   }
@@ -248,7 +248,6 @@ export default abstract class PlanetScene extends Phaser.Scene {
             this.frog.bounce(1.25)
           }
           this.enemies[key].handleHit(
-            this,
             attackSprite.getData('direction'),
             this.frog.getContainer().getData('damage')
           )
@@ -352,7 +351,6 @@ export default abstract class PlanetScene extends Phaser.Scene {
 
   private initializeCharacters(): void {
     this.frog.init(
-      this,
       this.velocityYModifier,
       CharacterConfigProvider.getPlayerConfig()
     )

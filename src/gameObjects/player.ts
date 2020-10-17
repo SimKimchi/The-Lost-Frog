@@ -19,23 +19,25 @@ export default class Player extends Character {
   protected die: (() => void) | null
   protected readonly knockback = 42.5
 
-  private constructor(die: () => void) {
-    super(5, 1, 'frog')
+  private constructor(scene: PlanetScene, die: () => void) {
+    super(5, 1, 'frog', scene)
     this.tongueSprite = null
     this.inAttackCooldown = false
     this.die = die
   }
 
-  public init(
-    scene: PlanetScene,
-    planetGravity: number,
-    config: CharacterConfig
-  ): void {
-    super.init(scene, planetGravity, config)
+  public static getPlayer(scene: PlanetScene, die: () => void): Player {
+    Player.instance = new Player(scene, die)
+
+    return Player.instance
+  }
+
+  public init(planetGravity: number, config: CharacterConfig): void {
+    super.init(planetGravity, config)
 
     if (!this.container) return
 
-    this.tongueSprite = scene.physics.add.sprite(0, 0, 'bomb')
+    this.tongueSprite = this.scene.physics.add.sprite(0, 0, 'bomb')
     ;(<Phaser.Physics.Arcade.Body>this.tongueSprite.body).setAllowGravity(false)
     this.tongueSprite.setVisible(false)
 
@@ -44,12 +46,6 @@ export default class Player extends Character {
 
   public getAttackSprite(): Phaser.Physics.Arcade.Sprite {
     return this.tongueSprite as Phaser.Physics.Arcade.Sprite
-  }
-
-  public static getPlayer(die: () => void): Player {
-    Player.instance = new Player(die)
-
-    return Player.instance
   }
 
   public jump(
@@ -108,29 +104,25 @@ export default class Player extends Character {
     return `Health: ${this.currentHp}/${this.maxHp}`
   }
 
-  public attack(scene: Phaser.Scene, direction: Direction): void {
+  public attack(direction: Direction): void {
     if (this.inAttackCooldown) return
 
     // TODO jouer une animation d'attaque quand ce sera une spritesheet
     this.renderAttack(direction)
-    this.setAttackDuration(scene)
-    this.setAttackCooldown(scene)
+    this.setAttackDuration()
+    this.setAttackCooldown()
   }
 
-  public handleHit(
-    scene: Phaser.Scene,
-    direction: Direction,
-    damage: number
-  ): void {
+  public handleHit(direction: Direction, damage: number): void {
     if (this.isInvulnerable()) return
 
-    scene.sound.get('hurt').play()
-    super.handleHit(scene, direction, damage)
+    this.scene.sound.get('hurt').play()
+    super.handleHit(direction, damage)
   }
 
-  protected makeInvulnerable(scene: Phaser.Scene): void {
-    super.makeInvulnerable(scene)
-    this.flickerSprite(scene)
+  protected makeInvulnerable(): void {
+    super.makeInvulnerable()
+    this.flickerSprite()
   }
 
   private renderAttack(direction: Direction): void {
@@ -154,22 +146,22 @@ export default class Player extends Character {
     this.tongueSprite.setVisible(true)
   }
 
-  private setAttackDuration(scene: Phaser.Scene): void {
-    scene.time.addEvent({
+  private setAttackDuration(): void {
+    this.scene.time.addEvent({
       delay: Player.ATTACK_DURATION,
       args: [this],
       callback: this.endAttack,
-      callbackScope: scene
+      callbackScope: this.scene
     })
   }
 
-  private setAttackCooldown(scene: Phaser.Scene): void {
+  private setAttackCooldown(): void {
     this.inAttackCooldown = true
-    scene.time.addEvent({
+    this.scene.time.addEvent({
       delay: Player.ATTACK_COOLDOWN,
       args: [this],
       callback: this.resetAttackCooldown,
-      callbackScope: scene
+      callbackScope: this.scene
     })
   }
 
@@ -183,8 +175,8 @@ export default class Player extends Character {
     player.inAttackCooldown = false
   }
 
-  private flickerSprite(scene: Phaser.Scene): void {
-    scene.tweens.add({
+  private flickerSprite(): void {
+    this.scene.tweens.add({
       targets: this.sprite,
       duration: this.invulnerableTime / 10,
       repeat: 5,
