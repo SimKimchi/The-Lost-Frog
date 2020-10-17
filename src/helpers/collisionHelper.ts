@@ -36,7 +36,13 @@ export default class CollisionHelper {
   ): void {
     if (!platformGroup) return
 
-    this.physics.add.collider([this.player.getContainer()], platformGroup)
+    this.physics.add.collider(
+      [this.player.getContainer()],
+      platformGroup,
+      () => {
+        this.player.clingToWall()
+      }
+    )
   }
 
   private setEnemyWorldCollisions(): void {

@@ -42,7 +42,7 @@ export default abstract class CharacterConfigProvider {
       hitAreaWidth: 28,
       hitAreaHeight: 45,
       spriteOffsetX: 0,
-      spriteOffsetY: 0
+      spriteOffsetY: -10
     }
   }
 
@@ -82,7 +82,7 @@ export default abstract class CharacterConfigProvider {
       hitAreaWidth: 48,
       hitAreaHeight: 24,
       spriteOffsetX: 0,
-      spriteOffsetY: 0
+      spriteOffsetY: -2
     }
   }
 }

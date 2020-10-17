@@ -120,7 +120,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
 
   protected initializeTexts(): void {
     this.displayHp = this.add
-      .text(150, 110, this.player.displayHp(), {
+      .text(150, 110, this.player.getDisplayHp(), {
         font: ' 20px monospace',
         fill: '#FFFFFF'
       })
@@ -134,7 +134,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   private updateTexts(): void {
-    this.displayHp?.setText(this.player.displayHp())
+    this.displayHp?.setText(this.player.getDisplayHp())
     this.displayScore?.setText((this.game as TheLostFrogGame).displayScore())
   }
 

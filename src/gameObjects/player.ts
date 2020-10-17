@@ -16,6 +16,7 @@ export default class Player extends Character {
   private canDoubleJump = false
   private tongueSprite: Phaser.Physics.Arcade.Sprite | null
   private inAttackCooldown: boolean
+  public wallClingDirection: Direction | null
   protected die: (() => void) | null
   protected readonly knockback = 42.5
 
@@ -23,6 +24,7 @@ export default class Player extends Character {
     super(5, 1, 64, 64, 'frog', scene)
     this.tongueSprite = null
     this.inAttackCooldown = false
+    this.wallClingDirection = null
     this.die = die
   }
 
@@ -66,6 +68,27 @@ export default class Player extends Character {
     }
   }
 
+  public climb(multiplier: number): void {
+    if (!this.container) return
+
+    if ((<Phaser.Physics.Arcade.Body>this.container.body).touching.down) {
+      this.stopWallCling()
+
+      return
+    }
+
+    const velocityY = this.moveSpeed * multiplier
+    ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(velocityY)
+
+    if (velocityY > 0) {
+      this.direction = Direction.Down
+    } else if (velocityY < 0) {
+      this.direction = Direction.Up
+    }
+
+    this.idle = false
+  }
+
   public bounce(multiplier: number): void {
     if (!this.container) return
 
@@ -79,7 +102,13 @@ export default class Player extends Character {
     if (!this.container || !this.sprite) return
 
     // TODO: Implement 'jump' and 'fall' animations when we'll have them
-    if (this.idle) {
+    if (this.wallClingDirection !== null) {
+      if (this.wallClingDirection === Direction.Left) {
+        this.sprite.anims.play(`${this.assetPrefix}_idle_left`, true)
+      } else {
+        this.sprite.anims.play(`${this.assetPrefix}_idle_right`, true)
+      }
+    } else if (this.idle) {
       if (this.direction === Direction.Left) {
         this.sprite.anims.play(`${this.assetPrefix}_idle_left`, true)
       } else {
@@ -96,7 +125,7 @@ export default class Player extends Character {
     this.sprite.setDisplaySize(this.spriteWidth, this.spriteHeight)
   }
 
-  public displayHp(): string {
+  public getDisplayHp(): string {
     return `Health: ${this.currentHp}/${this.maxHp}`
   }
 
@@ -114,6 +143,54 @@ export default class Player extends Character {
 
     this.scene.sound.get('hurt').play()
     super.handleHit(direction, damage)
+  }
+
+  public clingToWall(): void {
+    if (
+      this.wallClingDirection !== null ||
+      !this.container ||
+      (this.container.body as Phaser.Physics.Arcade.Body).wasTouching.down
+    )
+      return
+
+    if ((this.container.body as Phaser.Physics.Arcade.Body).touching.left) {
+      this.wallClingDirection = Direction.Left
+    } else if (
+      (this.container.body as Phaser.Physics.Arcade.Body).touching.right
+    ) {
+      this.wallClingDirection = Direction.Right
+    } else if (
+      (this.container.body as Phaser.Physics.Arcade.Body).touching.up
+    ) {
+      this.wallClingDirection = Direction.Up
+    }
+
+    if (this.wallClingDirection === null) return
+    ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocity(0, 0)
+    ;(<Phaser.Physics.Arcade.Body>this.container.body).setAllowGravity(false)
+
+    this.updateAnimation()
+  }
+
+  public wallJump(multiplier: number): void {
+    if (!this.container) return
+
+    this.wallClingDirection = null
+    ;(<Phaser.Physics.Arcade.Body>this.container.body).setAllowGravity(true)
+    ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(
+      this.jumpStrength * multiplier
+    )
+
+    this.canDoubleJump = true
+
+    this.updateAnimation()
+  }
+
+  public stopWallCling(): void {
+    if (!this.container) return
+
+    this.wallClingDirection = null
+    ;(<Phaser.Physics.Arcade.Body>this.container.body).setAllowGravity(true)
   }
 
   protected makeInvulnerable(): void {

@@ -19,7 +19,7 @@ export default abstract class PlatformConfigProvider {
       height: 64,
       spriteKey: 'platform_v1',
       checkUpCollision: true,
-      checkDownCollision: false,
+      checkDownCollision: true,
       checkLeftCollision: true,
       checkRightCollision: true
     }

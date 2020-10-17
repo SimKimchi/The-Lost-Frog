@@ -33,6 +33,29 @@ export default class InputHelper {
   ): void {
     if (!this.hotKeys) return
 
+    if (player.wallClingDirection !== null) {
+      this.handleWallClingMovement(
+        player,
+        velocityXModifier,
+        velocityYModifier,
+        planetFrictionModifier
+      )
+    } else {
+      this.handleRegularMovement(
+        player,
+        velocityXModifier,
+        velocityYModifier,
+        planetFrictionModifier
+      )
+    }
+  }
+
+  private handleRegularMovement(
+    player: Player,
+    velocityXModifier: number,
+    velocityYModifier: number,
+    planetFrictionModifier: number
+  ): void {
     if (this.hotKeys.A.isDown) {
       player.run(-velocityXModifier)
     } else if (this.hotKeys.D.isDown) {
@@ -42,6 +65,36 @@ export default class InputHelper {
     }
     if (Phaser.Input.Keyboard.JustDown(this.hotKeys.SPACE)) {
       player.jump(-velocityYModifier)
+    }
+  }
+
+  private handleWallClingMovement(
+    player: Player,
+    velocityXModifier: number,
+    velocityYModifier: number,
+    planetFrictionModifier: number
+  ): void {
+    if (player.wallClingDirection === Direction.Up) {
+      if (this.hotKeys.S.isDown) {
+        player.stopWallCling()
+      } else if (this.hotKeys.A.isDown) {
+        player.run(-velocityXModifier * 0.75)
+      } else if (this.hotKeys.D.isDown) {
+        player.run(velocityXModifier * 0.75)
+      } else {
+        player.stop(planetFrictionModifier)
+      }
+    } else {
+      if (this.hotKeys.W.isDown) {
+        player.climb(-velocityYModifier / 2)
+      } else if (this.hotKeys.S.isDown) {
+        player.climb(velocityYModifier / 2)
+      } else {
+        player.climb(0)
+      }
+      if (Phaser.Input.Keyboard.JustDown(this.hotKeys.SPACE)) {
+        player.wallJump(-velocityYModifier)
+      }
     }
   }
 
