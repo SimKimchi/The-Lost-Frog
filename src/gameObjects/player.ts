@@ -178,7 +178,7 @@ export default class Player extends Character {
       repeat: 5,
       repeatDelay: this.invulnerableTime / 10,
       props: {
-        alpha: 0.2
+        alpha: 0.1
       },
       onComplete: () => {
         if (!this.sprite) return
