@@ -15,11 +15,13 @@ export default class Enemy extends Character {
   constructor(
     maxHp: number,
     damage: number,
+    bodyWidth: number,
+    bodyHeight: number,
     scoreWorth: number,
     assetPrefix: string,
     scene: PlanetScene
   ) {
-    super(maxHp, damage, assetPrefix, scene)
+    super(maxHp, damage, bodyWidth, bodyHeight, assetPrefix, scene)
     this.scoreWorth = scoreWorth
     this.die = null
   }
@@ -46,6 +48,8 @@ export default class Enemy extends Character {
     } else {
       this.sprite.anims.play(`${this.assetPrefix}_idle`, true)
     }
+
+    this.sprite.setDisplaySize(this.spriteWidth, this.spriteHeight)
   }
 
   public turnAround(): void {

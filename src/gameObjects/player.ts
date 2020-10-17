@@ -20,7 +20,7 @@ export default class Player extends Character {
   protected readonly knockback = 42.5
 
   private constructor(scene: PlanetScene, die: () => void) {
-    super(5, 1, 'frog', scene)
+    super(5, 1, 64, 64, 'frog', scene)
     this.tongueSprite = null
     this.inAttackCooldown = false
     this.die = die
@@ -93,7 +93,7 @@ export default class Player extends Character {
       }
     }
 
-    this.sprite.setDisplaySize(64, 64)
+    this.sprite.setDisplaySize(this.spriteWidth, this.spriteHeight)
   }
 
   public displayHp(): string {
@@ -178,7 +178,7 @@ export default class Player extends Character {
       repeat: 5,
       repeatDelay: this.invulnerableTime / 10,
       props: {
-        alpha: 0.2
+        alpha: 0.1
       },
       onComplete: () => {
         if (!this.sprite) return

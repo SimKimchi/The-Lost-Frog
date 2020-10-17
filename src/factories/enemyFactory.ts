@@ -34,7 +34,7 @@ export default abstract class EnemyFactory {
     spawnX: number,
     spawnY: number
   ): Enemy {
-    const lizard = new Enemy(3, 1, 100, 'lizard', scene)
+    const lizard = new Enemy(3, 1, 56, 28, 100, 'lizard', scene)
 
     const config: CharacterConfig = CharacterConfigProvider.getLizardConfig(
       spawnX,
