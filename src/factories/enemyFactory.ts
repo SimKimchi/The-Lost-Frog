@@ -50,7 +50,7 @@ export default abstract class EnemyFactory {
     enemy: Enemy,
     config: CharacterConfig
   ): Enemy {
-    enemy.init(scene, planetGravity, config)
+    enemy.init(planetGravity, config)
 
     this.initializeEnemyBehavior(enemy, scene)
     enemy.setDeathBehavior(this.getEnemyDeathBehavior(enemy, scene))
