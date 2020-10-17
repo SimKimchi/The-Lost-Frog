@@ -5,10 +5,15 @@ import PlatformGroupFactory from '../../../factories/platformGroupFactory'
 import PlanetWaveConfigProvider from '../../../providers/planetWaveConfigProvider'
 
 export default class JunglePlanetScene extends PlanetScene {
-  protected enemyWaves: EnemySpawn[][] = PlanetWaveConfigProvider.getJungleWaveConfig()
+  public enemyWaves: EnemySpawn[][] = PlanetWaveConfigProvider.getJungleWaveConfig()
 
   constructor() {
     super('JunglePlanetScene', 1, 1, 0.6)
+  }
+
+  public goToNextPlanet(): void {
+    this.sound.removeAll()
+    this.game.scene.switch('JunglePlanetScene', 'IceLoadingScene')
   }
 
   protected initializeBackground(): void {
@@ -38,10 +43,5 @@ export default class JunglePlanetScene extends PlanetScene {
     if (!this.soundHelper) return
 
     this.soundHelper.setPlanetTheme('volcanoTheme')
-  }
-
-  protected goToNextPlanet(): void {
-    this.sound.removeAll()
-    this.game.scene.switch('JunglePlanetScene', 'IceLoadingScene')
   }
 }

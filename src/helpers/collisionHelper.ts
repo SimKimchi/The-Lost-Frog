@@ -74,17 +74,27 @@ export default class CollisionHelper {
       return enemy.getContainer()
     })
 
-    this.physics.add.collider(enemyContainers, platformGroup, (enemy) => {
-      if (
-        (enemy.body as Phaser.Physics.Arcade.Body).touching.left ||
-        (enemy.body as Phaser.Physics.Arcade.Body).touching.right
-      ) {
-        ;(this.findCharacterByContainer(
-          this.enemies,
-          enemy as Phaser.GameObjects.Container
-        ) as Enemy).turnAround()
+    this.physics.add.collider(
+      enemyContainers,
+      platformGroup,
+      (enemy, platform) => {
+        const body = enemy.body as Phaser.Physics.Arcade.Body
+        const platformSprite = platform as Phaser.GameObjects.Sprite
+        let mustTurnAround = this.checkWallCollision(body)
+        if (this.checkPlatformEdge(body, platformSprite, platformGroup)) {
+          mustTurnAround = true
+        }
+        if (platformSprite.width <= body.width) {
+          mustTurnAround = false
+        }
+        if (mustTurnAround) {
+          ;(this.findCharacterByContainer(
+            this.enemies,
+            enemy as Phaser.GameObjects.Container
+          ) as Enemy).turnAround()
+        }
       }
-    })
+    )
   }
 
   private setPlayerCollisionsWithEnemies(): void {
@@ -151,5 +161,80 @@ export default class CollisionHelper {
     container: Phaser.GameObjects.Container
   ): Character | undefined {
     return characters.find((x) => x.getContainer() === container)
+  }
+
+  private checkWallCollision(body: Phaser.Physics.Arcade.Body): boolean {
+    return body.touching.left || body.touching.right
+  }
+
+  private checkPlatformEdge(
+    body: Phaser.Physics.Arcade.Body,
+    platformSprite: Phaser.GameObjects.Sprite,
+    platformGroup: Phaser.Physics.Arcade.StaticGroup
+  ): boolean {
+    let direction = null
+    if (body.velocity.x > 0) {
+      direction = Direction.Right
+    } else if (body.velocity.x < 0) {
+      direction = Direction.Left
+    }
+    const isAtEdge = this.isAtEdge(body, platformSprite, direction)
+    const hasAdjacentPlatform = this.hasAdjacentPlatform(
+      platformSprite,
+      platformGroup,
+      direction
+    )
+
+    return isAtEdge && !hasAdjacentPlatform
+  }
+
+  private isAtEdge(
+    body: Phaser.Physics.Arcade.Body,
+    platformSprite: Phaser.GameObjects.Sprite,
+    direction: Direction | null
+  ): boolean {
+    if (direction === Direction.Right) {
+      if (
+        body.position.x + body.width >=
+        platformSprite.x + platformSprite.width / 2
+      ) {
+        return true
+      }
+    } else if (direction === Direction.Left) {
+      if (body.position.x <= platformSprite.x - platformSprite.width / 2) {
+        return true
+      }
+    }
+    return false
+  }
+
+  private hasAdjacentPlatform(
+    platformSprite: Phaser.GameObjects.Sprite,
+    platformGroup: Phaser.Physics.Arcade.StaticGroup,
+    direction: Direction | null
+  ): boolean {
+    const platform = platformGroup.children.getArray().find((child) => {
+      const childSprite = child as Phaser.GameObjects.Sprite
+      if (childSprite.y !== platformSprite.y) {
+        return undefined
+      }
+      if (direction === Direction.Left) {
+        if (
+          childSprite.x + childSprite.width / 2 ===
+          platformSprite.x - platformSprite.width / 2
+        ) {
+          return child
+        }
+      } else if (direction === Direction.Right) {
+        if (
+          childSprite.x - childSprite.width / 2 ===
+          platformSprite.x + platformSprite.width / 2
+        ) {
+          return child
+        }
+      }
+      return undefined
+    })
+    return platform ? true : false
   }
 }

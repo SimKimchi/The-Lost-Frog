@@ -5,10 +5,15 @@ import PlatformGroupFactory from '../../../factories/platformGroupFactory'
 import PlanetWaveConfigProvider from '../../../providers/planetWaveConfigProvider'
 
 export default class IcePlanetScene extends PlanetScene {
-  protected enemyWaves: EnemySpawn[][] = PlanetWaveConfigProvider.getIceWaveConfig()
+  public enemyWaves: EnemySpawn[][] = PlanetWaveConfigProvider.getIceWaveConfig()
 
   constructor() {
     super('IcePlanetScene', 1, 1, 0.97)
+  }
+
+  public goToNextPlanet(): void {
+    this.sound.removeAll()
+    this.game.scene.switch('IcePlanetScene', 'VolcanoLoadingScene')
   }
 
   protected initializeBackground(): void {
@@ -29,10 +34,5 @@ export default class IcePlanetScene extends PlanetScene {
     if (!this.soundHelper) return
 
     this.soundHelper.setPlanetTheme('iceTheme')
-  }
-
-  protected goToNextPlanet(): void {
-    this.sound.removeAll()
-    this.game.scene.switch('IcePlanetScene', 'VolcanoLoadingScene')
   }
 }
