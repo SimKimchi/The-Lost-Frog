@@ -169,6 +169,8 @@ export default class Player extends Character {
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocity(0, 0)
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setAllowGravity(false)
 
+    this.scene.soundHelper?.playPlayerWallClingSound()
+
     this.updateAnimation()
   }
 
@@ -181,6 +183,7 @@ export default class Player extends Character {
       this.jumpStrength * multiplier
     )
 
+    this.scene.soundHelper?.playPlayerWallJumpSound()
     this.canDoubleJump = true
 
     this.updateAnimation()
@@ -191,6 +194,8 @@ export default class Player extends Character {
 
     this.wallClingDirection = null
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setAllowGravity(true)
+
+    this.scene.soundHelper?.playPlayerWallJumpSound()
   }
 
   protected makeInvulnerable(): void {

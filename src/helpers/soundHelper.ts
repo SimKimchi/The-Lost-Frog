@@ -12,6 +12,8 @@ export default class SoundHelper {
     this.soundManager.add('hurt', { volume: 0.1 })
     this.soundManager.add('jump', { volume: 0.1 })
     this.soundManager.add('double_jump', { volume: 0.1 })
+    this.soundManager.add('wall_cling', { volume: 0.1 })
+    this.soundManager.add('wall_jump', { volume: 0.1 })
   }
 
   public setPlanetTheme(theme: string): void {
@@ -57,5 +59,13 @@ export default class SoundHelper {
 
   public playPlayerDoubleJumpSound(): void {
     this.soundManager.get('double_jump').play()
+  }
+
+  public playPlayerWallClingSound(): void {
+    this.soundManager.get('wall_cling').play()
+  }
+
+  public playPlayerWallJumpSound(): void {
+    this.soundManager.get('wall_jump').play()
   }
 }

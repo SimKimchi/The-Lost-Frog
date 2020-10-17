@@ -103,6 +103,8 @@ export default class JungleLoadingScene extends LoadingScene {
     this.load.audio('hit', genericAssets.sounds.hit)
     this.load.audio('jump', genericAssets.sounds.jump)
     this.load.audio('double_jump', genericAssets.sounds.double_jump)
+    this.load.audio('wall_cling', genericAssets.sounds.wall_cling)
+    this.load.audio('wall_jump', genericAssets.sounds.wall_jump)
     this.load.image('button_mute', genericAssets.images.button_mute)
     this.load.image('button_sound', genericAssets.images.button_sound)
     this.load.image(
