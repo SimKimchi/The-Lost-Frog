@@ -3,22 +3,23 @@ import EnemyFactory from '../../factories/enemyFactory'
 import Character from '../../gameObjects/character'
 import Enemy from '../../gameObjects/enemy'
 import Player from '../../gameObjects/player'
+import InputHelper from '../../helpers/inputHelper'
 import CharacterConfigProvider from '../../providers/characterConfigProvider'
-import { Direction, EnemySpawn, HotKeys } from '../../util'
+import { Direction, EnemySpawn } from '../../util'
 
 export default abstract class PlanetScene extends Phaser.Scene {
   public velocityXModifier: number
   public velocityYModifier: number
   public planetFrictionModifier: number
-  protected frog: Player
+  protected player: Player
   protected enemies: Enemy[]
   protected platformGroup: Phaser.Physics.Arcade.StaticGroup | null
-  protected hotKeys: HotKeys | null
   protected displayScore: Phaser.GameObjects.Text | null
   protected displayHp: Phaser.GameObjects.Text | null
   protected music: Phaser.Sound.BaseSound | null
   protected abstract enemyWaves: EnemySpawn[][]
   protected currentEnemyWave: number
+  protected inputHelper: InputHelper | null
 
   constructor(
     planetSceneName: string,
@@ -30,29 +31,29 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.velocityXModifier = velocityXModifier
     this.velocityYModifier = velocityYModifier
     this.planetFrictionModifier = planetFriction
-    this.frog = Player.getPlayer(this, () => {
+    this.player = Player.getPlayer(this, () => {
       this.playerDeath()
     })
     this.platformGroup = null
-    this.hotKeys = null
     this.displayScore = null
     this.displayHp = null
     this.enemies = []
     this.music = null
     this.currentEnemyWave = 0
+    this.inputHelper = null
   }
 
   public init(): void {
-    this.frog = Player.getPlayer(this, () => {
+    this.player = Player.getPlayer(this, () => {
       this.playerDeath()
     })
     this.platformGroup = null
-    this.hotKeys = null
     this.displayScore = null
     this.displayHp = null
     this.enemies = []
     this.music = null
     this.currentEnemyWave = 0
+    this.inputHelper = new InputHelper(this.input.keyboard)
 
     this.events.on('enemyKilled', () => {
       this.onEnemyDeath()
@@ -60,10 +61,6 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   public create(): void {
-    this.hotKeys = this.input.keyboard.addKeys(
-      'SPACE,A,S,D,E,W,UP,DOWN,LEFT,RIGHT'
-    ) as HotKeys
-
     this.initializeWorld()
     this.initializeStaticAssets()
     this.initializeCharacters()
@@ -77,8 +74,14 @@ export default abstract class PlanetScene extends Phaser.Scene {
   public update(): void {
     this.updateTexts()
 
-    this.triggerKeyboardActions()
-    this.frog.updateAnimation()
+    this.inputHelper?.triggerKeyboardActions(
+      this.player,
+      this.velocityXModifier,
+      this.velocityYModifier,
+      this.planetFrictionModifier,
+      this.sound
+    )
+    this.player.updateAnimation()
   }
 
   protected initializeWorld(): void {
@@ -88,7 +91,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
 
   protected initializeTexts(): void {
     this.displayHp = this.add
-      .text(150, 110, this.frog.displayHp(), {
+      .text(150, 110, this.player.displayHp(), {
         font: ' 20px monospace',
         fill: '#FFFFFF'
       })
@@ -103,13 +106,13 @@ export default abstract class PlanetScene extends Phaser.Scene {
 
   protected initializeCamera(): void {
     this.cameras.main
-      .startFollow(this.frog.getContainer(), false, 0.1, 0.05, 0, 70)
+      .startFollow(this.player.getContainer(), false, 0.1, 0.05, 0, 70)
       .setBounds(0, 0, 1920, 640)
       .setZoom(1.4)
   }
 
   protected updateTexts(): void {
-    this.displayHp?.setText(this.frog.displayHp())
+    this.displayHp?.setText(this.player.displayHp())
     this.displayScore?.setText((this.game as TheLostFrogGame).displayScore())
   }
 
@@ -125,7 +128,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     }
 
     const character = this.findCharacterByContainer(
-      [this.frog, ...this.enemies],
+      [this.player, ...this.enemies],
       body.gameObject as Phaser.GameObjects.Container
     )
 
@@ -139,43 +142,6 @@ export default abstract class PlanetScene extends Phaser.Scene {
     container: Phaser.GameObjects.Container
   ): Character | undefined {
     return characters.find((x) => x.getContainer() === container)
-  }
-
-  protected handleMovement(): void {
-    if (!this.hotKeys) return
-
-    if (this.hotKeys.A.isDown) {
-      this.frog.run(-this.velocityXModifier)
-    } else if (this.hotKeys.D.isDown) {
-      this.frog.run(this.velocityXModifier)
-    } else {
-      this.frog.stop(this.planetFrictionModifier)
-    }
-    if (Phaser.Input.Keyboard.JustDown(this.hotKeys.SPACE)) {
-      const jumpSound = this.sound.get('jump')
-      const doubleJumpSound = this.sound.get('double_jump')
-
-      this.frog.jump(-this.velocityYModifier, jumpSound, doubleJumpSound)
-    }
-  }
-
-  protected handleAttack(): void {
-    if (!this.hotKeys) return
-
-    let direction
-    if (Phaser.Input.Keyboard.JustDown(this.hotKeys.UP)) {
-      direction = Direction.Up
-    } else if (Phaser.Input.Keyboard.JustDown(this.hotKeys.DOWN)) {
-      direction = Direction.Down
-    } else if (Phaser.Input.Keyboard.JustDown(this.hotKeys.LEFT)) {
-      direction = Direction.Left
-    } else if (Phaser.Input.Keyboard.JustDown(this.hotKeys.RIGHT)) {
-      direction = Direction.Right
-    }
-
-    if (direction !== undefined) {
-      this.frog.attack(direction)
-    }
   }
 
   protected setEnemyPlatformCollisions(): void {
@@ -224,20 +190,20 @@ export default abstract class PlanetScene extends Phaser.Scene {
     })
 
     this.physics.add.overlap(
-      this.frog.getContainer(),
+      this.player.getContainer(),
       enemyContainers,
       (frog, enemy) => {
         const direction =
           enemy.body.position.x >= frog.body.position.x
             ? Direction.Left
             : Direction.Right
-        this.frog.handleHit(direction, enemy.getData('damage'))
+        this.player.handleHit(direction, enemy.getData('damage'))
       }
     )
   }
 
   protected setPlayerAttackCollisions(): void {
-    const attackSprite = this.frog.getAttackSprite()
+    const attackSprite = this.player.getAttackSprite()
     for (const key in this.enemies) {
       this.physics.add.overlap(
         attackSprite,
@@ -245,11 +211,11 @@ export default abstract class PlanetScene extends Phaser.Scene {
         () => {
           if (!attackSprite.visible) return
           if (attackSprite.getData('direction') === Direction.Down) {
-            this.frog.bounce(1.25)
+            this.player.bounce(1.25)
           }
           this.enemies[key].handleHit(
             attackSprite.getData('direction'),
-            this.frog.getContainer().getData('damage')
+            this.player.getContainer().getData('damage')
           )
         }
       )
@@ -271,7 +237,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
   private setPlayerPlatformCollisions(): void {
     if (!this.platformGroup) return
 
-    this.physics.add.collider([this.frog.getContainer()], this.platformGroup)
+    this.physics.add.collider([this.player.getContainer()], this.platformGroup)
   }
 
   private startNextWave(): void {
@@ -344,13 +310,8 @@ export default abstract class PlanetScene extends Phaser.Scene {
     )
   }
 
-  private triggerKeyboardActions(): void {
-    this.handleMovement()
-    this.handleAttack()
-  }
-
   private initializeCharacters(): void {
-    this.frog.init(
+    this.player.init(
       this.velocityYModifier,
       CharacterConfigProvider.getPlayerConfig()
     )
