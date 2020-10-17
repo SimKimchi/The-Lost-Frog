@@ -66,14 +66,14 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   public create(): void {
-    this.initializeWorld() // No helper - too short
-    this.initializeBackground() // No helper - abstract
-    this.initializePlatforms() // No helper - abstract
-    this.initializeCharacters() // Has helper for collisions
-    this.initializeCollisions() // Has helper
-    this.initializeCamera() // No helper - too short
-    this.initializeSounds() // Has helper
-    this.initializeTexts() // No helper - too short
+    this.initializeWorld()
+    this.initializeBackground()
+    this.initializePlatforms()
+    this.initializeCharacters()
+    this.initializeCollisions()
+    this.initializeCamera()
+    this.initializeSounds()
+    this.initializeTexts()
     this.addMuteButtons()
     this.setDebug(false)
   }
