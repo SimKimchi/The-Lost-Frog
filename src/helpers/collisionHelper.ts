@@ -78,6 +78,9 @@ export default class CollisionHelper {
         if (this.checkPlatformEdge(body, platformSprite, platformGroup)) {
           mustTurnAround = true
         }
+        if (platformSprite.width <= body.width) {
+          mustTurnAround = false
+        }
         if (mustTurnAround) {
           ;(this.findCharacterByContainer(
             this.enemies,

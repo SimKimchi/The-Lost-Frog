@@ -3,8 +3,10 @@ import EnemyFactory from '../../factories/enemyFactory'
 import Enemy from '../../gameObjects/enemy'
 import Player from '../../gameObjects/player'
 import CollisionHelper from '../../helpers/collisionHelper'
+import DeathHelper from '../../helpers/deathHelper'
 import InputHelper from '../../helpers/inputHelper'
 import SoundHelper from '../../helpers/soundHelper'
+import UiHelper from '../../helpers/uiHelper'
 import CharacterConfigProvider from '../../providers/characterConfigProvider'
 import { EnemySpawn } from '../../util'
 
@@ -12,16 +14,18 @@ export default abstract class PlanetScene extends Phaser.Scene {
   public velocityXModifier: number
   public velocityYModifier: number
   public planetFrictionModifier: number
+  public enemies: Enemy[]
+  public abstract enemyWaves: EnemySpawn[][]
+  public currentEnemyWave: number
+  public soundHelper: SoundHelper | null
   protected player: Player
-  protected enemies: Enemy[]
   protected platformGroup: Phaser.Physics.Arcade.StaticGroup | null
   protected displayScore: Phaser.GameObjects.Text | null
   protected displayHp: Phaser.GameObjects.Text | null
-  protected abstract enemyWaves: EnemySpawn[][]
-  protected currentEnemyWave: number
   protected inputHelper: InputHelper | null
-  public soundHelper: SoundHelper | null
   protected collisionHelper: CollisionHelper | null
+  protected deathHelper: DeathHelper | null
+  protected uiHelper: UiHelper | null
 
   constructor(
     planetSceneName: string,
@@ -34,7 +38,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.velocityYModifier = velocityYModifier
     this.planetFrictionModifier = planetFriction
     this.player = Player.getPlayer(this, () => {
-      this.playerDeath()
+      this.deathHelper?.playerDeath()
     })
     this.platformGroup = null
     this.displayScore = null
@@ -44,11 +48,15 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.inputHelper = null
     this.soundHelper = null
     this.collisionHelper = null
+    this.deathHelper = null
+    this.uiHelper = null
   }
+
+  public abstract goToNextPlanet(): void
 
   public init(): void {
     this.player = Player.getPlayer(this, () => {
-      this.playerDeath()
+      this.deathHelper?.playerDeath()
     })
     this.platformGroup = null
     this.displayScore = null
@@ -58,8 +66,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.inputHelper = new InputHelper(this.input.keyboard)
     this.soundHelper = new SoundHelper(this.sound)
     this.collisionHelper = new CollisionHelper(this.physics, this.player)
-
-    this.events.on('enemyKilled', this.onEnemyDeath, this)
+    this.deathHelper = new DeathHelper(this)
   }
 
   public create(): void {
@@ -86,9 +93,12 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.player.updateAnimation()
   }
 
+  public startNextWave(): void {
+    this.spawnEnemies(this.enemyWaves[++this.currentEnemyWave])
+  }
+
   protected abstract initializeBackground(): void
   protected abstract initializePlatforms(): void
-  protected abstract goToNextPlanet(): void
 
   protected initializeWorld(): void {
     this.physics.world.setBounds(0, 0, 1920, 640)
@@ -138,20 +148,6 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.displayScore?.setText((this.game as TheLostFrogGame).displayScore())
   }
 
-  private onEnemyDeath(): void {
-    if (!this.enemies.every((x) => x.getContainer().body === undefined)) return
-
-    if (this.currentEnemyWave === this.enemyWaves.length - 1) {
-      this.goToNextPlanet()
-    } else {
-      this.startNextWave()
-    }
-  }
-
-  private startNextWave(): void {
-    this.spawnEnemies(this.enemyWaves[++this.currentEnemyWave])
-  }
-
   private spawnEnemies(enemySpawns: EnemySpawn[]): void {
     this.enemies = []
 
@@ -169,56 +165,6 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.collisionHelper?.setCollisionsAfterEnemySpawn(
       this.platformGroup,
       this.enemies
-    )
-  }
-
-  private playerDeath(): void {
-    this.physics.pause()
-    this.soundHelper?.pauseMusic()
-
-    this.displayGameOver()
-    this.allowRetry()
-  }
-
-  private displayGameOver(): void {
-    const gameOverText = this.add
-      .text(0, 0, 'Game over!', {
-        font: '45px monospace',
-        fill: '#FFFFFF'
-      })
-      .setScrollFactor(0, 0)
-    gameOverText.setPosition(
-      this.game.scale.width / 2 - gameOverText.width / 2,
-      this.game.scale.height / 2 - gameOverText.height / 2
-    )
-    const retryText = this.add
-      .text(0, 0, 'Try again?', {
-        font: '25px monospace',
-        fill: '#FFFFFF'
-      })
-      .setScrollFactor(0, 0)
-    retryText.setPosition(
-      this.game.scale.width / 2 - retryText.width / 2,
-      this.game.scale.height / 2 - retryText.height / 2 + 50
-    )
-  }
-
-  private allowRetry(): void {
-    this.input.on(
-      'pointerdown',
-      function (this: PlanetScene) {
-        this.scene.restart() // TODO tester this.restart
-        ;(this.game as TheLostFrogGame).resetScore()
-      },
-      this
-    )
-    this.input.keyboard.on(
-      'keydown',
-      function (this: PlanetScene) {
-        this.scene.restart() // TODO tester this.restart
-        ;(this.game as TheLostFrogGame).resetScore()
-      },
-      this
     )
   }
 

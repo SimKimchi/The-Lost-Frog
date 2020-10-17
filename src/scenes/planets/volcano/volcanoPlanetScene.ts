@@ -5,10 +5,14 @@ import PlatformGroupFactory from '../../../factories/platformGroupFactory'
 import PlanetWaveConfigProvider from '../../../providers/planetWaveConfigProvider'
 
 export default class VolcanoPlanetScene extends PlanetScene {
-  protected enemyWaves: EnemySpawn[][] = PlanetWaveConfigProvider.getVolcanoWaveConfig()
+  public enemyWaves: EnemySpawn[][] = PlanetWaveConfigProvider.getVolcanoWaveConfig()
 
   constructor() {
     super('VolcanoPlanetScene', 1, 1, 0.3)
+  }
+
+  public goToNextPlanet(): void {
+    alert('Thanks for playing our game!')
   }
 
   protected initializeBackground(): void {
@@ -38,9 +42,5 @@ export default class VolcanoPlanetScene extends PlanetScene {
     if (!this.soundHelper) return
 
     this.soundHelper.setPlanetTheme('volcanoTheme')
-  }
-
-  protected goToNextPlanet(): void {
-    alert('Thanks for playing our game!')
   }
 }
