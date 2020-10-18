@@ -40,8 +40,8 @@ export type AnimationConfig = {
 export type Platform = {
   x: number
   y: number
-  xOffSet?: number
-  yOffSet?: number
+  posOffsetX?: number
+  posOffsetY?: number
   config: PlatformConfig
   scale?: number
 }

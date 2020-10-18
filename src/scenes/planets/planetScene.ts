@@ -6,7 +6,6 @@ import CollisionHelper from '../../helpers/collisionHelper'
 import DeathHelper from '../../helpers/deathHelper'
 import InputHelper from '../../helpers/inputHelper'
 import SoundHelper from '../../helpers/soundHelper'
-//import UiHelper from '../../helpers/uiHelper'
 import CharacterConfigProvider from '../../providers/characterConfigProvider'
 import { EnemySpawn, gridHeight, gridWidth } from '../../util'
 
@@ -25,8 +24,6 @@ export default abstract class PlanetScene extends Phaser.Scene {
   protected inputHelper: InputHelper | null
   protected collisionHelper: CollisionHelper | null
   protected deathHelper: DeathHelper | null
-  // ! TODO: Faire le helper.
-  //protected uiHelper: UiHelper | null
 
   constructor(
     planetSceneName: string,
@@ -50,7 +47,6 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.soundHelper = null
     this.collisionHelper = null
     this.deathHelper = null
-    //this.uiHelper = null
   }
 
   public abstract goToNextPlanet(): void

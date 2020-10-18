@@ -97,16 +97,26 @@ export default class JungleLoadingScene extends LoadingScene {
   }
 
   public create(): void {
-    this.load.audio('iceTheme', iceAssets.sounds.ice_theme)
-    this.load.audio('volcanoTheme', volcanoAssets.sounds.volcano_theme)
-    this.load.audio('hurt', genericAssets.sounds.hurt)
-    this.load.audio('hit', genericAssets.sounds.hit)
-    this.load.audio('jump', genericAssets.sounds.jump)
-    this.load.audio('double_jump', genericAssets.sounds.double_jump)
-    this.load.audio('wall_cling', genericAssets.sounds.wall_cling)
-    this.load.audio('wall_jump', genericAssets.sounds.wall_jump)
+    this.loadBackgrounds()
+    this.loadCharacters()
+    this.loadPlatforms()
+    this.loadSpikes()
+    this.loadSounds()
+    this.loadUIElements()
+
+    this.load.start()
+  }
+
+  protected goToScene(): void {
+    this.game.scene.switch('JungleLoadingScene', 'JunglePlanetScene')
+  }
+
+  private loadUIElements(): void {
     this.load.image('button_mute', genericAssets.images.button_mute)
     this.load.image('button_sound', genericAssets.images.button_sound)
+  }
+
+  private loadBackgrounds(): void {
     this.load.image(
       'background_jungle_1',
       jungleAssets.images.background_jungle_1
@@ -152,11 +162,54 @@ export default class JungleLoadingScene extends LoadingScene {
       'background_volcano_5',
       volcanoAssets.images.background_volcano_5
     )
-    this.load.image('platform_h1', jungleAssets.images.platform_h1)
-    this.load.image('platform_v1', jungleAssets.images.platform_v1)
-    this.load.image('platform_v2', jungleAssets.images.platform_v2)
-    this.load.image('platform_v3', jungleAssets.images.platform_v3)
-    this.load.image('platform', jungleAssets.images.platform)
+  }
+
+  private loadPlatforms(): void {
+    this.load.image(
+      'platform_jungle_h1',
+      jungleAssets.images.platform_jungle_h1
+    )
+    this.load.image(
+      'platform_jungle_h2',
+      jungleAssets.images.platform_jungle_h2
+    )
+    this.load.image(
+      'platform_jungle_h3',
+      jungleAssets.images.platform_jungle_h3
+    )
+    this.load.image(
+      'platform_jungle_h4',
+      jungleAssets.images.platform_jungle_h4
+    )
+    this.load.image(
+      'platform_jungle_v1',
+      jungleAssets.images.platform_jungle_v1
+    )
+    this.load.image(
+      'platform_jungle_v2',
+      jungleAssets.images.platform_jungle_v2
+    )
+    this.load.image(
+      'platform_jungle_v3',
+      jungleAssets.images.platform_jungle_v3
+    )
+    this.load.image('platform_ice_h1', iceAssets.images.platform_ice_h1)
+    this.load.image('platform_ice_v1', iceAssets.images.platform_ice_v1)
+    this.load.image(
+      'platform_volcano_h1',
+      volcanoAssets.images.platform_volcano_h1
+    )
+    this.load.image(
+      'platform_volcano_h2',
+      volcanoAssets.images.platform_volcano_h2
+    )
+    this.load.image(
+      'platform_volcano_h3',
+      volcanoAssets.images.platform_volcano_h3
+    )
+  }
+
+  private loadCharacters(): void {
     this.load.image('bomb', jungleAssets.images.bomb)
     this.load.spritesheet(
       'enemy_lizard_left',
@@ -186,11 +239,21 @@ export default class JungleLoadingScene extends LoadingScene {
         frameHeight: 256
       }
     )
-
-    this.load.start()
   }
 
-  protected goToScene(): void {
-    this.game.scene.switch('JungleLoadingScene', 'JunglePlanetScene')
+  private loadSounds(): void {
+    this.load.audio('iceTheme', iceAssets.sounds.ice_theme)
+    this.load.audio('volcanoTheme', volcanoAssets.sounds.volcano_theme)
+    this.load.audio('hurt', genericAssets.sounds.hurt)
+    this.load.audio('hit', genericAssets.sounds.hit)
+    this.load.audio('jump', genericAssets.sounds.jump)
+    this.load.audio('double_jump', genericAssets.sounds.double_jump)
+    this.load.audio('wall_cling', genericAssets.sounds.wall_cling)
+    this.load.audio('wall_jump', genericAssets.sounds.wall_jump)
+  }
+
+  private loadSpikes(): void {
+    this.load.image('spikes_jungle', jungleAssets.images.spikes_jungle)
+    this.load.image('spikes_ice', iceAssets.images.spikes_ice)
   }
 }
