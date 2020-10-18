@@ -20,10 +20,12 @@ export default class CollisionHelper {
   }
 
   public initializeCollisions(
-    platformGroup: Phaser.Physics.Arcade.StaticGroup | null
+    platformGroup: Phaser.Physics.Arcade.StaticGroup | null,
+    floor: Phaser.Physics.Arcade.Sprite | null
   ): void {
     this.setPlayerPlatformCollisions(platformGroup)
     this.setEnemyWorldCollisions()
+    this.setFloorCollisions(floor)
   }
 
   public setCollisionsAfterEnemySpawn(
@@ -66,6 +68,19 @@ export default class CollisionHelper {
       (_player, platform) => {
         this.player.clingToWall(platform as Phaser.GameObjects.Sprite)
       }
+    )
+  }
+
+  private setFloorCollisions(floor: Phaser.Physics.Arcade.Sprite | null): void {
+    if (!floor) return
+
+    const enemyContainers = this.enemies.map((enemy) => {
+      return enemy.getContainer()
+    })
+
+    this.physics.add.collider(
+      [this.player.getContainer(), ...enemyContainers],
+      floor
     )
   }
 
@@ -120,7 +135,10 @@ export default class CollisionHelper {
         if (checkEdge.isAtEdge && !checkEdge.adjacentPlatform) {
           mustTurnAround = true
         }
-        if (platformSprite.width <= body.width) {
+        if (
+          (enemy.body as Phaser.Physics.Arcade.Body).touching.down &&
+          platformSprite.width <= body.width
+        ) {
           mustTurnAround = false
         }
         if (mustTurnAround) {

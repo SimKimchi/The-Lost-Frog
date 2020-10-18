@@ -33,6 +33,10 @@ export default class JunglePlanetScene extends PlanetScene {
     this.add.image(0, 0, 'background_jungle_1').setOrigin(0).setScrollFactor(1)
   }
 
+  protected initializeFloor(): void {
+    this.floor = this.physics.add.staticSprite(960, 608, 'floor_jungle')
+  }
+
   protected initializePlatforms(): void {
     this.platformGroup = PlatformGroupFactory.createJunglePlatformGroup(this)
   }

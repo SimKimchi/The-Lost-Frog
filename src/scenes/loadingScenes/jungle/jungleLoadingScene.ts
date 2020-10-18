@@ -100,6 +100,7 @@ export default class JungleLoadingScene extends LoadingScene {
     this.loadBackgrounds()
     this.loadCharacters()
     this.loadPlatforms()
+    this.loadFloors()
     this.loadSpikes()
     this.loadSounds()
     this.loadUIElements()
@@ -209,6 +210,12 @@ export default class JungleLoadingScene extends LoadingScene {
     )
   }
 
+  private loadFloors(): void {
+    this.load.image('floor_jungle', jungleAssets.images.floor_jungle)
+    this.load.image('floor_ice', iceAssets.images.floor_ice)
+    this.load.image('floor_volcano', volcanoAssets.images.floor_volcano)
+  }
+
   private loadCharacters(): void {
     this.load.image('bomb', jungleAssets.images.bomb)
     this.load.spritesheet(
@@ -222,6 +229,22 @@ export default class JungleLoadingScene extends LoadingScene {
     this.load.spritesheet(
       'enemy_lizard_right',
       jungleAssets.images.enemy_lizard_right,
+      {
+        frameWidth: 32,
+        frameHeight: 16
+      }
+    )
+    this.load.spritesheet(
+      'enemy_lizard_hurt_right',
+      jungleAssets.images.enemy_lizard_hurt_right,
+      {
+        frameWidth: 32,
+        frameHeight: 16
+      }
+    )
+    this.load.spritesheet(
+      'enemy_lizard_hurt_left',
+      jungleAssets.images.enemy_lizard_hurt_left,
       {
         frameWidth: 32,
         frameHeight: 16
