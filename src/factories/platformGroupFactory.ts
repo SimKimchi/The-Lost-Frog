@@ -12,6 +12,7 @@ export default abstract class PlatformGroupFactory {
     const jungleV1Config = PlatformConfigProvider.getJungleV1Config()
     const jungleV2Config = PlatformConfigProvider.getJungleV2Config()
     const jungleV3Config = PlatformConfigProvider.getJungleV3Config()
+    const jungleSpikesConfig = PlatformConfigProvider.getJungleSpikesConfig()
     const platformArray: Platform[] = [
       { x: 0, y: 0, config: jungleH1Config },
       { x: 0, y: 1, posOffsetX: 16, config: jungleV1Config },
@@ -38,6 +39,7 @@ export default abstract class PlatformGroupFactory {
       { x: 8, y: 7, config: jungleH1Config },
       { x: 9, y: 5, config: jungleH1Config },
       { x: 9, y: 7, config: jungleH3Config },
+      { x: 10, y: 7, config: jungleSpikesConfig },
       { x: 10, y: 5, config: jungleH2Config },
       { x: 11, y: 5, config: jungleH3Config },
       { x: 14, y: 2, config: jungleH1Config },
@@ -221,10 +223,18 @@ export default abstract class PlatformGroupFactory {
       ) as Phaser.Physics.Arcade.Sprite).setScale(platform.scale ?? 1)
 
       sprite.setSize(platform.config.width, platform.config.height)
-      sprite.body.checkCollision.down = platform.config.checkDownCollision
-      sprite.body.checkCollision.up = platform.config.checkUpCollision
-      sprite.body.checkCollision.left = platform.config.checkLeftCollision
-      sprite.body.checkCollision.right = platform.config.checkRightCollision
+      sprite.body.checkCollision.down =
+        platform.config.checkDownCollision ?? true
+      sprite.body.checkCollision.up = platform.config.checkUpCollision ?? true
+      sprite.body.checkCollision.left =
+        platform.config.checkLeftCollision ?? true
+      sprite.body.checkCollision.right =
+        platform.config.checkRightCollision ?? true
+
+      sprite.setData('damageUp', platform.config.damageUp ?? false)
+      sprite.setData('damageDown', platform.config.damageDown ?? false)
+      sprite.setData('damageLeft', platform.config.damageLeft ?? false)
+      sprite.setData('damageRight', platform.config.damageRight ?? false)
     }
 
     return platformGroup

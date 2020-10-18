@@ -21,10 +21,14 @@ export type PlatformConfig = {
   width: number
   height: number
   spriteKey: string
-  checkUpCollision: boolean
-  checkDownCollision: boolean
-  checkLeftCollision: boolean
-  checkRightCollision: boolean
+  checkUpCollision?: boolean
+  checkDownCollision?: boolean
+  checkLeftCollision?: boolean
+  checkRightCollision?: boolean
+  damageUp?: boolean
+  damageDown?: boolean
+  damageLeft?: boolean
+  damageRight?: boolean
 }
 
 export type AnimationConfig = {
