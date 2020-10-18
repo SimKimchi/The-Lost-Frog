@@ -241,9 +241,9 @@ export default abstract class PlatformGroupFactory {
       sprite.setData('damageDown', platform.config.damageDown ?? false)
       sprite.setData('damageLeft', platform.config.damageLeft ?? false)
       sprite.setData('damageRight', platform.config.damageRight ?? false)
-     
-      sprite.setData('clingSides', platform.config.clingSides)
-      sprite.setData('clingUnder', platform.config.clingUnder)
+
+      sprite.setData('clingSides', platform.config.clingSides ?? false)
+      sprite.setData('clingUnder', platform.config.clingUnder ?? false)
     }
 
     return platformGroup

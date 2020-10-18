@@ -8,7 +8,6 @@ export default abstract class PlatformConfigProvider {
       spriteKey: 'platform_jungle_h1',
       checkLeftCollision: false,
       checkRightCollision: false,
-      clingSides: false,
       clingUnder: true
     }
   }
@@ -20,7 +19,6 @@ export default abstract class PlatformConfigProvider {
       spriteKey: 'platform_jungle_h2',
       checkLeftCollision: false,
       checkRightCollision: false,
-      clingSides: false,
       clingUnder: true
     }
   }
@@ -32,7 +30,6 @@ export default abstract class PlatformConfigProvider {
       spriteKey: 'platform_jungle_h3',
       checkLeftCollision: false,
       checkRightCollision: false,
-      clingSides: false,
       clingUnder: true
     }
   }
@@ -44,7 +41,6 @@ export default abstract class PlatformConfigProvider {
       spriteKey: 'platform_jungle_h4',
       checkLeftCollision: false,
       checkRightCollision: false,
-      clingSides: false,
       clingUnder: true
     }
   }
@@ -53,10 +49,8 @@ export default abstract class PlatformConfigProvider {
     return {
       width: 32,
       height: 64,
-      spriteKey: 'platform_jungle_v1'
       spriteKey: 'platform_jungle_v1',
-      clingSides: true,
-      clingUnder: false
+      clingSides: true
     }
   }
 
@@ -67,9 +61,7 @@ export default abstract class PlatformConfigProvider {
       spriteKey: 'platform_jungle_branch_h1',
       checkDownCollision: false,
       checkLeftCollision: false,
-      checkRightCollision: false,
-      clingSides: false,
-      clingUnder: false
+      checkRightCollision: false
     }
   }
 
@@ -80,9 +72,7 @@ export default abstract class PlatformConfigProvider {
       spriteKey: 'platform_jungle_branch_h2',
       checkDownCollision: false,
       checkLeftCollision: false,
-      checkRightCollision: false,
-      clingSides: false,
-      clingUnder: false
+      checkRightCollision: false
     }
   }
 
@@ -102,7 +92,6 @@ export default abstract class PlatformConfigProvider {
       spriteKey: 'platform_ice_h1',
       checkLeftCollision: false,
       checkRightCollision: false,
-      clingSides: false,
       clingUnder: true
     }
   }
@@ -112,8 +101,7 @@ export default abstract class PlatformConfigProvider {
       width: 32,
       height: 64,
       spriteKey: 'platform_ice_v1',
-	  clingSides: true,
-      clingUnder: false
+      clingSides: true
     }
   }
 
@@ -133,7 +121,6 @@ export default abstract class PlatformConfigProvider {
       spriteKey: 'platform_volcano_h1',
       checkLeftCollision: false,
       checkRightCollision: false,
-      clingSides: false,
       clingUnder: true
     }
   }
@@ -145,7 +132,6 @@ export default abstract class PlatformConfigProvider {
       spriteKey: 'platform_volcano_h2',
       checkLeftCollision: false,
       checkRightCollision: false,
-      clingSides: false,
       clingUnder: true
     }
   }
@@ -157,7 +143,6 @@ export default abstract class PlatformConfigProvider {
       spriteKey: 'platform_volcano_h3',
       checkLeftCollision: false,
       checkRightCollision: false,
-      clingSides: false,
       clingUnder: true
     }
   }
