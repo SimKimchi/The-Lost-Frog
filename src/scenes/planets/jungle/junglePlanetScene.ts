@@ -8,12 +8,12 @@ export default class JunglePlanetScene extends PlanetScene {
   public enemyWaves: EnemySpawn[][] = PlanetWaveConfigProvider.getJungleWaveConfig()
 
   constructor() {
-    super('JunglePlanetScene', 1, 1, 0.6)
+    super('JunglePlanetScene', 1, 1, 0.65)
   }
 
   public goToNextPlanet(): void {
     this.sound.removeAll()
-    this.game.scene.switch('JunglePlanetScene', 'IceLoadingScene')
+    this.game.scene.switch('JunglePlanetScene', 'IcePlanetTransitionScene')
   }
 
   protected initializeBackground(): void {

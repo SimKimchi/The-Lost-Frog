@@ -13,7 +13,7 @@ export default class IcePlanetScene extends PlanetScene {
 
   public goToNextPlanet(): void {
     this.sound.removeAll()
-    this.game.scene.switch('IcePlanetScene', 'VolcanoLoadingScene')
+    this.game.scene.switch('IcePlanetScene', 'VolcanoPlanetTransitionScene')
   }
 
   protected initializeBackground(): void {

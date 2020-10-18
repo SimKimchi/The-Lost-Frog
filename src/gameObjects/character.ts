@@ -127,7 +127,9 @@ export default abstract class Character {
     if (!this.container) return
 
     if (!this.isGrounded()) {
-      ;(<Phaser.Physics.Arcade.Body>this.container.body).setDragX(0.8)
+      ;(<Phaser.Physics.Arcade.Body>this.container.body).setDragX(
+        planetFrictionModifier
+      )
     } else {
       ;(<Phaser.Physics.Arcade.Body>this.container.body).setDragX(
         planetFrictionModifier

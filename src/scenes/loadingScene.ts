@@ -1,12 +1,11 @@
-import LoadingScene from '../loadingScene'
-import genericAssets from '../../../assets/generic'
-import jungleAssets from '../../../assets/jungle'
-import iceAssets from '../../../assets/ice'
-import volcanoAssets from '../../../assets/volcano'
+import genericAssets from '../assets/generic'
+import jungleAssets from '../assets/jungle'
+import iceAssets from '../assets/ice'
+import volcanoAssets from '../assets/volcano'
 
-export default class JungleLoadingScene extends LoadingScene {
+export default class LoadingScene extends Phaser.Scene {
   constructor() {
-    super('JungleLoadingScene')
+    super('LoadingScene')
   }
 
   public preload(): void {
@@ -14,44 +13,46 @@ export default class JungleLoadingScene extends LoadingScene {
     const height = this.game.scale.height
 
     const progressBar = this.add.graphics()
-    const progressBox = this.add
+    this.add
       .graphics()
       .fillStyle(0x222222, 0.8)
       .fillRect(width / 2 - 160, height / 2 - 25, 320, 50)
 
-    const loadingText = this.make.text({
-      x: width / 2,
-      y: height / 2 - 50,
-      text: 'Loading...',
-      style: {
-        font: '20px monospace',
-        fill: '#ffffff'
-      }
-    })
-    loadingText.setOrigin(0.5, 0.5)
+    this.make
+      .text({
+        x: width / 2,
+        y: height / 2 - 50,
+        text: 'Loading...',
+        style: {
+          font: '20px monospace',
+          fill: '#ffffff'
+        }
+      })
+      .setOrigin(0.5, 0.5)
 
-    const percentText = this.make.text({
-      x: width / 2,
-      y: height / 2,
-      text: '0%',
-      style: {
-        font: '18px monospace',
-        fill: '#ffffff'
-      }
-    })
-    percentText.setOrigin(0.5, 0.5)
+    const percentText = this.make
+      .text({
+        x: width / 2,
+        y: height / 2,
+        text: '0%',
+        style: {
+          font: '18px monospace',
+          fill: '#ffffff'
+        }
+      })
+      .setOrigin(0.5, 0.5)
 
-    const assetText = this.make.text({
-      x: width / 2,
-      y: height / 2 + 50,
-      text: '',
-      style: {
-        font: '18px monospace',
-        fill: '#ffffff'
-      }
-    })
-
-    assetText.setOrigin(0.5, 0.5)
+    const assetText = this.make
+      .text({
+        x: width / 2,
+        y: height / 2 + 50,
+        text: '',
+        style: {
+          font: '18px monospace',
+          fill: '#ffffff'
+        }
+      })
+      .setOrigin(0.5, 0.5)
 
     this.load.on('progress', function (value: number) {
       percentText.setText(`${Math.round(value * 100)}%`)
@@ -67,26 +68,29 @@ export default class JungleLoadingScene extends LoadingScene {
 
     this.load.on(
       'complete',
-      function (this: JungleLoadingScene) {
-        progressBar.destroy()
-        progressBox.destroy()
-        loadingText.destroy()
-        percentText.destroy()
-        assetText
-          .setX(width / 2)
-          .setY(height / 2)
-          .setText('Click anywhere to play!')
+      function (this: LoadingScene) {
+        this.make
+          .text({
+            x: width / 2,
+            y: height / 2 + 200,
+            text: 'Click or press any key to continue!',
+            style: {
+              font: '20px monospace',
+              fill: '#ffffff'
+            }
+          })
+          .setOrigin(0.5, 0.5)
 
         this.input.on(
           'pointerdown',
-          function (this: JungleLoadingScene) {
+          function (this: LoadingScene) {
             this.goToScene()
           },
           this
         )
         this.input.keyboard.on(
           'keydown',
-          function (this: JungleLoadingScene) {
+          function (this: LoadingScene) {
             this.goToScene()
           },
           this
@@ -109,7 +113,7 @@ export default class JungleLoadingScene extends LoadingScene {
   }
 
   protected goToScene(): void {
-    this.game.scene.switch('JungleLoadingScene', 'JunglePlanetScene')
+    this.game.scene.switch('LoadingScene', 'MainMenuScene')
   }
 
   private loadUIElements(): void {

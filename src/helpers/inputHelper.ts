@@ -114,19 +114,19 @@ export default class InputHelper {
       if (this.hotKeys.W.isDown) {
         checkEdge = this.checkEdge(player, platformGroup, Direction.Up)
         if (!checkEdge.isAtEdge || checkEdge.adjacentPlatform) {
-          player.climb(-velocityYModifier / 2)
+          player.climb(-velocityYModifier * 0.75)
         } else {
-          player.climb(0)
+          player.stopClimb(planetFrictionModifier)
         }
       } else if (this.hotKeys.S.isDown) {
         checkEdge = this.checkEdge(player, platformGroup, Direction.Down)
         if (!checkEdge.isAtEdge || checkEdge.adjacentPlatform) {
-          player.climb(velocityYModifier / 2)
+          player.climb(velocityYModifier * 0.75)
         } else {
-          player.climb(0)
+          player.stopClimb(planetFrictionModifier)
         }
       } else {
-        player.climb(0)
+        player.stopClimb(planetFrictionModifier)
       }
       if (checkEdge.adjacentPlatform) {
         player.clingPlatform = checkEdge.adjacentPlatform

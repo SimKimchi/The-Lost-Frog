@@ -1,10 +1,13 @@
 import 'phaser'
-import IceLoadingScene from './scenes/loadingScenes/ice/iceLoadingScene'
-import JungleLoadingScene from './scenes/loadingScenes/jungle/jungleLoadingScene'
-import VolcanoLoadingScene from './scenes/loadingScenes/volcano/volcanoLoadingScene'
+import IcePlanetTransitionScene from './scenes/planetTransitions/ice/icePlanetTransitionScene'
+import VolcanoPlanetTransitionScene from './scenes/planetTransitions/volcano/volcanoPlanetTransitionScene'
 import IcePlanetScene from './scenes/planets/ice/icePlanetScene'
 import JunglePlanetScene from './scenes/planets/jungle/junglePlanetScene'
 import VolcanoPlanetScene from './scenes/planets/volcano/volcanoPlanetScene'
+import LoadingScene from './scenes/loadingScene'
+import MainMenuScene from './scenes/mainMenuScene'
+import CreditsScene from './scenes/creditsScene'
+import JunglePlanetTransitionScene from './scenes/planetTransitions/jungle/JunglePlanetTransitionScene'
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
@@ -18,11 +21,14 @@ const config: Phaser.Types.Core.GameConfig = {
   },
   parent: 'game-container',
   scene: [
-    JungleLoadingScene,
+    LoadingScene,
+    MainMenuScene,
+    CreditsScene,
+    JunglePlanetTransitionScene,
     JunglePlanetScene,
-    IceLoadingScene,
+    IcePlanetTransitionScene,
     IcePlanetScene,
-    VolcanoLoadingScene,
+    VolcanoPlanetTransitionScene,
     VolcanoPlanetScene
   ]
 }

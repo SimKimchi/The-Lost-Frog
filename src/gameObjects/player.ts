@@ -80,6 +80,7 @@ export default class Player extends Character {
     }
 
     const velocityY = this.moveSpeed * multiplier
+    ;(<Phaser.Physics.Arcade.Body>this.container.body).setDragY(0)
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(velocityY)
 
     if (velocityY > 0) {
@@ -87,6 +88,22 @@ export default class Player extends Character {
     } else if (velocityY < 0) {
       this.direction = Direction.Up
     }
+
+    this.idle = false
+  }
+
+  public stopClimb(planetFrictionModifier: number): void {
+    if (!this.container) return
+
+    if ((<Phaser.Physics.Arcade.Body>this.container.body).touching.down) {
+      this.stopWallCling()
+
+      return
+    }
+
+    ;(<Phaser.Physics.Arcade.Body>this.container.body).setDragY(
+      planetFrictionModifier
+    )
 
     this.idle = false
   }
@@ -204,6 +221,7 @@ export default class Player extends Character {
     this.clingPlatform = null
     this.canDoubleJump = true
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setAllowGravity(true)
+    ;(<Phaser.Physics.Arcade.Body>this.container.body).setDragY(0)
   }
 
   protected makeInvulnerable(): void {
