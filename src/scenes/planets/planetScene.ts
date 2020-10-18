@@ -19,6 +19,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
   public soundHelper: SoundHelper | null
   protected player: Player
   protected platformGroup: Phaser.Physics.Arcade.StaticGroup | null
+  protected floor: Phaser.Physics.Arcade.Sprite | null
   protected displayScore: Phaser.GameObjects.Text | null
   protected displayHp: Phaser.GameObjects.Text | null
   protected inputHelper: InputHelper | null
@@ -39,6 +40,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
       this.deathHelper?.playerDeath()
     })
     this.platformGroup = null
+    this.floor = null
     this.displayScore = null
     this.displayHp = null
     this.enemies = []
@@ -56,6 +58,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
       this.deathHelper?.playerDeath()
     })
     this.platformGroup = null
+    this.floor = null
     this.displayScore = null
     this.displayHp = null
     this.enemies = []
@@ -70,6 +73,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.initializeWorld()
     this.initializeBackground()
     this.initializePlatforms()
+    this.initializeFloor()
     this.initializeCharacters()
     this.initializeCollisions()
     this.initializeCamera()
@@ -96,6 +100,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
 
   protected abstract initializeBackground(): void
   protected abstract initializePlatforms(): void
+  protected abstract initializeFloor(): void
 
   protected initializeWorld(): void {
     this.physics.world.setBounds(0, 0, 1920, 640)
@@ -111,7 +116,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   protected initializeCollisions(): void {
-    this.collisionHelper?.initializeCollisions(this.platformGroup)
+    this.collisionHelper?.initializeCollisions(this.platformGroup, this.floor)
   }
 
   protected initializeCamera(): void {

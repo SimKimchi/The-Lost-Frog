@@ -100,6 +100,7 @@ export default class JungleLoadingScene extends LoadingScene {
     this.loadBackgrounds()
     this.loadCharacters()
     this.loadPlatforms()
+    this.loadFloors()
     this.loadSpikes()
     this.loadSounds()
     this.loadUIElements()
@@ -207,6 +208,12 @@ export default class JungleLoadingScene extends LoadingScene {
       'platform_volcano_h3',
       volcanoAssets.images.platform_volcano_h3
     )
+  }
+
+  private loadFloors(): void {
+    this.load.image('floor_jungle', jungleAssets.images.floor_jungle)
+    this.load.image('floor_ice', iceAssets.images.floor_ice)
+    this.load.image('floor_volcano', volcanoAssets.images.floor_volcano)
   }
 
   private loadCharacters(): void {
