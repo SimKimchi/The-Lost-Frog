@@ -10,18 +10,24 @@ export default abstract class PlatformGroupFactory {
     const jungleH3Config = PlatformConfigProvider.getJungleH3Config()
     const jungleH4Config = PlatformConfigProvider.getJungleH4Config()
     const jungleV1Config = PlatformConfigProvider.getJungleV1Config()
-    const jungleV2Config = PlatformConfigProvider.getJungleV2Config()
-    const jungleV3Config = PlatformConfigProvider.getJungleV3Config()
+    const jungleBranchH1Config = PlatformConfigProvider.getJungleBranchH1Config()
+    const jungleBranchH2Config = PlatformConfigProvider.getJungleBranchH2Config()
     const platformArray: Platform[] = [
       { x: 0, y: 9, config: jungleH1Config },
       { x: 1, y: 9, config: jungleH2Config },
       { x: 2, y: 9, config: jungleH3Config },
       { x: 4, y: 1, posOffsetX: 16, config: jungleV1Config },
       { x: 4, y: 2, posOffsetX: 16, config: jungleV1Config },
-      { x: 4, y: 3, posOffsetX: -16, config: jungleV2Config },
+      { x: 4, y: 3, posOffsetX: -16, config: jungleBranchH1Config },
       { x: 4, y: 3, posOffsetX: 16, config: jungleV1Config },
       { x: 4, y: 4, posOffsetX: 16, config: jungleV1Config },
-      { x: 4, y: 4, posOffsetX: 48, posOffsetY: 16, config: jungleV3Config },
+      {
+        x: 4,
+        y: 4,
+        posOffsetX: 48.01,
+        posOffsetY: 16,
+        config: jungleBranchH2Config
+      },
       { x: 4, y: 5, posOffsetX: 16, config: jungleV1Config },
       { x: 4, y: 9, config: jungleH4Config },
       { x: 5, y: 7, config: jungleH1Config },
@@ -149,8 +155,8 @@ export default abstract class PlatformGroupFactory {
     const volcanoH3Config = PlatformConfigProvider.getVolcanoH3Config()
     const jungleH4Config = PlatformConfigProvider.getJungleH4Config()
     const jungleV1Config = PlatformConfigProvider.getJungleV1Config()
-    const jungleV2Config = PlatformConfigProvider.getJungleV2Config()
-    const jungleV3Config = PlatformConfigProvider.getJungleV3Config()
+    const jungleV2Config = PlatformConfigProvider.getJungleBranchH1Config()
+    const jungleV3Config = PlatformConfigProvider.getJungleBranchH2Config()
     const platformArray: Platform[] = [
       { x: 0, y: 9, config: volcanoH1Config },
       { x: 1, y: 9, config: volcanoH2Config },
@@ -236,6 +242,8 @@ export default abstract class PlatformGroupFactory {
       sprite.body.checkCollision.up = platform.config.checkUpCollision
       sprite.body.checkCollision.left = platform.config.checkLeftCollision
       sprite.body.checkCollision.right = platform.config.checkRightCollision
+      sprite.setData('clingSides', platform.config.clingSides)
+      sprite.setData('clingUnder', platform.config.clingUnder)
     }
 
     return platformGroup

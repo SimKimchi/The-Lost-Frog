@@ -3,6 +3,11 @@ import Enemy from '../gameObjects/enemy'
 import Player from '../gameObjects/player'
 import { Direction } from '../util'
 
+export interface IEdge {
+  isAtEdge: boolean
+  adjacentPlatform: Phaser.GameObjects.Sprite | undefined
+}
+
 export default class CollisionHelper {
   private physics: Phaser.Physics.Arcade.ArcadePhysics
   private player: Player
@@ -31,6 +36,25 @@ export default class CollisionHelper {
     this.setPlayerAttackCollisions()
   }
 
+  public checkPlatformEdge(
+    body: Phaser.Physics.Arcade.Body,
+    platformSprite: Phaser.GameObjects.Sprite,
+    platformGroup: Phaser.Physics.Arcade.StaticGroup,
+    direction: Direction | null
+  ): IEdge {
+    const isAtEdge = this.isAtEdge(body, platformSprite, direction)
+    const adjacentPlatform = this.hasAdjacentPlatform(
+      platformSprite,
+      platformGroup,
+      direction
+    )
+
+    return {
+      isAtEdge,
+      adjacentPlatform
+    }
+  }
+
   private setPlayerPlatformCollisions(
     platformGroup: Phaser.Physics.Arcade.StaticGroup | null
   ): void {
@@ -39,8 +63,8 @@ export default class CollisionHelper {
     this.physics.add.collider(
       [this.player.getContainer()],
       platformGroup,
-      () => {
-        this.player.clingToWall()
+      (_player, platform) => {
+        this.player.clingToWall(platform as Phaser.GameObjects.Sprite)
       }
     )
   }
@@ -81,7 +105,19 @@ export default class CollisionHelper {
         const body = enemy.body as Phaser.Physics.Arcade.Body
         const platformSprite = platform as Phaser.GameObjects.Sprite
         let mustTurnAround = this.checkWallCollision(body)
-        if (this.checkPlatformEdge(body, platformSprite, platformGroup)) {
+        let direction = null
+        if (body.velocity.x > 0) {
+          direction = Direction.Right
+        } else if (body.velocity.x < 0) {
+          direction = Direction.Left
+        }
+        const checkEdge = this.checkPlatformEdge(
+          body,
+          platformSprite,
+          platformGroup,
+          direction
+        )
+        if (checkEdge.isAtEdge && !checkEdge.adjacentPlatform) {
           mustTurnAround = true
         }
         if (platformSprite.width <= body.width) {
@@ -167,27 +203,6 @@ export default class CollisionHelper {
     return body.touching.left || body.touching.right
   }
 
-  private checkPlatformEdge(
-    body: Phaser.Physics.Arcade.Body,
-    platformSprite: Phaser.GameObjects.Sprite,
-    platformGroup: Phaser.Physics.Arcade.StaticGroup
-  ): boolean {
-    let direction = null
-    if (body.velocity.x > 0) {
-      direction = Direction.Right
-    } else if (body.velocity.x < 0) {
-      direction = Direction.Left
-    }
-    const isAtEdge = this.isAtEdge(body, platformSprite, direction)
-    const hasAdjacentPlatform = this.hasAdjacentPlatform(
-      platformSprite,
-      platformGroup,
-      direction
-    )
-
-    return isAtEdge && !hasAdjacentPlatform
-  }
-
   private isAtEdge(
     body: Phaser.Physics.Arcade.Body,
     platformSprite: Phaser.GameObjects.Sprite,
@@ -204,6 +219,17 @@ export default class CollisionHelper {
       if (body.position.x <= platformSprite.x - platformSprite.width / 2) {
         return true
       }
+    } else if (direction === Direction.Up) {
+      if (body.position.y <= platformSprite.y - platformSprite.height / 2) {
+        return true
+      }
+    } else if (direction === Direction.Down) {
+      if (
+        body.position.y + body.height >=
+        platformSprite.y + platformSprite.height / 2
+      ) {
+        return true
+      }
     }
     return false
   }
@@ -212,12 +238,19 @@ export default class CollisionHelper {
     platformSprite: Phaser.GameObjects.Sprite,
     platformGroup: Phaser.Physics.Arcade.StaticGroup,
     direction: Direction | null
-  ): boolean {
+  ): Phaser.GameObjects.Sprite | undefined {
+    let axis = 'x'
+    if (direction === Direction.Up || direction === Direction.Down) {
+      axis = 'y'
+    }
     const platform = platformGroup.children.getArray().find((child) => {
       const childSprite = child as Phaser.GameObjects.Sprite
-      if (childSprite.y !== platformSprite.y) {
+      if (axis === 'x' && childSprite.y !== platformSprite.y) {
+        return undefined
+      } else if (axis === 'y' && childSprite.x !== platformSprite.x) {
         return undefined
       }
+
       if (direction === Direction.Left) {
         if (
           childSprite.x + childSprite.width / 2 ===
@@ -232,9 +265,23 @@ export default class CollisionHelper {
         ) {
           return child
         }
+      } else if (direction === Direction.Up) {
+        if (
+          childSprite.y + childSprite.height / 2 ===
+          platformSprite.y - platformSprite.height / 2
+        ) {
+          return child
+        }
+      } else if (direction === Direction.Down) {
+        if (
+          childSprite.y - childSprite.height / 2 ===
+          platformSprite.y + platformSprite.height / 2
+        ) {
+          return child
+        }
       }
       return undefined
     })
-    return platform ? true : false
+    return platform as Phaser.GameObjects.Sprite
   }
 }

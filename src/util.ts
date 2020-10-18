@@ -25,6 +25,8 @@ export type PlatformConfig = {
   checkDownCollision: boolean
   checkLeftCollision: boolean
   checkRightCollision: boolean
+  clingSides: boolean
+  clingUnder: boolean
 }
 
 export type AnimationConfig = {

@@ -9,7 +9,9 @@ export default abstract class PlatformConfigProvider {
       checkUpCollision: true,
       checkDownCollision: false,
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      clingSides: false,
+      clingUnder: true
     }
   }
 
@@ -21,7 +23,9 @@ export default abstract class PlatformConfigProvider {
       checkUpCollision: true,
       checkDownCollision: false,
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      clingSides: false,
+      clingUnder: true
     }
   }
 
@@ -33,7 +37,9 @@ export default abstract class PlatformConfigProvider {
       checkUpCollision: true,
       checkDownCollision: false,
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      clingSides: false,
+      clingUnder: true
     }
   }
 
@@ -45,7 +51,9 @@ export default abstract class PlatformConfigProvider {
       checkUpCollision: true,
       checkDownCollision: false,
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      clingSides: false,
+      clingUnder: true
     }
   }
 
@@ -57,31 +65,37 @@ export default abstract class PlatformConfigProvider {
       checkUpCollision: true,
       checkDownCollision: true,
       checkLeftCollision: true,
-      checkRightCollision: true
+      checkRightCollision: true,
+      clingSides: true,
+      clingUnder: false
     }
   }
 
-  public static getJungleV2Config(): PlatformConfig {
+  public static getJungleBranchH1Config(): PlatformConfig {
     return {
       width: 32,
       height: 32,
-      spriteKey: 'platform_jungle_v2',
+      spriteKey: 'platform_jungle_branch_h1',
       checkUpCollision: true,
       checkDownCollision: false,
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      clingSides: false,
+      clingUnder: false
     }
   }
 
-  public static getJungleV3Config(): PlatformConfig {
+  public static getJungleBranchH2Config(): PlatformConfig {
     return {
       width: 32,
       height: 32,
-      spriteKey: 'platform_jungle_v3',
+      spriteKey: 'platform_jungle_branch_h2',
       checkUpCollision: true,
       checkDownCollision: false,
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      clingSides: false,
+      clingUnder: false
     }
   }
 
@@ -93,7 +107,9 @@ export default abstract class PlatformConfigProvider {
       checkUpCollision: true,
       checkDownCollision: false,
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      clingSides: false,
+      clingUnder: true
     }
   }
 
@@ -105,7 +121,9 @@ export default abstract class PlatformConfigProvider {
       checkUpCollision: true,
       checkDownCollision: true,
       checkLeftCollision: true,
-      checkRightCollision: true
+      checkRightCollision: true,
+      clingSides: true,
+      clingUnder: false
     }
   }
 
@@ -117,7 +135,9 @@ export default abstract class PlatformConfigProvider {
       checkUpCollision: true,
       checkDownCollision: false,
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      clingSides: false,
+      clingUnder: true
     }
   }
 
@@ -129,7 +149,9 @@ export default abstract class PlatformConfigProvider {
       checkUpCollision: true,
       checkDownCollision: false,
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      clingSides: false,
+      clingUnder: true
     }
   }
 
@@ -141,7 +163,9 @@ export default abstract class PlatformConfigProvider {
       checkUpCollision: true,
       checkDownCollision: false,
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      clingSides: false,
+      clingUnder: true
     }
   }
 }
