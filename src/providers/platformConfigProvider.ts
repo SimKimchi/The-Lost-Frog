@@ -81,14 +81,16 @@ export default abstract class PlatformConfigProvider {
       width: 64,
       height: 32,
       spriteKey: 'spikes_jungle',
-      damageUp: true
+      damageUp: true,
+      clingUnder: true,
+      clingSides: true
     }
   }
 
   public static getIceH1Config(): PlatformConfig {
     return {
       width: 64,
-      height: 0.1,
+      height: 32,
       spriteKey: 'platform_ice_h1',
       checkLeftCollision: false,
       checkRightCollision: false,
