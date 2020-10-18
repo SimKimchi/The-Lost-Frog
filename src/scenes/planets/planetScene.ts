@@ -6,9 +6,9 @@ import CollisionHelper from '../../helpers/collisionHelper'
 import DeathHelper from '../../helpers/deathHelper'
 import InputHelper from '../../helpers/inputHelper'
 import SoundHelper from '../../helpers/soundHelper'
-import UiHelper from '../../helpers/uiHelper'
+//import UiHelper from '../../helpers/uiHelper'
 import CharacterConfigProvider from '../../providers/characterConfigProvider'
-import { EnemySpawn } from '../../util'
+import { EnemySpawn, gridHeight, gridWidth } from '../../util'
 
 export default abstract class PlanetScene extends Phaser.Scene {
   public velocityXModifier: number
@@ -25,7 +25,8 @@ export default abstract class PlanetScene extends Phaser.Scene {
   protected inputHelper: InputHelper | null
   protected collisionHelper: CollisionHelper | null
   protected deathHelper: DeathHelper | null
-  protected uiHelper: UiHelper | null
+  // ! TODO: Faire le helper.
+  //protected uiHelper: UiHelper | null
 
   constructor(
     planetSceneName: string,
@@ -49,7 +50,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.soundHelper = null
     this.collisionHelper = null
     this.deathHelper = null
-    this.uiHelper = null
+    //this.uiHelper = null
   }
 
   public abstract goToNextPlanet(): void
@@ -156,8 +157,8 @@ export default abstract class PlanetScene extends Phaser.Scene {
         EnemyFactory.createEnemyByType(
           enemySpawn.type,
           this as PlanetScene,
-          enemySpawn.spawnX,
-          enemySpawn.spawnY
+          enemySpawn.spawnTileX * gridWidth,
+          enemySpawn.spawnTileY * gridHeight
         )
       )
     }

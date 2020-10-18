@@ -74,6 +74,6 @@ export enum EnemyType {
 
 export type EnemySpawn = {
   type: EnemyType
-  spawnX: number
-  spawnY: number
+  spawnTileX: number
+  spawnTileY: number
 }

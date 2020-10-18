@@ -4,31 +4,22 @@ export default abstract class PlanetWaveConfigProvider {
   public static getJungleWaveConfig(): EnemySpawn[][] {
     return [
       [
-        { type: EnemyType.Lizard, spawnX: 100, spawnY: 100 },
-        { type: EnemyType.Lizard, spawnX: 300, spawnY: 200 },
-        { type: EnemyType.Lizard, spawnX: 500, spawnY: 300 },
-        { type: EnemyType.Lizard, spawnX: 900, spawnY: 400 },
-        { type: EnemyType.Lizard, spawnX: 1300, spawnY: 500 },
-        { type: EnemyType.Lizard, spawnX: 1600, spawnY: 600 },
-        { type: EnemyType.Lizard, spawnX: 1800, spawnY: 600 }
+        { type: EnemyType.Lizard, spawnTileX: 24, spawnTileY: 5 },
+        { type: EnemyType.Lizard, spawnTileX: 8, spawnTileY: 7 },
+        { type: EnemyType.Lizard, spawnTileX: 9, spawnTileY: 4 },
+        { type: EnemyType.Lizard, spawnTileX: 15, spawnTileY: 1 },
+        { type: EnemyType.Lizard, spawnTileX: 18, spawnTileY: 6 },
+        { type: EnemyType.Lizard, spawnTileX: 20, spawnTileY: 2 },
+        { type: EnemyType.Lizard, spawnTileX: 28, spawnTileY: 3 }
       ],
       [
-        { type: EnemyType.Lizard, spawnX: 100, spawnY: 100 },
-        { type: EnemyType.Lizard, spawnX: 300, spawnY: 200 },
-        { type: EnemyType.Lizard, spawnX: 500, spawnY: 300 },
-        { type: EnemyType.Lizard, spawnX: 900, spawnY: 400 },
-        { type: EnemyType.Lizard, spawnX: 1300, spawnY: 500 },
-        { type: EnemyType.Lizard, spawnX: 1600, spawnY: 600 },
-        { type: EnemyType.Lizard, spawnX: 1800, spawnY: 600 }
-      ],
-      [
-        { type: EnemyType.Lizard, spawnX: 100, spawnY: 100 },
-        { type: EnemyType.Lizard, spawnX: 300, spawnY: 200 },
-        { type: EnemyType.Lizard, spawnX: 500, spawnY: 300 },
-        { type: EnemyType.Lizard, spawnX: 900, spawnY: 400 },
-        { type: EnemyType.Lizard, spawnX: 1300, spawnY: 500 },
-        { type: EnemyType.Lizard, spawnX: 1600, spawnY: 600 },
-        { type: EnemyType.Lizard, spawnX: 1800, spawnY: 600 }
+        { type: EnemyType.Lizard, spawnTileX: 24, spawnTileY: 5 },
+        { type: EnemyType.Lizard, spawnTileX: 8, spawnTileY: 7 },
+        { type: EnemyType.Lizard, spawnTileX: 9, spawnTileY: 4 },
+        { type: EnemyType.Lizard, spawnTileX: 15, spawnTileY: 1 },
+        { type: EnemyType.Lizard, spawnTileX: 18, spawnTileY: 6 },
+        { type: EnemyType.Lizard, spawnTileX: 20, spawnTileY: 2 },
+        { type: EnemyType.Lizard, spawnTileX: 28, spawnTileY: 3 }
       ]
     ]
   }
@@ -36,31 +27,22 @@ export default abstract class PlanetWaveConfigProvider {
   public static getIceWaveConfig(): EnemySpawn[][] {
     return [
       [
-        { type: EnemyType.Lizard, spawnX: 100, spawnY: 100 },
-        { type: EnemyType.Lizard, spawnX: 300, spawnY: 200 },
-        { type: EnemyType.Lizard, spawnX: 500, spawnY: 300 },
-        { type: EnemyType.Lizard, spawnX: 900, spawnY: 400 },
-        { type: EnemyType.Lizard, spawnX: 1300, spawnY: 500 },
-        { type: EnemyType.Lizard, spawnX: 1600, spawnY: 600 },
-        { type: EnemyType.Lizard, spawnX: 1800, spawnY: 600 }
+        { type: EnemyType.Lizard, spawnTileX: 24, spawnTileY: 5 },
+        { type: EnemyType.Lizard, spawnTileX: 8, spawnTileY: 7 },
+        { type: EnemyType.Lizard, spawnTileX: 9, spawnTileY: 4 },
+        { type: EnemyType.Lizard, spawnTileX: 15, spawnTileY: 1 },
+        { type: EnemyType.Lizard, spawnTileX: 18, spawnTileY: 6 },
+        { type: EnemyType.Lizard, spawnTileX: 20, spawnTileY: 2 },
+        { type: EnemyType.Lizard, spawnTileX: 28, spawnTileY: 3 }
       ],
       [
-        { type: EnemyType.Lizard, spawnX: 100, spawnY: 100 },
-        { type: EnemyType.Lizard, spawnX: 300, spawnY: 200 },
-        { type: EnemyType.Lizard, spawnX: 500, spawnY: 300 },
-        { type: EnemyType.Lizard, spawnX: 900, spawnY: 400 },
-        { type: EnemyType.Lizard, spawnX: 1300, spawnY: 500 },
-        { type: EnemyType.Lizard, spawnX: 1600, spawnY: 600 },
-        { type: EnemyType.Lizard, spawnX: 1800, spawnY: 600 }
-      ],
-      [
-        { type: EnemyType.Lizard, spawnX: 100, spawnY: 100 },
-        { type: EnemyType.Lizard, spawnX: 300, spawnY: 200 },
-        { type: EnemyType.Lizard, spawnX: 500, spawnY: 300 },
-        { type: EnemyType.Lizard, spawnX: 900, spawnY: 400 },
-        { type: EnemyType.Lizard, spawnX: 1300, spawnY: 500 },
-        { type: EnemyType.Lizard, spawnX: 1600, spawnY: 600 },
-        { type: EnemyType.Lizard, spawnX: 1800, spawnY: 600 }
+        { type: EnemyType.Lizard, spawnTileX: 24, spawnTileY: 5 },
+        { type: EnemyType.Lizard, spawnTileX: 8, spawnTileY: 7 },
+        { type: EnemyType.Lizard, spawnTileX: 9, spawnTileY: 4 },
+        { type: EnemyType.Lizard, spawnTileX: 15, spawnTileY: 1 },
+        { type: EnemyType.Lizard, spawnTileX: 18, spawnTileY: 6 },
+        { type: EnemyType.Lizard, spawnTileX: 20, spawnTileY: 2 },
+        { type: EnemyType.Lizard, spawnTileX: 28, spawnTileY: 3 }
       ]
     ]
   }
@@ -68,31 +50,22 @@ export default abstract class PlanetWaveConfigProvider {
   public static getVolcanoWaveConfig(): EnemySpawn[][] {
     return [
       [
-        { type: EnemyType.Lizard, spawnX: 100, spawnY: 100 },
-        { type: EnemyType.Lizard, spawnX: 300, spawnY: 200 },
-        { type: EnemyType.Lizard, spawnX: 500, spawnY: 300 },
-        { type: EnemyType.Lizard, spawnX: 900, spawnY: 400 },
-        { type: EnemyType.Lizard, spawnX: 1300, spawnY: 500 },
-        { type: EnemyType.Lizard, spawnX: 1600, spawnY: 600 },
-        { type: EnemyType.Lizard, spawnX: 1800, spawnY: 600 }
+        { type: EnemyType.Lizard, spawnTileX: 24, spawnTileY: 5 },
+        { type: EnemyType.Lizard, spawnTileX: 8, spawnTileY: 7 },
+        { type: EnemyType.Lizard, spawnTileX: 9, spawnTileY: 4 },
+        { type: EnemyType.Lizard, spawnTileX: 15, spawnTileY: 1 },
+        { type: EnemyType.Lizard, spawnTileX: 18, spawnTileY: 6 },
+        { type: EnemyType.Lizard, spawnTileX: 20, spawnTileY: 2 },
+        { type: EnemyType.Lizard, spawnTileX: 28, spawnTileY: 3 }
       ],
       [
-        { type: EnemyType.Lizard, spawnX: 100, spawnY: 100 },
-        { type: EnemyType.Lizard, spawnX: 300, spawnY: 200 },
-        { type: EnemyType.Lizard, spawnX: 500, spawnY: 300 },
-        { type: EnemyType.Lizard, spawnX: 900, spawnY: 400 },
-        { type: EnemyType.Lizard, spawnX: 1300, spawnY: 500 },
-        { type: EnemyType.Lizard, spawnX: 1600, spawnY: 600 },
-        { type: EnemyType.Lizard, spawnX: 1800, spawnY: 600 }
-      ],
-      [
-        { type: EnemyType.Lizard, spawnX: 100, spawnY: 100 },
-        { type: EnemyType.Lizard, spawnX: 300, spawnY: 200 },
-        { type: EnemyType.Lizard, spawnX: 500, spawnY: 300 },
-        { type: EnemyType.Lizard, spawnX: 900, spawnY: 400 },
-        { type: EnemyType.Lizard, spawnX: 1300, spawnY: 500 },
-        { type: EnemyType.Lizard, spawnX: 1600, spawnY: 600 },
-        { type: EnemyType.Lizard, spawnX: 1800, spawnY: 600 }
+        { type: EnemyType.Lizard, spawnTileX: 24, spawnTileY: 5 },
+        { type: EnemyType.Lizard, spawnTileX: 8, spawnTileY: 7 },
+        { type: EnemyType.Lizard, spawnTileX: 9, spawnTileY: 4 },
+        { type: EnemyType.Lizard, spawnTileX: 15, spawnTileY: 1 },
+        { type: EnemyType.Lizard, spawnTileX: 18, spawnTileY: 6 },
+        { type: EnemyType.Lizard, spawnTileX: 20, spawnTileY: 2 },
+        { type: EnemyType.Lizard, spawnTileX: 28, spawnTileY: 3 }
       ]
     ]
   }

@@ -21,7 +21,7 @@ export default class Player extends Character {
   protected readonly knockback = 42.5
 
   private constructor(scene: PlanetScene, die: () => void) {
-    super(5, 1, 64, 64, 'frog', scene)
+    super(6, 1, 64, 64, 'frog', scene)
     this.tongueSprite = null
     this.inAttackCooldown = false
     this.wallClingDirection = null
@@ -170,8 +170,6 @@ export default class Player extends Character {
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setAllowGravity(false)
 
     this.scene.soundHelper?.playPlayerWallClingSound()
-
-    this.updateAnimation()
   }
 
   public wallJump(multiplier: number): void {
@@ -185,8 +183,6 @@ export default class Player extends Character {
 
     this.scene.soundHelper?.playPlayerWallJumpSound()
     this.canDoubleJump = true
-
-    this.updateAnimation()
   }
 
   public stopWallCling(): void {
