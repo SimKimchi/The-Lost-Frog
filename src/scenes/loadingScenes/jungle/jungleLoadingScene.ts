@@ -187,12 +187,12 @@ export default class JungleLoadingScene extends LoadingScene {
       jungleAssets.images.platform_jungle_v1
     )
     this.load.image(
-      'platform_jungle_v2',
-      jungleAssets.images.platform_jungle_v2
+      'platform_jungle_branch_h1',
+      jungleAssets.images.platform_jungle_branch_h1
     )
     this.load.image(
-      'platform_jungle_v3',
-      jungleAssets.images.platform_jungle_v3
+      'platform_jungle_branch_h2',
+      jungleAssets.images.platform_jungle_branch_h2
     )
     this.load.image('platform_ice_h1', iceAssets.images.platform_ice_h1)
     this.load.image('platform_ice_v1', iceAssets.images.platform_ice_v1)

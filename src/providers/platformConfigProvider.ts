@@ -7,7 +7,9 @@ export default abstract class PlatformConfigProvider {
       height: 32,
       spriteKey: 'platform_jungle_h1',
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      clingSides: false,
+      clingUnder: true
     }
   }
 
@@ -17,7 +19,9 @@ export default abstract class PlatformConfigProvider {
       height: 32,
       spriteKey: 'platform_jungle_h2',
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      clingSides: false,
+      clingUnder: true
     }
   }
 
@@ -27,7 +31,9 @@ export default abstract class PlatformConfigProvider {
       height: 32,
       spriteKey: 'platform_jungle_h3',
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      clingSides: false,
+      clingUnder: true
     }
   }
 
@@ -37,7 +43,9 @@ export default abstract class PlatformConfigProvider {
       height: 32,
       spriteKey: 'platform_jungle_h4',
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      clingSides: false,
+      clingUnder: true
     }
   }
 
@@ -46,28 +54,35 @@ export default abstract class PlatformConfigProvider {
       width: 32,
       height: 64,
       spriteKey: 'platform_jungle_v1'
+      spriteKey: 'platform_jungle_v1',
+      clingSides: true,
+      clingUnder: false
     }
   }
 
-  public static getJungleV2Config(): PlatformConfig {
+  public static getJungleBranchH1Config(): PlatformConfig {
     return {
       width: 32,
       height: 32,
-      spriteKey: 'platform_jungle_v2',
+      spriteKey: 'platform_jungle_branch_h1',
       checkDownCollision: false,
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      clingSides: false,
+      clingUnder: false
     }
   }
 
-  public static getJungleV3Config(): PlatformConfig {
+  public static getJungleBranchH2Config(): PlatformConfig {
     return {
       width: 32,
       height: 32,
-      spriteKey: 'platform_jungle_v3',
+      spriteKey: 'platform_jungle_branch_h2',
       checkDownCollision: false,
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      clingSides: false,
+      clingUnder: false
     }
   }
 
@@ -86,7 +101,9 @@ export default abstract class PlatformConfigProvider {
       height: 0.1,
       spriteKey: 'platform_ice_h1',
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      clingSides: false,
+      clingUnder: true
     }
   }
 
@@ -94,7 +111,9 @@ export default abstract class PlatformConfigProvider {
     return {
       width: 32,
       height: 64,
-      spriteKey: 'platform_ice_v1'
+      spriteKey: 'platform_ice_v1',
+	  clingSides: true,
+      clingUnder: false
     }
   }
 
@@ -113,7 +132,9 @@ export default abstract class PlatformConfigProvider {
       height: 32,
       spriteKey: 'platform_volcano_h1',
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      clingSides: false,
+      clingUnder: true
     }
   }
 
@@ -123,7 +144,9 @@ export default abstract class PlatformConfigProvider {
       height: 32,
       spriteKey: 'platform_volcano_h2',
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      clingSides: false,
+      clingUnder: true
     }
   }
 
@@ -133,7 +156,9 @@ export default abstract class PlatformConfigProvider {
       height: 32,
       spriteKey: 'platform_volcano_h3',
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      clingSides: false,
+      clingUnder: true
     }
   }
 }

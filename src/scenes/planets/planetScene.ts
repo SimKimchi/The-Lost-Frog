@@ -63,9 +63,12 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.displayHp = null
     this.enemies = []
     this.currentEnemyWave = 0
-    this.inputHelper = new InputHelper(this.input.keyboard)
-    this.soundHelper = new SoundHelper(this.sound)
     this.collisionHelper = new CollisionHelper(this.physics, this.player)
+    this.inputHelper = new InputHelper(
+      this.input.keyboard,
+      this.collisionHelper
+    )
+    this.soundHelper = new SoundHelper(this.sound)
     this.deathHelper = new DeathHelper(this)
   }
 
@@ -89,7 +92,8 @@ export default abstract class PlanetScene extends Phaser.Scene {
       this.player,
       this.velocityXModifier,
       this.velocityYModifier,
-      this.planetFrictionModifier
+      this.planetFrictionModifier,
+      this.platformGroup
     )
     this.player.updateAnimation()
   }

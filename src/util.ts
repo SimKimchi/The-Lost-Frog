@@ -29,6 +29,10 @@ export type PlatformConfig = {
   damageDown?: boolean
   damageLeft?: boolean
   damageRight?: boolean
+  clingSides: boolean
+  clingUnder: boolean
+  clingSides: boolean
+  clingUnder: boolean
 }
 
 export type AnimationConfig = {

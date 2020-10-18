@@ -19,6 +19,7 @@ export default class Player extends Character {
   public wallClingDirection: Direction | null
   protected die: (() => void) | null
   protected readonly knockback = 42.5
+  public clingPlatform: Phaser.GameObjects.Sprite | null
 
   private constructor(scene: PlanetScene, die: () => void) {
     super(6, 1, 64, 64, 'frog', scene)
@@ -26,6 +27,7 @@ export default class Player extends Character {
     this.inAttackCooldown = false
     this.wallClingDirection = null
     this.die = die
+    this.clingPlatform = null
   }
 
   public static getPlayer(scene: PlanetScene, die: () => void): Player {
@@ -145,7 +147,7 @@ export default class Player extends Character {
     super.handleHit(direction, damage)
   }
 
-  public clingToWall(): void {
+  public clingToWall(platform: Phaser.GameObjects.Sprite): void {
     if (
       this.wallClingDirection !== null ||
       !this.container ||
@@ -153,19 +155,25 @@ export default class Player extends Character {
     )
       return
 
-    if ((this.container.body as Phaser.Physics.Arcade.Body).touching.left) {
+    if (
+      (this.container.body as Phaser.Physics.Arcade.Body).touching.left &&
+      platform.getData('clingSides')
+    ) {
       this.wallClingDirection = Direction.Left
     } else if (
-      (this.container.body as Phaser.Physics.Arcade.Body).touching.right
+      (this.container.body as Phaser.Physics.Arcade.Body).touching.right &&
+      platform.getData('clingSides')
     ) {
       this.wallClingDirection = Direction.Right
     } else if (
-      (this.container.body as Phaser.Physics.Arcade.Body).touching.up
+      (this.container.body as Phaser.Physics.Arcade.Body).touching.up &&
+      platform.getData('clingUnder')
     ) {
       this.wallClingDirection = Direction.Up
     }
 
     if (this.wallClingDirection === null) return
+    this.clingPlatform = platform
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocity(0, 0)
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setAllowGravity(false)
 
@@ -175,8 +183,7 @@ export default class Player extends Character {
   public wallJump(multiplier: number): void {
     if (!this.container) return
 
-    this.wallClingDirection = null
-    ;(<Phaser.Physics.Arcade.Body>this.container.body).setAllowGravity(true)
+    this.stopWallCling()
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(
       this.jumpStrength * multiplier
     )
@@ -189,9 +196,9 @@ export default class Player extends Character {
     if (!this.container) return
 
     this.wallClingDirection = null
+    this.clingPlatform = null
+    this.canDoubleJump = true
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setAllowGravity(true)
-
-    this.scene.soundHelper?.playPlayerWallJumpSound()
   }
 
   protected makeInvulnerable(): void {

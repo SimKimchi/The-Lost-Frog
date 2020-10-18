@@ -10,8 +10,8 @@ export default abstract class PlatformGroupFactory {
     const jungleH3Config = PlatformConfigProvider.getJungleH3Config()
     const jungleH4Config = PlatformConfigProvider.getJungleH4Config()
     const jungleV1Config = PlatformConfigProvider.getJungleV1Config()
-    const jungleV2Config = PlatformConfigProvider.getJungleV2Config()
-    const jungleV3Config = PlatformConfigProvider.getJungleV3Config()
+    const jungleBranchH1Config = PlatformConfigProvider.getJungleBranchH1Config()
+    const jungleBranchH2Config = PlatformConfigProvider.getJungleBranchH2Config()
     const jungleSpikesConfig = PlatformConfigProvider.getJungleSpikesConfig()
     const platformArray: Platform[] = [
       { x: 0, y: 0, config: jungleH1Config },
@@ -26,10 +26,16 @@ export default abstract class PlatformGroupFactory {
       { x: 2, y: 0, config: jungleH1Config },
       { x: 4, y: 1, posOffsetX: 16, config: jungleV1Config },
       { x: 4, y: 2, posOffsetX: 16, config: jungleV1Config },
-      { x: 4, y: 3, posOffsetX: -16, config: jungleV2Config },
+      { x: 4, y: 3, posOffsetX: -16, config: jungleBranchH1Config },
       { x: 4, y: 3, posOffsetX: 16, config: jungleV1Config },
       { x: 4, y: 4, posOffsetX: 16, config: jungleV1Config },
-      { x: 4, y: 4, posOffsetX: 48, posOffsetY: 16, config: jungleV3Config },
+      {
+        x: 4,
+        y: 4,
+        posOffsetX: 48.01,
+        posOffsetY: 16,
+        config: jungleBranchH2Config
+      },
       { x: 4, y: 5, posOffsetX: 16, config: jungleV1Config },
       { x: 5, y: 8, config: jungleH1Config },
       { x: 6, y: 2, config: jungleH1Config },
@@ -149,8 +155,8 @@ export default abstract class PlatformGroupFactory {
     const volcanoH3Config = PlatformConfigProvider.getVolcanoH3Config()
     const jungleH4Config = PlatformConfigProvider.getJungleH4Config()
     const jungleV1Config = PlatformConfigProvider.getJungleV1Config()
-    const jungleV2Config = PlatformConfigProvider.getJungleV2Config()
-    const jungleV3Config = PlatformConfigProvider.getJungleV3Config()
+    const jungleV2Config = PlatformConfigProvider.getJungleBranchH1Config()
+    const jungleV3Config = PlatformConfigProvider.getJungleBranchH2Config()
     const platformArray: Platform[] = [
       { x: 4, y: 1, posOffsetX: 16, config: jungleV1Config },
       { x: 4, y: 2, posOffsetX: 16, config: jungleV1Config },
@@ -235,6 +241,9 @@ export default abstract class PlatformGroupFactory {
       sprite.setData('damageDown', platform.config.damageDown ?? false)
       sprite.setData('damageLeft', platform.config.damageLeft ?? false)
       sprite.setData('damageRight', platform.config.damageRight ?? false)
+     
+      sprite.setData('clingSides', platform.config.clingSides)
+      sprite.setData('clingUnder', platform.config.clingUnder)
     }
 
     return platformGroup
