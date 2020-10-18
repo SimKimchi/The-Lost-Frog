@@ -57,6 +57,7 @@ Special thanks for our testers :
     ViBe
     c'est qui
     Papaprune
+    Renard Rusé
 `,
         {
           font: '14px monospace',
