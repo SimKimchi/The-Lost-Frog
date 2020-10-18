@@ -86,47 +86,45 @@ export default class InputHelper {
     planetFrictionModifier: number,
     platformGroup: Phaser.Physics.Arcade.StaticGroup
   ): void {
-    let direction = null
-    if (this.hotKeys.W.isDown) {
-      direction = Direction.Up
-    } else if (this.hotKeys.D.isDown) {
-      direction = Direction.Right
-    } else if (this.hotKeys.S.isDown) {
-      direction = Direction.Down
-    } else if (this.hotKeys.A.isDown) {
-      direction = Direction.Left
-    }
     let checkEdge: IEdge = { isAtEdge: false, adjacentPlatform: undefined }
-    if (player.clingPlatform) {
-      checkEdge = this.collisionHelper.checkPlatformEdge(
-        <Phaser.Physics.Arcade.Body>player.getContainer().body,
-        player.clingPlatform,
-        platformGroup,
-        direction
-      )
-    }
     if (player.wallClingDirection === Direction.Up) {
-      // TODO check in A.isDown and D.isDown for adjacent platforms
       if (this.hotKeys.S.isDown) {
         player.stopWallCling()
       } else if (this.hotKeys.A.isDown) {
-        player.run(-velocityXModifier * 0.75)
+        checkEdge = this.checkEdge(player, platformGroup, Direction.Left)
+        if (!checkEdge.isAtEdge || checkEdge.adjacentPlatform) {
+          player.run(-velocityXModifier * 0.75)
+        } else {
+          player.stop(planetFrictionModifier)
+        }
       } else if (this.hotKeys.D.isDown) {
-        player.run(velocityXModifier * 0.75)
+        checkEdge = this.checkEdge(player, platformGroup, Direction.Right)
+        if (!checkEdge.isAtEdge || checkEdge.adjacentPlatform) {
+          player.run(velocityXModifier * 0.75)
+        } else {
+          player.stop(planetFrictionModifier)
+        }
       } else {
         player.stop(planetFrictionModifier)
       }
+      if (checkEdge.adjacentPlatform) {
+        player.clingPlatform = checkEdge.adjacentPlatform
+      }
     } else {
-      if (
-        this.hotKeys.W.isDown &&
-        (!checkEdge.isAtEdge || checkEdge.adjacentPlatform)
-      ) {
-        player.climb(-velocityYModifier / 2)
-      } else if (
-        this.hotKeys.S.isDown &&
-        (!checkEdge.isAtEdge || checkEdge.adjacentPlatform)
-      ) {
-        player.climb(velocityYModifier / 2)
+      if (this.hotKeys.W.isDown) {
+        checkEdge = this.checkEdge(player, platformGroup, Direction.Up)
+        if (!checkEdge.isAtEdge || checkEdge.adjacentPlatform) {
+          player.climb(-velocityYModifier / 2)
+        } else {
+          player.climb(0)
+        }
+      } else if (this.hotKeys.S.isDown) {
+        checkEdge = this.checkEdge(player, platformGroup, Direction.Down)
+        if (!checkEdge.isAtEdge || checkEdge.adjacentPlatform) {
+          player.climb(velocityYModifier / 2)
+        } else {
+          player.climb(0)
+        }
       } else {
         player.climb(0)
       }
@@ -137,6 +135,23 @@ export default class InputHelper {
         player.wallJump(-velocityYModifier)
       }
     }
+  }
+
+  private checkEdge(
+    player: Player,
+    platformGroup: Phaser.Physics.Arcade.StaticGroup,
+    direction: Direction
+  ): IEdge {
+    let checkEdge: IEdge = { isAtEdge: false, adjacentPlatform: undefined }
+    if (player.clingPlatform) {
+      checkEdge = this.collisionHelper.checkPlatformEdge(
+        <Phaser.Physics.Arcade.Body>player.getContainer().body,
+        player.clingPlatform,
+        platformGroup,
+        direction
+      )
+    }
+    return checkEdge
   }
 
   private handleAttack(player: Player): void {
