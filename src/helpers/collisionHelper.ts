@@ -65,8 +65,11 @@ export default class CollisionHelper {
     this.physics.add.collider(
       [this.player.getContainer()],
       platformGroup,
-      (_player, platform) => {
+      (player, platform) => {
         this.player.clingToWall(platform as Phaser.GameObjects.Sprite)
+        if ((<Phaser.Physics.Arcade.Body>player.body).touching.down) {
+          this.player.canDoubleJump = true
+        }
       }
     )
   }

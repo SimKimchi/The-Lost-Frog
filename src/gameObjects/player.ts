@@ -13,7 +13,7 @@ export default class Player extends Character {
   protected readonly jumpStrength = 550
   protected readonly gravity = 200
   private static instance: Player
-  private canDoubleJump = false
+  public canDoubleJump = true
   private tongueSprite: Phaser.Physics.Arcade.Sprite | null
   private inAttackCooldown: boolean
   public wallClingDirection: Direction | null
@@ -107,8 +107,14 @@ export default class Player extends Character {
     if (this.wallClingDirection !== null) {
       if (this.wallClingDirection === Direction.Left) {
         this.sprite.anims.play(`${this.assetPrefix}_idle_left`, true)
-      } else {
+      } else if (this.wallClingDirection === Direction.Right) {
         this.sprite.anims.play(`${this.assetPrefix}_idle_right`, true)
+      } else {
+        if (this.direction === Direction.Left) {
+          this.sprite.anims.play(`${this.assetPrefix}_idle_left`, true)
+        } else {
+          this.sprite.anims.play(`${this.assetPrefix}_idle_right`, true)
+        }
       }
     } else if (this.idle) {
       if (this.direction === Direction.Left) {
@@ -132,7 +138,7 @@ export default class Player extends Character {
   }
 
   public attack(direction: Direction): void {
-    if (this.inAttackCooldown) return
+    if (this.inAttackCooldown || direction === this.wallClingDirection) return
 
     // TODO jouer une animation d'attaque quand ce sera une spritesheet
     this.renderAttack(direction)
@@ -189,7 +195,6 @@ export default class Player extends Character {
     )
 
     this.scene.soundHelper?.playPlayerWallJumpSound()
-    this.canDoubleJump = true
   }
 
   public stopWallCling(): void {
