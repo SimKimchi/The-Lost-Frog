@@ -194,6 +194,7 @@ export default abstract class Character {
       args: [this],
       callback: (character: Character) => {
         character.invulnerable = false
+        character.updateAnimation()
       },
       callbackScope: this.scene
     })

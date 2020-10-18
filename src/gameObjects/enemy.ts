@@ -5,7 +5,7 @@ import Character from './character'
 
 export default class Enemy extends Character {
   public scoreWorth: number
-  protected readonly invulnerableTime = 200
+  protected readonly invulnerableTime = 300
   protected readonly moveSpeed = 75
   protected readonly jumpStrength = 400
   protected readonly gravity = 100
@@ -37,16 +37,20 @@ export default class Enemy extends Character {
   }
 
   public updateAnimation(): void {
-    if (!this.sprite || !this.container) return
+    if (!this.sprite || !this.container || !this.container.body) return
 
-    if ((<Phaser.Physics.Arcade.Body>this.container.body).velocity.x < 0) {
-      this.sprite.anims.play(`${this.assetPrefix}_left`, true)
+    if (this.isInvulnerable()) {
+      if (this.direction === Direction.Left) {
+        this.sprite.anims.play(`${this.assetPrefix}_hurt_left`, true)
+      } else {
+        this.sprite.anims.play(`${this.assetPrefix}_hurt_right`, true)
+      }
     } else if (
-      (<Phaser.Physics.Arcade.Body>this.container.body).velocity.x > 0
+      (<Phaser.Physics.Arcade.Body>this.container.body).velocity.x < 0
     ) {
-      this.sprite.anims.play(`${this.assetPrefix}_right`, true)
+      this.sprite.anims.play(`${this.assetPrefix}_left`, true)
     } else {
-      this.sprite.anims.play(`${this.assetPrefix}_idle`, true)
+      this.sprite.anims.play(`${this.assetPrefix}_right`, true)
     }
 
     this.sprite.setDisplaySize(this.spriteWidth, this.spriteHeight)
@@ -77,10 +81,14 @@ export default class Enemy extends Character {
 
     if (!this.sprite) return
 
+    this.updateAnimation()
+
     this.sprite.setTint(0xff0000)
     this.scene.time.addEvent({
       delay: this.invulnerableTime,
-      callback: () => this.sprite?.clearTint()
+      callback: () => {
+        this.sprite?.clearTint()
+      }
     })
   }
 }

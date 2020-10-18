@@ -234,6 +234,22 @@ export default class JungleLoadingScene extends LoadingScene {
         frameHeight: 16
       }
     )
+    this.load.spritesheet(
+      'enemy_lizard_hurt_right',
+      jungleAssets.images.enemy_lizard_hurt_right,
+      {
+        frameWidth: 32,
+        frameHeight: 16
+      }
+    )
+    this.load.spritesheet(
+      'enemy_lizard_hurt_left',
+      jungleAssets.images.enemy_lizard_hurt_left,
+      {
+        frameWidth: 32,
+        frameHeight: 16
+      }
+    )
     this.load.spritesheet('dude', jungleAssets.images.dude, {
       frameWidth: 32,
       frameHeight: 48

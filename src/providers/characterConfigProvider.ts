@@ -65,17 +65,27 @@ export default abstract class CharacterConfigProvider {
           repeat: -1
         },
         {
-          key: 'lizard_idle',
-          assetKey: 'enemy_lizard_left',
-          frame: 1,
-          frameRate: 20
-        },
-        {
           key: 'lizard_right',
           assetKey: 'enemy_lizard_right',
           frameStart: 0,
           frameEnd: 4,
           frameRate: 6,
+          repeat: -1
+        },
+        {
+          key: 'lizard_hurt_left',
+          assetKey: 'enemy_lizard_hurt_left',
+          frameStart: 0,
+          frameEnd: 5,
+          frameRate: 30,
+          repeat: -1
+        },
+        {
+          key: 'lizard_hurt_right',
+          assetKey: 'enemy_lizard_hurt_right',
+          frameStart: 0,
+          frameEnd: 5,
+          frameRate: 30,
           repeat: -1
         }
       ],
