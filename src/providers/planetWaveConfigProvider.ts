@@ -4,7 +4,7 @@ export default abstract class PlanetWaveConfigProvider {
   public static getJungleWaveConfig(): EnemySpawn[][] {
     return [
       [
-        { type: EnemyType.Lizard, spawnTileX: 1, spawnTileY: 1 }
+        { type: EnemyType.Lizard, spawnTileX: 6, spawnTileY: 8 }
         //   { type: EnemyType.Lizard, spawnTileX: 8, spawnTileY: 7 },
         //   { type: EnemyType.Lizard, spawnTileX: 9, spawnTileY: 4 },
         //   { type: EnemyType.Lizard, spawnTileX: 15, spawnTileY: 1 },
@@ -27,7 +27,7 @@ export default abstract class PlanetWaveConfigProvider {
   public static getIceWaveConfig(): EnemySpawn[][] {
     return [
       [
-        { type: EnemyType.Lizard, spawnTileX: 1, spawnTileY: 1 }
+        { type: EnemyType.Lizard, spawnTileX: 6, spawnTileY: 8 }
         //   { type: EnemyType.Lizard, spawnTileX: 8, spawnTileY: 7 },
         //   { type: EnemyType.Lizard, spawnTileX: 9, spawnTileY: 4 },
         //   { type: EnemyType.Lizard, spawnTileX: 15, spawnTileY: 1 },
@@ -50,7 +50,7 @@ export default abstract class PlanetWaveConfigProvider {
   public static getVolcanoWaveConfig(): EnemySpawn[][] {
     return [
       [
-        { type: EnemyType.Lizard, spawnTileX: 1, spawnTileY: 1 },
+        { type: EnemyType.Lizard, spawnTileX: 6, spawnTileY: 8 },
         { type: EnemyType.Lizard, spawnTileX: 8, spawnTileY: 7 },
         { type: EnemyType.Lizard, spawnTileX: 9, spawnTileY: 4 },
         { type: EnemyType.Lizard, spawnTileX: 15, spawnTileY: 1 },

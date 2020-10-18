@@ -8,8 +8,8 @@ export default abstract class PlatformConfigProvider {
       spriteKey: 'platform_jungle_h1',
       checkUpCollision: true,
       checkDownCollision: true,
-      checkLeftCollision: true,
-      checkRightCollision: true
+      checkLeftCollision: false,
+      checkRightCollision: false
     }
   }
 
@@ -20,8 +20,8 @@ export default abstract class PlatformConfigProvider {
       spriteKey: 'platform_jungle_h2',
       checkUpCollision: true,
       checkDownCollision: true,
-      checkLeftCollision: true,
-      checkRightCollision: true
+      checkLeftCollision: false,
+      checkRightCollision: false
     }
   }
 
@@ -32,8 +32,8 @@ export default abstract class PlatformConfigProvider {
       spriteKey: 'platform_jungle_h3',
       checkUpCollision: true,
       checkDownCollision: true,
-      checkLeftCollision: true,
-      checkRightCollision: true
+      checkLeftCollision: false,
+      checkRightCollision: false
     }
   }
 
@@ -44,8 +44,8 @@ export default abstract class PlatformConfigProvider {
       spriteKey: 'platform_jungle_h4',
       checkUpCollision: true,
       checkDownCollision: true,
-      checkLeftCollision: true,
-      checkRightCollision: true
+      checkLeftCollision: false,
+      checkRightCollision: false
     }
   }
 
@@ -92,8 +92,8 @@ export default abstract class PlatformConfigProvider {
       spriteKey: 'platform_ice_h1',
       checkUpCollision: true,
       checkDownCollision: true,
-      checkLeftCollision: true,
-      checkRightCollision: true
+      checkLeftCollision: false,
+      checkRightCollision: false
     }
   }
 
@@ -116,8 +116,8 @@ export default abstract class PlatformConfigProvider {
       spriteKey: 'platform_volcano_h1',
       checkUpCollision: true,
       checkDownCollision: true,
-      checkLeftCollision: true,
-      checkRightCollision: true
+      checkLeftCollision: false,
+      checkRightCollision: false
     }
   }
 
@@ -128,8 +128,8 @@ export default abstract class PlatformConfigProvider {
       spriteKey: 'platform_volcano_h2',
       checkUpCollision: true,
       checkDownCollision: true,
-      checkLeftCollision: true,
-      checkRightCollision: true
+      checkLeftCollision: false,
+      checkRightCollision: false
     }
   }
 
@@ -140,8 +140,8 @@ export default abstract class PlatformConfigProvider {
       spriteKey: 'platform_volcano_h3',
       checkUpCollision: true,
       checkDownCollision: true,
-      checkLeftCollision: true,
-      checkRightCollision: true
+      checkLeftCollision: false,
+      checkRightCollision: false
     }
   }
 }

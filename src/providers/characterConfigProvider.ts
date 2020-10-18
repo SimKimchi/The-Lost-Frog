@@ -3,8 +3,8 @@ import { CharacterConfig } from '../util'
 export default abstract class CharacterConfigProvider {
   public static getPlayerConfig(): CharacterConfig {
     return {
-      spawnX: 100,
-      spawnY: 450,
+      spawnX: 64,
+      spawnY: 550,
       spriteKey: 'dude',
       collideWorldBounds: true,
       animations: [
