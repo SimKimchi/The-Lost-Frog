@@ -46,6 +46,6 @@ export default class JunglePlanetScene extends PlanetScene {
 
     if (!this.soundHelper) return
 
-    this.soundHelper.setPlanetTheme('volcanoTheme')
+    this.soundHelper.setPlanetTheme('jungle_theme')
   }
 }

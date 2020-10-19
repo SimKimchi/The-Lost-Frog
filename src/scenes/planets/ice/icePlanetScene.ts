@@ -37,6 +37,6 @@ export default class IcePlanetScene extends PlanetScene {
 
     if (!this.soundHelper) return
 
-    this.soundHelper.setPlanetTheme('iceTheme')
+    this.soundHelper.setPlanetTheme('ice_theme')
   }
 }
