@@ -39,20 +39,32 @@ export default abstract class CharacterConfigProvider {
           repeat: -1
         },
         {
-          key: 'frog_jump_left',
+          key: 'frog_jump_ascend_left',
           assetKey: 'frog_jump_left_anim',
-          frameStart: 0,
-          frameEnd: 8,
-          frameRate: 10,
-          repeat: -1
+          frameStart: 1,
+          frameEnd: 3,
+          frameRate: 20
         },
         {
-          key: 'frog_jump_right',
+          key: 'frog_jump_ascend_right',
           assetKey: 'frog_jump_right_anim',
-          frameStart: 0,
-          frameEnd: 8,
-          frameRate: 10,
-          repeat: -1
+          frameStart: 1,
+          frameEnd: 3,
+          frameRate: 20
+        },
+        {
+          key: 'frog_jump_descend_left',
+          assetKey: 'frog_jump_left_anim',
+          frameStart: 4,
+          frameEnd: 5,
+          frameRate: 10
+        },
+        {
+          key: 'frog_jump_descend_right',
+          assetKey: 'frog_jump_right_anim',
+          frameStart: 4,
+          frameEnd: 5,
+          frameRate: 10
         }
       ],
       hitAreaWidth: 28,

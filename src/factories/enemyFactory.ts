@@ -103,6 +103,5 @@ export default abstract class EnemyFactory {
     } else {
       enemy.run(scene.velocityXModifier)
     }
-    enemy.updateAnimation()
   }
 }

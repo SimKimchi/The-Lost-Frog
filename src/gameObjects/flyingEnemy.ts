@@ -56,6 +56,7 @@ export default class FlyingEnemy extends Enemy {
       ;(<Phaser.Physics.Arcade.Body>this.getContainer().body).setVelocityX(0)
       ;(<Phaser.Physics.Arcade.Body>this.getContainer().body).setVelocityY(0)
     }
+
     this.updateAnimation()
   }
 }

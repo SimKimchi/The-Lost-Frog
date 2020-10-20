@@ -121,19 +121,18 @@ export default abstract class Character {
     }
 
     this.idle = false
+
+    this.updateAnimation()
   }
 
   public stop(planetFrictionModifier: number): void {
     if (!this.container) return
+    ;(<Phaser.Physics.Arcade.Body>this.container.body).setDragX(
+      planetFrictionModifier
+    )
 
-    if (!this.isGrounded()) {
-      ;(<Phaser.Physics.Arcade.Body>this.container.body).setDragX(
-        planetFrictionModifier
-      )
-    } else {
-      ;(<Phaser.Physics.Arcade.Body>this.container.body).setDragX(
-        planetFrictionModifier
-      )
+    if (this.isGrounded()) {
+      this.updateAnimation()
     }
 
     this.idle = true

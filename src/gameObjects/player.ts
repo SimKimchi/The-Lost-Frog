@@ -1,6 +1,6 @@
 import 'phaser'
 import Character from './character'
-import { CharacterConfig, Direction } from '../util'
+import { CharacterConfig, Direction, getRandomInt } from '../util'
 import PlanetScene from '../scenes/planets/planetScene'
 
 export default class Player extends Character {
@@ -61,12 +61,16 @@ export default class Player extends Character {
         this.jumpStrength * multiplier
       )
       this.scene.soundHelper?.playPlayerJumpSound()
+
+      this.updateAnimation()
     } else if (this.canDoubleJump) {
       this.canDoubleJump = false
       ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(
         this.jumpStrength * multiplier
       )
       this.scene.soundHelper?.playPlayerDoubleJumpSound()
+
+      this.updateAnimation()
     }
   }
 
@@ -90,6 +94,8 @@ export default class Player extends Character {
     }
 
     this.idle = false
+
+    this.updateAnimation()
   }
 
   public stopClimb(planetFrictionModifier: number): void {
@@ -106,6 +112,8 @@ export default class Player extends Character {
     )
 
     this.idle = false
+
+    this.updateAnimation()
   }
 
   public bounce(multiplier: number): void {
@@ -115,12 +123,13 @@ export default class Player extends Character {
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(
       -this.jumpStrength * multiplier * 0.75
     )
+
+    this.updateAnimation()
   }
 
   public updateAnimation(): void {
     if (!this.container || !this.sprite) return
 
-    // TODO: Implement 'jump' and 'fall' animations when we'll have them
     // * Wall cling
     if (this.wallClingDirection !== null) {
       if (this.facingLeft()) {
@@ -137,15 +146,15 @@ export default class Player extends Character {
     ) {
       if ((<Phaser.Physics.Arcade.Body>this.container.body).velocity.y > 0) {
         if (this.facingLeft()) {
-          this.sprite.anims.play(`${this.assetPrefix}_jump_left`, true)
+          this.sprite.anims.play(`${this.assetPrefix}_jump_descend_left`, true)
         } else {
-          this.sprite.anims.play(`${this.assetPrefix}_jump_right`, true)
+          this.sprite.anims.play(`${this.assetPrefix}_jump_descend_right`, true)
         }
       } else {
         if (this.facingLeft()) {
-          this.sprite.anims.play(`${this.assetPrefix}_jump_left`, true)
+          this.sprite.anims.play(`${this.assetPrefix}_jump_ascend_left`, true)
         } else {
-          this.sprite.anims.play(`${this.assetPrefix}_jump_right`, true)
+          this.sprite.anims.play(`${this.assetPrefix}_jump_ascend_right`, true)
         }
       }
     }
@@ -159,11 +168,6 @@ export default class Player extends Character {
       if (this.facingLeft()) {
         this.sprite.anims.play(`${this.assetPrefix}_run_left`, true)
       } else {
-        console.log(
-          Math.floor(
-            (<Phaser.Physics.Arcade.Body>this.container.body).velocity.x
-          )
-        )
         this.sprite.anims.play(`${this.assetPrefix}_run_right`, true)
       }
     }
@@ -238,11 +242,11 @@ export default class Player extends Character {
 
   public wallJump(multiplier: number): void {
     if (!this.container) return
-
-    this.stopWallCling()
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(
       this.jumpStrength * multiplier
     )
+
+    this.stopWallCling()
 
     this.scene.soundHelper?.playPlayerWallJumpSound()
   }
@@ -255,6 +259,8 @@ export default class Player extends Character {
     this.canDoubleJump = true
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setAllowGravity(true)
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setDragY(0)
+
+    this.updateAnimation()
   }
 
   protected makeInvulnerable(): void {

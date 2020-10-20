@@ -100,7 +100,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
       this.planetFrictionModifier,
       this.platformGroup
     )
-    this.player.updateAnimation()
+
     this.enemies
       .filter((enemy) => enemy.constructor.name === 'FlyingEnemy')
       .forEach((enemy) => {
