@@ -12,7 +12,7 @@ export default class IcePlanetScene extends PlanetScene {
   }
 
   public goToNextPlanet(): void {
-    this.sound.removeAll()
+    this.soundHelper?.stopAllSounds()
     this.game.scene.switch('IcePlanetScene', 'VolcanoPlanetTransitionScene')
   }
 
@@ -33,6 +33,6 @@ export default class IcePlanetScene extends PlanetScene {
 
     if (!this.soundHelper) return
 
-    this.soundHelper.setPlanetTheme('ice_theme')
+    this.soundHelper.setMusic('ice_theme')
   }
 }

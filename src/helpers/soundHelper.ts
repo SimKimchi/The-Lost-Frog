@@ -16,10 +16,10 @@ export default class SoundHelper {
     this.soundManager.add('wall_jump', { volume: 0.1 })
   }
 
-  public setPlanetTheme(theme: string): void {
+  public setMusic(theme: string, loop = true): void {
     this.music = this.soundManager.add(theme, {
-      volume: 0.6,
-      loop: true
+      volume: 0.75,
+      loop: loop
     })
 
     this.playMusic()
@@ -35,6 +35,12 @@ export default class SoundHelper {
     if (!this.music) return
 
     this.music.pause()
+  }
+
+  public stopAllSounds(): void {
+    if (!this.music) return
+
+    this.soundManager.removeAll()
   }
 
   public mute(): void {

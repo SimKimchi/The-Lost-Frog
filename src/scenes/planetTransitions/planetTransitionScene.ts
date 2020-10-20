@@ -1,7 +1,9 @@
+import SoundHelper from '../../helpers/soundHelper'
 import { HotKeys } from '../../util'
 
 export default class PlanetTransitionScene extends Phaser.Scene {
   private hotKeys: HotKeys | null
+  public soundHelper: SoundHelper | null
   private currentSceneName: string
   private nextPlanetSceneName: string
   private sceneTitle: string
@@ -20,10 +22,12 @@ export default class PlanetTransitionScene extends Phaser.Scene {
     this.nextPlanetSceneName = nextPlanetSceneName
     this.sceneTitle = sceneTitle
     this.sceneDescription = sceneDescription
+    this.soundHelper = null
   }
 
   public init(): void {
     this.hotKeys = this.input.keyboard.addKeys('ENTER') as HotKeys
+    this.soundHelper = new SoundHelper(this.sound)
   }
   public create(): void {
     const width = this.game.scale.width
@@ -68,9 +72,19 @@ export default class PlanetTransitionScene extends Phaser.Scene {
       },
       this
     )
+
+    this.playMusic()
+  }
+
+  private playMusic(): void {
+    if (!this.soundHelper) return
+
+    this.soundHelper.setMusic('transition_theme', false)
   }
 
   protected goToScene(): void {
+    this.soundHelper?.stopAllSounds()
+
     this.game.scene.switch(this.currentSceneName, this.nextPlanetSceneName)
   }
 }

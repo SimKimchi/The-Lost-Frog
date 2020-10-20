@@ -12,7 +12,7 @@ export default class JunglePlanetScene extends PlanetScene {
   }
 
   public goToNextPlanet(): void {
-    this.sound.removeAll()
+    this.soundHelper?.stopAllSounds()
     this.game.scene.switch('JunglePlanetScene', 'IcePlanetTransitionScene')
   }
 
@@ -50,6 +50,6 @@ export default class JunglePlanetScene extends PlanetScene {
 
     if (!this.soundHelper) return
 
-    this.soundHelper.setPlanetTheme('jungle_theme')
+    this.soundHelper.setMusic('jungle_theme')
   }
 }

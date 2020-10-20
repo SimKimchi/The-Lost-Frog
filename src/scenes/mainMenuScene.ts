@@ -1,9 +1,11 @@
+import SoundHelper from '../helpers/soundHelper'
 import { HotKeys } from '../util'
 
 export default class MainMenuScene extends Phaser.Scene {
   private playTextOption: Phaser.GameObjects.Text | null
   private creditsTextOption: Phaser.GameObjects.Text | null
   private hotKeys: HotKeys | null
+  public soundHelper: SoundHelper | null
 
   constructor() {
     super('MainMenuScene')
@@ -11,10 +13,12 @@ export default class MainMenuScene extends Phaser.Scene {
     this.playTextOption = null
     this.creditsTextOption = null
     this.hotKeys = null
+    this.soundHelper = null
   }
 
   public init(): void {
     this.hotKeys = this.input.keyboard.addKeys('S,W,UP,DOWN,ENTER') as HotKeys
+    this.soundHelper = new SoundHelper(this.sound)
   }
 
   public create(): void {
@@ -84,9 +88,19 @@ export default class MainMenuScene extends Phaser.Scene {
       },
       this
     )
+
+    this.playMusic()
+  }
+
+  private playMusic(): void {
+    if (!this.soundHelper) return
+
+    this.soundHelper.setMusic('main_theme')
   }
 
   private goToFirstPlanet(): void {
+    this.soundHelper?.stopAllSounds()
+
     this.game.scene.switch('MainMenuScene', 'JunglePlanetTransitionScene')
   }
 

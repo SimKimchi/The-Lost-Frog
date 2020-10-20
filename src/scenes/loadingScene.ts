@@ -356,6 +356,8 @@ export default class LoadingScene extends Phaser.Scene {
   }
 
   private loadSounds(): void {
+    this.load.audio('main_theme', genericAssets.sounds.main_theme)
+    this.load.audio('transition_theme', genericAssets.sounds.transition_theme)
     this.load.audio('jungle_theme', jungleAssets.sounds.jungle_theme)
     this.load.audio('ice_theme', iceAssets.sounds.ice_theme)
     this.load.audio('volcano_theme', volcanoAssets.sounds.volcano_theme)
