@@ -4,6 +4,7 @@ import Enemy from '../gameObjects/enemy'
 import { CharacterConfig, EnemyType, getRandomInt } from '../util'
 import CharacterConfigProvider from '../providers/characterConfigProvider'
 import PlanetScene from '../scenes/planets/planetScene'
+import FlyingEnemy from '../gameObjects/flyingEnemy'
 
 export default abstract class EnemyFactory {
   public static createEnemyByType(
@@ -25,8 +26,30 @@ export default abstract class EnemyFactory {
         // TODO: Implémenter la création du fox
         enemy = EnemyFactory.createLizard(scene, spawnX, spawnY)
         break
+      case EnemyType.FlyingJungle:
+        enemy = EnemyFactory.createFlyingJungle(scene, spawnX, spawnY)
     }
     return enemy
+  }
+
+  private static createFlyingJungle(
+    scene: PlanetScene,
+    spawnX: number,
+    spawnY: number
+  ): FlyingEnemy {
+    const flyingJungle = new FlyingEnemy(3, 1, 56, 28, 100, 'lizard', scene)
+
+    const config: CharacterConfig = CharacterConfigProvider.getLizardConfig(
+      spawnX,
+      spawnY
+    )
+
+    return this.createEnemy(
+      scene,
+      scene.velocityYModifier,
+      flyingJungle,
+      config
+    ) as FlyingEnemy
   }
 
   private static createLizard(
@@ -49,7 +72,7 @@ export default abstract class EnemyFactory {
     planetGravity: number,
     enemy: Enemy,
     config: CharacterConfig
-  ): Enemy {
+  ): Enemy | FlyingEnemy {
     enemy.init(planetGravity, config)
 
     this.initializeEnemyBehavior(enemy, scene)
@@ -73,6 +96,7 @@ export default abstract class EnemyFactory {
     enemy: Enemy,
     scene: PlanetScene
   ): void {
+    if (enemy.constructor.name === 'FlyingEnemy') return
     const direction = getRandomInt(2)
     if (direction === 1) {
       enemy.run(-scene.velocityXModifier)
