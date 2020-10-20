@@ -21,11 +21,7 @@ export default class IcePlanetScene extends PlanetScene {
     this.add.image(0, 0, 'background_ice_4').setOrigin(0).setScrollFactor(0.25)
     this.add.image(0, 0, 'background_ice_3').setOrigin(0).setScrollFactor(0.5)
     this.add.image(0, 0, 'background_ice_2').setOrigin(0).setScrollFactor(0.75)
-    this.add.image(0, 0, 'background_ice_1').setOrigin(0).setScrollFactor(1)
-  }
-
-  protected initializeFloor(): void {
-    this.floor = this.physics.add.staticSprite(960, 612, 'floor_ice')
+    this.add.image(0, 0, 'background_ice_1').setOrigin(0).setScrollFactor(0.9)
   }
 
   protected initializePlatforms(): void {

@@ -102,12 +102,14 @@ export default class LoadingScene extends Phaser.Scene {
 
   public create(): void {
     this.loadBackgrounds()
+    this.loadForegrounds()
     this.loadCharacters()
     this.loadPlatforms()
     this.loadFloors()
     this.loadSpikes()
     this.loadSounds()
     this.loadUIElements()
+    this.loadOther()
 
     this.load.start()
   }
@@ -169,6 +171,21 @@ export default class LoadingScene extends Phaser.Scene {
     )
   }
 
+  private loadForegrounds(): void {
+    this.load.image(
+      'foreground_jungle_1',
+      jungleAssets.images.foreground_jungle_1
+    )
+    this.load.image(
+      'foreground_volcano_1',
+      volcanoAssets.images.foreground_volcano_1
+    )
+    this.load.image(
+      'foreground_volcano_2',
+      volcanoAssets.images.foreground_volcano_2
+    )
+  }
+
   private loadPlatforms(): void {
     this.load.image(
       'platform_jungle_h1',
@@ -212,12 +229,30 @@ export default class LoadingScene extends Phaser.Scene {
       'platform_volcano_h3',
       volcanoAssets.images.platform_volcano_h3
     )
+    this.load.image(
+      'platform_volcano_v1',
+      volcanoAssets.images.platform_volcano_v1
+    )
+    this.load.image(
+      'platform_volcano_v2',
+      volcanoAssets.images.platform_volcano_v2
+    )
+    this.load.image(
+      'platform_volcano_v3',
+      volcanoAssets.images.platform_volcano_v3
+    )
   }
 
   private loadFloors(): void {
-    this.load.image('floor_jungle', jungleAssets.images.floor_jungle)
-    this.load.image('floor_ice', iceAssets.images.floor_ice)
-    this.load.image('floor_volcano', volcanoAssets.images.floor_volcano)
+    this.load.image('floor_jungle_1', jungleAssets.images.floor_jungle_1)
+    this.load.image('floor_jungle_2', jungleAssets.images.floor_jungle_2)
+    this.load.image('floor_jungle_3', jungleAssets.images.floor_jungle_3)
+    this.load.image('floor_ice_1', iceAssets.images.floor_ice_1)
+    this.load.image('floor_ice_2', iceAssets.images.floor_ice_2)
+    this.load.image('floor_ice_3', iceAssets.images.floor_ice_3)
+    this.load.image('floor_volcano_1', volcanoAssets.images.floor_volcano_1)
+    this.load.image('floor_volcano_2', volcanoAssets.images.floor_volcano_2)
+    this.load.image('floor_volcano_3', volcanoAssets.images.floor_volcano_3)
   }
 
   private loadCharacters(): void {
@@ -283,5 +318,16 @@ export default class LoadingScene extends Phaser.Scene {
   private loadSpikes(): void {
     this.load.image('spikes_jungle', jungleAssets.images.spikes_jungle)
     this.load.image('spikes_ice', iceAssets.images.spikes_ice)
+  }
+
+  private loadOther(): void {
+    this.load.spritesheet(
+      'cutscene_shuttle',
+      genericAssets.images.cutscene_shuttle,
+      {
+        frameWidth: 960,
+        frameHeight: 640
+      }
+    )
   }
 }

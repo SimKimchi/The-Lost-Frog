@@ -19,12 +19,12 @@ export default abstract class PlanetScene extends Phaser.Scene {
   public soundHelper: SoundHelper | null
   protected player: Player
   protected platformGroup: Phaser.Physics.Arcade.StaticGroup | null
-  protected floor: Phaser.Physics.Arcade.Sprite | null
   protected displayScore: Phaser.GameObjects.Text | null
   protected displayHp: Phaser.GameObjects.Text | null
   protected inputHelper: InputHelper | null
   protected collisionHelper: CollisionHelper | null
   protected deathHelper: DeathHelper | null
+  protected cutSceneGoingOn: boolean
 
   constructor(
     planetSceneName: string,
@@ -40,7 +40,6 @@ export default abstract class PlanetScene extends Phaser.Scene {
       this.deathHelper?.playerDeath()
     })
     this.platformGroup = null
-    this.floor = null
     this.displayScore = null
     this.displayHp = null
     this.enemies = []
@@ -49,6 +48,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.soundHelper = null
     this.collisionHelper = null
     this.deathHelper = null
+    this.cutSceneGoingOn = false
   }
 
   public abstract goToNextPlanet(): void
@@ -58,7 +58,6 @@ export default abstract class PlanetScene extends Phaser.Scene {
       this.deathHelper?.playerDeath()
     })
     this.platformGroup = null
-    this.floor = null
     this.displayScore = null
     this.displayHp = null
     this.enemies = []
@@ -70,22 +69,27 @@ export default abstract class PlanetScene extends Phaser.Scene {
     )
     this.soundHelper = new SoundHelper(this.sound)
     this.deathHelper = new DeathHelper(this)
+    this.cutSceneGoingOn = false
   }
 
   public create(): void {
     this.initializeWorld()
+    this.initializeSounds()
     this.initializeBackground()
     this.initializePlatforms()
-    this.initializeFloor()
     this.initializeCharacters()
     this.initializeCollisions()
     this.initializeCamera()
-    this.initializeSounds()
     this.initializeTexts()
     this.addMuteButtons()
+    this.startCutscene()
     this.setDebug(false)
   }
+
   public update(): void {
+    // TODO: Start the scene after the cutscene is done (freeze enemies, spawn player on a specific frame, etc.)
+    //if (this.cutSceneGoingOn) return
+
     this.updateTexts()
 
     this.inputHelper?.triggerKeyboardActions(
@@ -104,8 +108,31 @@ export default abstract class PlanetScene extends Phaser.Scene {
 
   protected abstract initializeBackground(): void
   protected abstract initializePlatforms(): void
-  protected abstract initializeFloor(): void
 
+  private startCutscene(): void {
+    this.cutSceneGoingOn = true
+
+    const cutscene = this.physics.add
+      .staticSprite(0, 0, 'cutscene_shuttle')
+      .setOrigin(0)
+
+    this.anims.create({
+      key: 'cutscene_shuttle',
+      frames: this.anims.generateFrameNumbers('cutscene_shuttle', {
+        start: 0,
+        end: 55
+      }),
+      frameRate: 10
+    })
+
+    cutscene.anims.play('cutscene_shuttle', true).on(
+      'animationcomplete',
+      () => {
+        this.cutSceneGoingOn = false
+      },
+      this
+    )
+  }
   protected initializeWorld(): void {
     this.physics.world.setBounds(0, 0, 1920, 640)
     this.physics.world.setBoundsCollision(true, true, false, true)
@@ -120,7 +147,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   protected initializeCollisions(): void {
-    this.collisionHelper?.initializeCollisions(this.platformGroup, this.floor)
+    this.collisionHelper?.initializeCollisions(this.platformGroup)
   }
 
   protected initializeCamera(): void {

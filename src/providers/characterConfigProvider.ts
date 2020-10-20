@@ -3,7 +3,7 @@ import { CharacterConfig } from '../util'
 export default abstract class CharacterConfigProvider {
   public static getPlayerConfig(): CharacterConfig {
     return {
-      spawnX: 64,
+      spawnX: 128,
       spawnY: 550,
       spriteKey: 'dude',
       collideWorldBounds: true,

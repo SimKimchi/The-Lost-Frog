@@ -76,6 +76,33 @@ export default abstract class PlatformConfigProvider {
     }
   }
 
+  public static getJungleF1Config(): PlatformConfig {
+    return {
+      width: 32,
+      height: 64,
+      spriteKey: 'floor_jungle_1',
+      clingSides: true
+    }
+  }
+
+  public static getJungleF2Config(): PlatformConfig {
+    return {
+      width: 64,
+      height: 64,
+      spriteKey: 'floor_jungle_2',
+      clingSides: true
+    }
+  }
+
+  public static getJungleF3Config(): PlatformConfig {
+    return {
+      width: 32,
+      height: 64,
+      spriteKey: 'floor_jungle_3',
+      clingSides: true
+    }
+  }
+
   public static getJungleSpikesConfig(): PlatformConfig {
     return {
       width: 64,
@@ -103,6 +130,33 @@ export default abstract class PlatformConfigProvider {
       width: 32,
       height: 64,
       spriteKey: 'platform_ice_v1',
+      clingSides: true
+    }
+  }
+
+  public static getIceF1Config(): PlatformConfig {
+    return {
+      width: 32,
+      height: 64,
+      spriteKey: 'floor_ice_1',
+      clingSides: true
+    }
+  }
+
+  public static getIceF2Config(): PlatformConfig {
+    return {
+      width: 64,
+      height: 64,
+      spriteKey: 'floor_ice_2',
+      clingSides: true
+    }
+  }
+
+  public static getIceF3Config(): PlatformConfig {
+    return {
+      width: 32,
+      height: 64,
+      spriteKey: 'floor_ice_3',
       clingSides: true
     }
   }
@@ -146,6 +200,60 @@ export default abstract class PlatformConfigProvider {
       checkLeftCollision: false,
       checkRightCollision: false,
       clingUnder: true
+    }
+  }
+
+  public static getVolcanoV1Config(): PlatformConfig {
+    return {
+      width: 32,
+      height: 64,
+      spriteKey: 'platform_volcano_v1',
+      clingSides: true
+    }
+  }
+
+  public static getVolcanoV2Config(): PlatformConfig {
+    return {
+      width: 32,
+      height: 64,
+      spriteKey: 'platform_volcano_v2',
+      clingSides: true
+    }
+  }
+
+  public static getVolcanoV3Config(): PlatformConfig {
+    return {
+      width: 32,
+      height: 64,
+      spriteKey: 'platform_volcano_v3',
+      clingSides: true
+    }
+  }
+
+  public static getVolcanoF1Config(): PlatformConfig {
+    return {
+      width: 32,
+      height: 64,
+      spriteKey: 'floor_volcano_1',
+      clingSides: true
+    }
+  }
+
+  public static getVolcanoF2Config(): PlatformConfig {
+    return {
+      width: 64,
+      height: 64,
+      spriteKey: 'floor_volcano_2',
+      clingSides: true
+    }
+  }
+
+  public static getVolcanoF3Config(): PlatformConfig {
+    return {
+      width: 32,
+      height: 64,
+      spriteKey: 'floor_volcano_3',
+      clingSides: true
     }
   }
 }

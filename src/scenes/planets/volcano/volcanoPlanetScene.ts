@@ -29,11 +29,20 @@ export default class VolcanoPlanetScene extends PlanetScene {
       .image(0, 0, 'background_volcano_2')
       .setOrigin(0)
       .setScrollFactor(0.75)
-    this.add.image(0, 0, 'background_volcano_1').setOrigin(0).setScrollFactor(1)
-  }
-
-  protected initializeFloor(): void {
-    this.floor = this.physics.add.staticSprite(960, 610, 'floor_volcano')
+    this.add
+      .image(0, 0, 'background_volcano_1')
+      .setOrigin(0)
+      .setScrollFactor(0.9)
+    this.add
+      .image(0, 0, 'foreground_volcano_2')
+      .setOrigin(0)
+      .setScrollFactor(1.25, 1)
+      .setDepth(2)
+    this.add
+      .image(0, 0, 'foreground_volcano_1')
+      .setOrigin(0)
+      .setScrollFactor(1.5, 1)
+      .setDepth(2)
   }
 
   protected initializePlatforms(): void {
