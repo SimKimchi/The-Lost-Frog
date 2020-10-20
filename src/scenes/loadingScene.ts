@@ -317,6 +317,42 @@ export default class LoadingScene extends Phaser.Scene {
         frameHeight: 256
       }
     )
+    this.load.spritesheet(
+      'enemy_owl_idle_left',
+      iceAssets.images.enemy_owl_idle_left,
+      {
+        frameWidth: 64,
+        frameHeight: 64
+      }
+    )
+    this.load.spritesheet(
+      'enemy_owl_idle_right',
+      iceAssets.images.enemy_owl_idle_right,
+      {
+        frameWidth: 64,
+        frameHeight: 64
+      }
+    )
+    this.load.spritesheet(
+      'enemy_owl_fly_left',
+      iceAssets.images.enemy_owl_fly_left,
+      {
+        frameWidth: 64,
+        frameHeight: 64
+      }
+    )
+    this.load.spritesheet(
+      'enemy_owl_fly_right',
+      iceAssets.images.enemy_owl_fly_right,
+      {
+        frameWidth: 64,
+        frameHeight: 64
+      }
+    )
+    this.load.spritesheet('enemy_owl_hurt', iceAssets.images.enemy_owl_hurt, {
+      frameWidth: 64,
+      frameHeight: 64
+    })
   }
 
   private loadSounds(): void {

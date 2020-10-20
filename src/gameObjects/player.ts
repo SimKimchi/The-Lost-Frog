@@ -1,6 +1,6 @@
 import 'phaser'
 import Character from './character'
-import { CharacterConfig, Direction, getRandomInt } from '../util'
+import { CharacterConfig, Direction } from '../util'
 import PlanetScene from '../scenes/planets/planetScene'
 
 export default class Player extends Character {
@@ -132,7 +132,7 @@ export default class Player extends Character {
 
     // * Wall cling
     if (this.wallClingDirection !== null) {
-      if (this.facingLeft()) {
+      if (this.isFacingLeft()) {
         this.sprite.anims.play(`${this.assetPrefix}_idle_left`, true)
       } else {
         this.sprite.anims.play(`${this.assetPrefix}_idle_right`, true)
@@ -145,13 +145,13 @@ export default class Player extends Character {
       ) !== 0
     ) {
       if ((<Phaser.Physics.Arcade.Body>this.container.body).velocity.y > 0) {
-        if (this.facingLeft()) {
+        if (this.isFacingLeft()) {
           this.sprite.anims.play(`${this.assetPrefix}_jump_descend_left`, true)
         } else {
           this.sprite.anims.play(`${this.assetPrefix}_jump_descend_right`, true)
         }
       } else {
-        if (this.facingLeft()) {
+        if (this.isFacingLeft()) {
           this.sprite.anims.play(`${this.assetPrefix}_jump_ascend_left`, true)
         } else {
           this.sprite.anims.play(`${this.assetPrefix}_jump_ascend_right`, true)
@@ -165,7 +165,7 @@ export default class Player extends Character {
       Math.floor((<Phaser.Physics.Arcade.Body>this.container.body).velocity.x) <
         -50
     ) {
-      if (this.facingLeft()) {
+      if (this.isFacingLeft()) {
         this.sprite.anims.play(`${this.assetPrefix}_run_left`, true)
       } else {
         this.sprite.anims.play(`${this.assetPrefix}_run_right`, true)
@@ -173,7 +173,7 @@ export default class Player extends Character {
     }
     // * Idle
     else {
-      if (this.facingLeft()) {
+      if (this.isFacingLeft()) {
         this.sprite.anims.play(`${this.assetPrefix}_idle_left`, true)
       } else {
         this.sprite.anims.play(`${this.assetPrefix}_idle_right`, true)
@@ -181,10 +181,6 @@ export default class Player extends Character {
     }
 
     this.sprite.setDisplaySize(this.spriteWidth, this.spriteHeight)
-  }
-
-  private facingLeft(): boolean {
-    return this.direction === Direction.Left
   }
 
   public getDisplayHp(): string {

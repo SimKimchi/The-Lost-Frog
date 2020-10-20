@@ -1,5 +1,5 @@
 import PlanetScene from '../scenes/planets/planetScene'
-import { CharacterConfig } from '../util'
+import { CharacterConfig, Direction } from '../util'
 import Enemy from './enemy'
 import Player from './player'
 
@@ -46,17 +46,43 @@ export default class FlyingEnemy extends Enemy {
         playerPos.x < enemyPos.x ? -this.moveSpeed : this.moveSpeed
       const velocityY =
         playerPos.y < enemyPos.y ? -this.moveSpeed : this.moveSpeed
-      ;(<Phaser.Physics.Arcade.Body>this.getContainer().body).setVelocityX(
-        velocityX
-      )
-      ;(<Phaser.Physics.Arcade.Body>this.getContainer().body).setVelocityY(
+      ;(<Phaser.Physics.Arcade.Body>this.getContainer().body).setVelocity(
+        velocityX,
         velocityY
       )
+      this.idle = false
     } else {
-      ;(<Phaser.Physics.Arcade.Body>this.getContainer().body).setVelocityX(0)
-      ;(<Phaser.Physics.Arcade.Body>this.getContainer().body).setVelocityY(0)
+      ;(<Phaser.Physics.Arcade.Body>this.getContainer().body).setVelocity(0)
+      this.idle = true
     }
 
+    this.direction = enemyPos.x > playerPos.x ? Direction.Left : Direction.Right
+
     this.updateAnimation()
+  }
+
+  public updateAnimation(): void {
+    if (!this.sprite || !this.container || !this.container.body) return
+
+    // * Hurt
+    if (this.isInvulnerable()) {
+      this.sprite.anims.play(`${this.assetPrefix}_hurt`, true)
+    }
+    // * Idle
+    else if (this.idle) {
+      if (this.isFacingLeft()) {
+        this.sprite.anims.play(`${this.assetPrefix}_idle_left`, true)
+      } else {
+        this.sprite.anims.play(`${this.assetPrefix}_idle_right`, true)
+      }
+    }
+    // * Fly
+    else {
+      if (this.isFacingLeft()) {
+        this.sprite.anims.play(`${this.assetPrefix}_fly_left`, true)
+      } else {
+        this.sprite.anims.play(`${this.assetPrefix}_fly_right`, true)
+      }
+    }
   }
 }

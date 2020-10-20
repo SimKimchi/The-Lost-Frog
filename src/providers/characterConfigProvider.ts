@@ -123,4 +123,59 @@ export default abstract class CharacterConfigProvider {
       spriteOffsetY: -2
     }
   }
+
+  public static getOwlConfig(spawnX: number, spawnY: number): CharacterConfig {
+    return {
+      spawnX,
+      spawnY,
+      spriteKey: 'enemy_owl',
+      collideWorldBounds: true,
+      animations: [
+        {
+          key: 'owl_idle_left',
+          assetKey: 'enemy_owl_idle_left',
+          frameStart: 0,
+          frameEnd: 16,
+          frameRate: 12,
+          repeat: -1
+        },
+        {
+          key: 'owl_idle_right',
+          assetKey: 'enemy_owl_idle_right',
+          frameStart: 0,
+          frameEnd: 16,
+          frameRate: 12,
+          repeat: -1
+        },
+        {
+          key: 'owl_fly_left',
+          assetKey: 'enemy_owl_fly_left',
+          frameStart: 0,
+          frameEnd: 16,
+          frameRate: 25,
+          repeat: -1
+        },
+        {
+          key: 'owl_fly_right',
+          assetKey: 'enemy_owl_fly_right',
+          frameStart: 0,
+          frameEnd: 16,
+          frameRate: 25,
+          repeat: -1
+        },
+        {
+          key: 'owl_hurt',
+          assetKey: 'enemy_owl_hurt',
+          frameStart: 0,
+          frameEnd: 8,
+          frameRate: 20,
+          repeat: -1
+        }
+      ],
+      hitAreaWidth: 64,
+      hitAreaHeight: 64,
+      spriteOffsetX: 0,
+      spriteOffsetY: 0
+    }
+  }
 }

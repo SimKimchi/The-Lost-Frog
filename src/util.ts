@@ -76,7 +76,6 @@ export const gridHeight = 64
 
 export enum EnemyType {
   Lizard,
-  FlyingJungle,
   Owl,
   Fox
 }

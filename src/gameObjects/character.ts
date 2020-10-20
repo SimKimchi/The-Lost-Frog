@@ -206,4 +206,8 @@ export default abstract class Character {
 
     return (<Phaser.Physics.Arcade.Body>this.container.body).blocked.down
   }
+
+  protected isFacingLeft(): boolean {
+    return this.direction === Direction.Left
+  }
 }
