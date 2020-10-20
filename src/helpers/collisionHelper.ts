@@ -112,9 +112,11 @@ export default class CollisionHelper {
   ): void {
     if (!platformGroup) return
 
-    const enemyContainers = this.enemies.map((enemy) => {
-      return enemy.getContainer()
-    })
+    const enemyContainers = this.enemies
+      .filter((enemy) => enemy.constructor.name !== 'FlyingEnemy')
+      .map((enemy) => {
+        return enemy.getContainer()
+      })
 
     this.physics.add.collider(
       enemyContainers,

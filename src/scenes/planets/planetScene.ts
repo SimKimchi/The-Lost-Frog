@@ -1,6 +1,7 @@
 import { TheLostFrogGame } from '../..'
 import EnemyFactory from '../../factories/enemyFactory'
 import Enemy from '../../gameObjects/enemy'
+import FlyingEnemy from '../../gameObjects/flyingEnemy'
 import Player from '../../gameObjects/player'
 import CollisionHelper from '../../helpers/collisionHelper'
 import DeathHelper from '../../helpers/deathHelper'
@@ -96,6 +97,11 @@ export default abstract class PlanetScene extends Phaser.Scene {
       this.platformGroup
     )
     this.player.updateAnimation()
+    this.enemies
+      .filter((enemy) => enemy.constructor.name === 'FlyingEnemy')
+      .forEach((enemy) => {
+        ;(<FlyingEnemy>enemy).fly(this.player)
+      })
   }
 
   public startNextWave(): void {
