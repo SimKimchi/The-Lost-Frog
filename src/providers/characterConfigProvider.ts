@@ -37,6 +37,22 @@ export default abstract class CharacterConfigProvider {
           frameEnd: 8,
           frameRate: 10,
           repeat: -1
+        },
+        {
+          key: 'frog_jump_left',
+          assetKey: 'frog_jump_left_anim',
+          frameStart: 0,
+          frameEnd: 8,
+          frameRate: 10,
+          repeat: -1
+        },
+        {
+          key: 'frog_jump_right',
+          assetKey: 'frog_jump_right_anim',
+          frameStart: 0,
+          frameEnd: 8,
+          frameRate: 10,
+          repeat: -1
         }
       ],
       hitAreaWidth: 28,

@@ -121,33 +121,66 @@ export default class Player extends Character {
     if (!this.container || !this.sprite) return
 
     // TODO: Implement 'jump' and 'fall' animations when we'll have them
+    // * Wall cling
     if (this.wallClingDirection !== null) {
-      if (this.wallClingDirection === Direction.Left) {
+      if (this.facingLeft()) {
         this.sprite.anims.play(`${this.assetPrefix}_idle_left`, true)
-      } else if (this.wallClingDirection === Direction.Right) {
-        this.sprite.anims.play(`${this.assetPrefix}_idle_right`, true)
       } else {
-        if (this.direction === Direction.Left) {
-          this.sprite.anims.play(`${this.assetPrefix}_idle_left`, true)
+        this.sprite.anims.play(`${this.assetPrefix}_idle_right`, true)
+      }
+    }
+    // * Jump
+    else if (
+      Math.floor(
+        (<Phaser.Physics.Arcade.Body>this.container.body).velocity.y
+      ) !== 0
+    ) {
+      if ((<Phaser.Physics.Arcade.Body>this.container.body).velocity.y > 0) {
+        if (this.facingLeft()) {
+          this.sprite.anims.play(`${this.assetPrefix}_jump_left`, true)
         } else {
-          this.sprite.anims.play(`${this.assetPrefix}_idle_right`, true)
+          this.sprite.anims.play(`${this.assetPrefix}_jump_right`, true)
+        }
+      } else {
+        if (this.facingLeft()) {
+          this.sprite.anims.play(`${this.assetPrefix}_jump_left`, true)
+        } else {
+          this.sprite.anims.play(`${this.assetPrefix}_jump_right`, true)
         }
       }
-    } else if (this.idle) {
-      if (this.direction === Direction.Left) {
+    }
+    // * Run
+    else if (
+      Math.floor((<Phaser.Physics.Arcade.Body>this.container.body).velocity.x) >
+        50 ||
+      Math.floor((<Phaser.Physics.Arcade.Body>this.container.body).velocity.x) <
+        -50
+    ) {
+      if (this.facingLeft()) {
+        this.sprite.anims.play(`${this.assetPrefix}_run_left`, true)
+      } else {
+        console.log(
+          Math.floor(
+            (<Phaser.Physics.Arcade.Body>this.container.body).velocity.x
+          )
+        )
+        this.sprite.anims.play(`${this.assetPrefix}_run_right`, true)
+      }
+    }
+    // * Idle
+    else {
+      if (this.facingLeft()) {
         this.sprite.anims.play(`${this.assetPrefix}_idle_left`, true)
       } else {
         this.sprite.anims.play(`${this.assetPrefix}_idle_right`, true)
-      }
-    } else {
-      if (this.direction === Direction.Left) {
-        this.sprite.anims.play(`${this.assetPrefix}_run_left`, true)
-      } else {
-        this.sprite.anims.play(`${this.assetPrefix}_run_right`, true)
       }
     }
 
     this.sprite.setDisplaySize(this.spriteWidth, this.spriteHeight)
+  }
+
+  private facingLeft(): boolean {
+    return this.direction === Direction.Left
   }
 
   public getDisplayHp(): string {

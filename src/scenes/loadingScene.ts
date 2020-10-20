@@ -301,6 +301,22 @@ export default class LoadingScene extends Phaser.Scene {
         frameHeight: 256
       }
     )
+    this.load.spritesheet(
+      'frog_jump_left_anim',
+      jungleAssets.images.frog_jump_left_anim,
+      {
+        frameWidth: 256,
+        frameHeight: 256
+      }
+    )
+    this.load.spritesheet(
+      'frog_jump_right_anim',
+      jungleAssets.images.frog_jump_right_anim,
+      {
+        frameWidth: 256,
+        frameHeight: 256
+      }
+    )
   }
 
   private loadSounds(): void {
