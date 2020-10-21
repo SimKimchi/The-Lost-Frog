@@ -25,7 +25,7 @@ export default class IcePlanetScene extends PlanetScene {
   }
 
   protected initializePlatforms(): void {
-    this.platformGroup = PlatformGroupFactory.createIcePlatformGroup(this)
+    this.platformGroups = PlatformGroupFactory.createIcePlatformGroups(this)
   }
 
   protected initializeSounds(): void {

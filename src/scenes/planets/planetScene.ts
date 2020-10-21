@@ -19,7 +19,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
   public currentEnemyWave: number
   public soundHelper: SoundHelper | null
   protected player: Player
-  protected platformGroup: Phaser.Physics.Arcade.StaticGroup | null
+  protected platformGroups: Phaser.Physics.Arcade.StaticGroup | null
   protected displayScore: Phaser.GameObjects.Text | null
   protected displayHp: Phaser.GameObjects.Text | null
   protected inputHelper: InputHelper | null
@@ -40,7 +40,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.player = Player.getPlayer(this, () => {
       this.deathHelper?.playerDeath()
     })
-    this.platformGroup = null
+    this.platformGroups = null
     this.displayScore = null
     this.displayHp = null
     this.enemies = []
@@ -56,7 +56,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.player = Player.getPlayer(this, () => {
       this.deathHelper?.playerDeath()
     })
-    this.platformGroup = null
+    this.platformGroups = null
     this.displayScore = null
     this.displayHp = null
     this.enemies = []
@@ -90,7 +90,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
       this.velocityXModifier,
       this.velocityYModifier,
       this.planetFrictionModifier,
-      this.platformGroup
+      this.platformGroups
     )
 
     this.enemies
@@ -165,7 +165,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   protected initializeCollisions(): void {
-    this.collisionHelper?.initializeCollisions(this.platformGroup)
+    this.collisionHelper?.initializeCollisions(this.platformGroups)
   }
 
   protected initializePlayerCamera(): void {
@@ -216,7 +216,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     }
 
     this.collisionHelper?.setCollisionsAfterEnemySpawn(
-      this.platformGroup,
+      this.platformGroups,
       this.enemies
     )
   }

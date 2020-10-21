@@ -48,7 +48,7 @@ export default class VolcanoPlanetScene extends PlanetScene {
   }
 
   protected initializePlatforms(): void {
-    this.platformGroup = PlatformGroupFactory.createVolcanoPlatformGroup(this)
+    this.platformGroups = PlatformGroupFactory.createVolcanoPlatformGroups(this)
   }
 
   protected initializeSounds(): void {
