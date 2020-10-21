@@ -50,6 +50,6 @@ export default class JunglePlanetScene extends PlanetScene {
 
     if (!this.soundHelper) return
 
-    this.soundHelper.setMusic('jungle_theme')
+    this.soundHelper.setMusic('jungle_theme', 0.75)
   }
 }

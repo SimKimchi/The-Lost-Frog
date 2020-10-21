@@ -95,7 +95,7 @@ export default class MainMenuScene extends Phaser.Scene {
   private playMusic(): void {
     if (!this.soundHelper) return
 
-    this.soundHelper.setMusic('main_theme')
+    this.soundHelper.setMusic('main_theme', 1)
   }
 
   private goToFirstPlanet(): void {

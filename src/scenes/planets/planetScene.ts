@@ -78,28 +78,22 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.initializeSounds()
     this.initializeBackground()
     this.initializePlatforms()
-    this.initializeCharacters()
-    this.initializeCollisions()
-    this.initializeCamera()
-    this.initializeTexts()
-    this.addMuteButtons()
     this.startCutscene()
     this.setDebug(false)
   }
 
   public update(): void {
-    // TODO: Start the scene after the cutscene is done (freeze enemies, spawn player on a specific frame, etc.)
-    //if (this.cutSceneGoingOn) return
-
     this.updateTexts()
 
-    this.inputHelper?.triggerKeyboardActions(
-      this.player,
-      this.velocityXModifier,
-      this.velocityYModifier,
-      this.planetFrictionModifier,
-      this.platformGroup
-    )
+    if (!this.cutSceneGoingOn) {
+      this.inputHelper?.triggerKeyboardActions(
+        this.player,
+        this.velocityXModifier,
+        this.velocityYModifier,
+        this.planetFrictionModifier,
+        this.platformGroup
+      )
+    }
 
     this.enemies
       .filter((enemy) => enemy.constructor.name === 'FlyingEnemy')
@@ -112,36 +106,58 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.spawnEnemies(this.enemyWaves[++this.currentEnemyWave])
   }
 
+  protected initializeWorld(): void {
+    this.physics.world.setBounds(0, 0, 1920, 640)
+    this.physics.world.setBoundsCollision(true, true, false, true)
+  }
+
   protected abstract initializeBackground(): void
   protected abstract initializePlatforms(): void
 
   private startCutscene(): void {
+    if (!this.soundHelper) return
+
     this.cutSceneGoingOn = true
 
     const cutscene = this.physics.add
       .staticSprite(0, 0, 'cutscene_shuttle')
       .setOrigin(0)
 
+    this.soundHelper.playShuttleSound()
+
     this.anims.create({
-      key: 'cutscene_shuttle',
+      key: 'cutscene_shuttle_1',
       frames: this.anims.generateFrameNumbers('cutscene_shuttle', {
         start: 0,
+        end: 38
+      }),
+      frameRate: 10,
+      repeat: 0
+    })
+
+    this.anims.create({
+      key: 'cutscene_shuttle_2',
+      frames: this.anims.generateFrameNumbers('cutscene_shuttle', {
+        start: 38,
         end: 55
       }),
       frameRate: 10
     })
 
-    cutscene.anims.play('cutscene_shuttle', true).on(
+    cutscene.anims.play('cutscene_shuttle_1', true).once(
       'animationcomplete',
       () => {
+        this.initializeCharacters()
+        this.initializeCollisions()
+        this.initializePlayerCamera()
+        this.initializeTexts()
+        this.addMuteButtons()
+
         this.cutSceneGoingOn = false
+        cutscene.anims.play('cutscene_shuttle_2', true)
       },
       this
     )
-  }
-  protected initializeWorld(): void {
-    this.physics.world.setBounds(0, 0, 1920, 640)
-    this.physics.world.setBoundsCollision(true, true, false, true)
   }
 
   protected initializeCharacters(): void {
@@ -156,7 +172,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.collisionHelper?.initializeCollisions(this.platformGroup)
   }
 
-  protected initializeCamera(): void {
+  protected initializePlayerCamera(): void {
     this.cameras.main
       .startFollow(this.player.getContainer(), false, 0.1, 0.05, 0, 70)
       .setBounds(0, 0, 1920, 640)
@@ -174,12 +190,14 @@ export default abstract class PlanetScene extends Phaser.Scene {
         fill: '#FFFFFF'
       })
       .setScrollFactor(0, 0)
+      .setDepth(3)
     this.displayScore = this.add
       .text(150, 140, (this.game as TheLostFrogGame).displayScore(), {
         font: '20px monospace',
         fill: '#FFFFFF'
       })
       .setScrollFactor(0, 0)
+      .setDepth(3)
   }
 
   private updateTexts(): void {

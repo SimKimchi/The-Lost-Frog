@@ -54,6 +54,6 @@ export default class VolcanoPlanetScene extends PlanetScene {
 
     if (!this.soundHelper) return
 
-    this.soundHelper.setMusic('volcano_theme')
+    this.soundHelper.setMusic('volcano_theme', 0.75)
   }
 }

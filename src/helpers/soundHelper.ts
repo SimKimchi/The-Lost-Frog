@@ -15,11 +15,12 @@ export default class SoundHelper {
     this.soundManager.add('wall_cling', { volume: 0.1 })
     this.soundManager.add('wall_jump', { volume: 0.1 })
     this.soundManager.add('frog_attack', { volume: 0.1 })
+    this.soundManager.add('shuttle_sound', { volume: 0.1 })
   }
 
-  public setMusic(theme: string, loop = true): void {
+  public setMusic(theme: string, volume: number, loop = true): void {
     this.music = this.soundManager.add(theme, {
-      volume: 0.75,
+      volume: volume,
       loop: loop
     })
 
@@ -76,7 +77,12 @@ export default class SoundHelper {
     this.soundManager.get('wall_jump').play()
   }
 
+<<<<<<< HEAD
   public playPlayerAttackSound(): void {
     this.soundManager.get('frog_attack').play()
+=======
+  public playShuttleSound(): void {
+    this.soundManager.get('shuttle_sound').play()
+>>>>>>> main
   }
 }
