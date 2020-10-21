@@ -38,11 +38,13 @@ export default class VolcanoPlanetScene extends PlanetScene {
       .setOrigin(0)
       .setScrollFactor(1.25, 1)
       .setDepth(2)
+      .setAlpha(0.75)
     this.add
       .image(0, 0, 'foreground_volcano_1')
       .setOrigin(0)
       .setScrollFactor(1.5, 1)
       .setDepth(2)
+      .setAlpha(0.75)
   }
 
   protected initializePlatforms(): void {

@@ -1,3 +1,5 @@
+import PlanetScene from '../scenes/planets/planetScene'
+
 export default class SoundHelper {
   private soundManager: Phaser.Sound.BaseSoundManager
   private music: Phaser.Sound.BaseSound | null
@@ -37,6 +39,14 @@ export default class SoundHelper {
     if (!this.music) return
 
     this.music.pause()
+  }
+
+  public fadeMusicOut(scene: PlanetScene): void {
+    scene.tweens.add({
+      targets: this.music,
+      volume: 0,
+      duration: 1400
+    })
   }
 
   public stopAllSounds(): void {

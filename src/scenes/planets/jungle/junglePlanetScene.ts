@@ -39,6 +39,7 @@ export default class JunglePlanetScene extends PlanetScene {
       .setOrigin(0)
       .setScrollFactor(1.25, 1)
       .setDepth(2)
+      .setAlpha(0.75)
   }
 
   protected initializePlatforms(): void {

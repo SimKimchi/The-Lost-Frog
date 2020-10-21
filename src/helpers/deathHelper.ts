@@ -19,7 +19,7 @@ export default class DeathHelper {
       return
 
     if (this.scene.currentEnemyWave === this.scene.enemyWaves.length - 1) {
-      this.scene.goToNextPlanet()
+      this.scene.completeLevel()
     } else {
       this.scene.startNextWave()
     }

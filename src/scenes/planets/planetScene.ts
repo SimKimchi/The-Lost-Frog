@@ -52,8 +52,6 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.cutSceneGoingOn = false
   }
 
-  public abstract goToNextPlanet(): void
-
   public init(): void {
     this.player = Player.getPlayer(this, () => {
       this.deathHelper?.playerDeath()
@@ -83,27 +81,23 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   public update(): void {
+    if (this.cutSceneGoingOn) return
+
     this.updateTexts()
 
-    if (!this.cutSceneGoingOn) {
-      this.inputHelper?.triggerKeyboardActions(
-        this.player,
-        this.velocityXModifier,
-        this.velocityYModifier,
-        this.planetFrictionModifier,
-        this.platformGroup
-      )
-    }
+    this.inputHelper?.triggerKeyboardActions(
+      this.player,
+      this.velocityXModifier,
+      this.velocityYModifier,
+      this.planetFrictionModifier,
+      this.platformGroup
+    )
 
     this.enemies
       .filter((enemy) => enemy.constructor.name === 'FlyingEnemy')
       .forEach((enemy) => {
         ;(<FlyingEnemy>enemy).fly(this.player)
       })
-  }
-
-  public startNextWave(): void {
-    this.spawnEnemies(this.enemyWaves[++this.currentEnemyWave])
   }
 
   protected initializeWorld(): void {
@@ -143,6 +137,8 @@ export default abstract class PlanetScene extends Phaser.Scene {
       }),
       frameRate: 10
     })
+
+    this.cameras.main.fadeIn(1500, 0, 0, 0)
 
     cutscene.anims.play('cutscene_shuttle_1', true).once(
       'animationcomplete',
@@ -259,6 +255,24 @@ export default abstract class PlanetScene extends Phaser.Scene {
       .setDisplaySize(32, 32)
       .setVisible(false)
   }
+
+  public startNextWave(): void {
+    this.spawnEnemies(this.enemyWaves[++this.currentEnemyWave])
+  }
+
+  public completeLevel(): void {
+    if (!this.soundHelper) return
+
+    this.soundHelper.fadeMusicOut(this)
+
+    this.cameras.main
+      .fadeOut(1500, 0, 0, 0)
+      .once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+        this.goToNextPlanet()
+      })
+  }
+
+  public abstract goToNextPlanet(): void
 
   private setDebug(debug: boolean) {
     if (!debug) {

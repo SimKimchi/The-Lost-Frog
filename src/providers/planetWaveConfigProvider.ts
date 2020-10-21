@@ -4,8 +4,7 @@ export default abstract class PlanetWaveConfigProvider {
   public static getJungleWaveConfig(): EnemySpawn[][] {
     return [
       [
-        { type: EnemyType.Lizard, spawnTileX: 6, spawnTileY: 8 },
-        { type: EnemyType.Owl, spawnTileX: 8, spawnTileY: 8 }
+        { type: EnemyType.Lizard, spawnTileX: 9, spawnTileY: 5 }
         //   { type: EnemyType.Lizard, spawnTileX: 8, spawnTileY: 7 },
         //   { type: EnemyType.Lizard, spawnTileX: 9, spawnTileY: 4 },
         //   { type: EnemyType.Lizard, spawnTileX: 15, spawnTileY: 1 },
@@ -29,7 +28,7 @@ export default abstract class PlanetWaveConfigProvider {
     return [
       [
         { type: EnemyType.Lizard, spawnTileX: 6, spawnTileY: 8 },
-        { type: EnemyType.Owl, spawnTileX: 8, spawnTileY: 8 }
+        { type: EnemyType.Owl, spawnTileX: 8, spawnTileY: 6 }
         //   { type: EnemyType.Lizard, spawnTileX: 8, spawnTileY: 7 },
         //   { type: EnemyType.Lizard, spawnTileX: 9, spawnTileY: 4 },
         //   { type: EnemyType.Lizard, spawnTileX: 15, spawnTileY: 1 },
