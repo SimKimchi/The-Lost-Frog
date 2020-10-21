@@ -65,6 +65,34 @@ export default abstract class CharacterConfigProvider {
           frameStart: 4,
           frameEnd: 5,
           frameRate: 10
+        },
+        {
+          key: 'frog_attack_right',
+          assetKey: 'frog_attack',
+          frameStart: 1,
+          frameEnd: 3,
+          frameRate: 13
+        },
+        {
+          key: 'frog_attack_up',
+          assetKey: 'frog_attack',
+          frameStart: 6,
+          frameEnd: 9,
+          frameRate: 13
+        },
+        {
+          key: 'frog_attack_left',
+          assetKey: 'frog_attack',
+          frameStart: 11,
+          frameEnd: 13,
+          frameRate: 13
+        },
+        {
+          key: 'frog_attack_down',
+          assetKey: 'frog_attack',
+          frameStart: 18,
+          frameEnd: 20,
+          frameRate: 13
         }
       ],
       hitAreaWidth: 28,

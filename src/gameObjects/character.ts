@@ -166,7 +166,7 @@ export default abstract class Character {
       }
     } else if (direction === Direction.Up) {
       props = {
-        y: -this.knockback
+        y: -this.knockback / 5
       }
     }
     this.triggerKnockbackTween(props)

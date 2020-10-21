@@ -42,22 +42,26 @@ export default class Player extends Character {
 
     if (!this.container) return
 
-    const tongueSpriteUp = this.scene.physics.add.sprite(0, -48, 'tongue_up')
+    const tongueSpriteUp = this.scene.physics.add.sprite(-2, -48, 'tongue_up')
     tongueSpriteUp.setData('key', 'tongue_up')
     tongueSpriteUp.setData('direction', Direction.Up)
     const tongueSpriteRight = this.scene.physics.add.sprite(
-      32,
-      -18,
+      36,
+      -9,
       'tongue_right'
     )
     tongueSpriteRight.setData('key', 'tongue_right')
     tongueSpriteRight.setData('direction', Direction.Right)
-    const tongueSpriteDown = this.scene.physics.add.sprite(0, 12, 'tongue_down')
+    const tongueSpriteDown = this.scene.physics.add.sprite(
+      -2,
+      20,
+      'tongue_down'
+    )
     tongueSpriteDown.setData('key', 'tongue_down')
     tongueSpriteDown.setData('direction', Direction.Down)
     const tongueSpriteLeft = this.scene.physics.add.sprite(
-      -32,
-      -18,
+      -36,
+      -9,
       'tongue_left'
     )
     tongueSpriteLeft.setData('key', 'tongue_left')
@@ -178,8 +182,26 @@ export default class Player extends Character {
   public updateAnimation(): void {
     if (!this.container || !this.sprite) return
 
+    // * Attack
+    if (this.currentTongueSprite) {
+      if (this.currentTongueSprite.getData('direction') === Direction.Up) {
+        this.sprite.anims.play(`${this.assetPrefix}_attack_up`, true)
+      } else if (
+        this.currentTongueSprite.getData('direction') === Direction.Right
+      ) {
+        this.sprite.anims.play(`${this.assetPrefix}_attack_right`, true)
+      } else if (
+        this.currentTongueSprite.getData('direction') === Direction.Down
+      ) {
+        this.sprite.anims.play(`${this.assetPrefix}_attack_down`, true)
+      } else if (
+        this.currentTongueSprite.getData('direction') === Direction.Left
+      ) {
+        this.sprite.anims.play(`${this.assetPrefix}_attack_left`, true)
+      }
+    }
     // * Wall cling
-    if (this.wallClingDirection !== null) {
+    else if (this.wallClingDirection !== null) {
       if (this.isFacingLeft()) {
         this.sprite.anims.play(`${this.assetPrefix}_idle_left`, true)
       } else {
@@ -241,6 +263,7 @@ export default class Player extends Character {
     this.renderAttack(direction)
     this.setAttackDuration()
     this.setAttackCooldown()
+    this.updateAnimation()
   }
 
   public handleHit(direction: Direction, damage: number): void {

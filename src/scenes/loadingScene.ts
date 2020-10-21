@@ -328,6 +328,10 @@ export default class LoadingScene extends Phaser.Scene {
         frameHeight: 256
       }
     )
+    this.load.spritesheet('frog_attack', genericAssets.images.frog_attack, {
+      frameWidth: 256,
+      frameHeight: 256
+    })
     this.load.spritesheet(
       'enemy_owl_idle_left',
       iceAssets.images.enemy_owl_idle_left,
