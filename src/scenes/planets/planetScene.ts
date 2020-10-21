@@ -8,18 +8,19 @@ import DeathHelper from '../../helpers/deathHelper'
 import InputHelper from '../../helpers/inputHelper'
 import SoundHelper from '../../helpers/soundHelper'
 import CharacterConfigProvider from '../../providers/characterConfigProvider'
-import { EnemySpawn, gridHeight, gridWidth } from '../../util'
+import CharacterSpawnConfigProvider from '../../providers/characterSpawnConfigProvider'
+import { PlayerSpawn, EnemySpawn, gridHeight, gridWidth } from '../../util'
 
 export default abstract class PlanetScene extends Phaser.Scene {
   public velocityXModifier: number
   public velocityYModifier: number
   public planetFrictionModifier: number
-  public enemies: Enemy[]
+  public currentEnemies: Enemy[]
   public abstract enemyWaves: EnemySpawn[][]
   public currentEnemyWave: number
   public soundHelper: SoundHelper | null
   protected player: Player
-  protected platformGroups: Phaser.Physics.Arcade.StaticGroup | null
+  protected currentPlatformLayout: Phaser.Physics.Arcade.StaticGroup | null
   protected displayScore: Phaser.GameObjects.Text | null
   protected displayHp: Phaser.GameObjects.Text | null
   protected inputHelper: InputHelper | null
@@ -40,10 +41,10 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.player = Player.getPlayer(this, () => {
       this.deathHelper?.playerDeath()
     })
-    this.platformGroups = null
+    this.currentPlatformLayout = null
     this.displayScore = null
     this.displayHp = null
-    this.enemies = []
+    this.currentEnemies = []
     this.currentEnemyWave = 0
     this.inputHelper = null
     this.soundHelper = null
@@ -56,10 +57,10 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.player = Player.getPlayer(this, () => {
       this.deathHelper?.playerDeath()
     })
-    this.platformGroups = null
+    this.currentPlatformLayout = null
     this.displayScore = null
     this.displayHp = null
-    this.enemies = []
+    this.currentEnemies = []
     this.currentEnemyWave = 0
     this.collisionHelper = new CollisionHelper(this.physics, this.player)
     this.inputHelper = new InputHelper(
@@ -75,9 +76,32 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.initializeWorld()
     this.initializeSounds()
     this.initializeBackground()
-    this.initializePlatforms()
+
+    this.spawnPlatforms()
+    this.spawnEnemies(this.enemyWaves[this.currentEnemyWave])
+    this.collisionHelper?.setEnemyPlatformCollisions(
+      this.currentPlatformLayout,
+      this.currentEnemies
+    )
+    this.collisionHelper?.setEnemyWorldCollisions(this.currentEnemies)
+
     this.startCutscene()
-    this.setDebug(false)
+    this.setDebug(true)
+  }
+
+  private finishSceneCreation(): void {
+    this.initializePlayer()
+
+    this.collisionHelper?.setPlayerCollisionsWithEnemies(this.currentEnemies)
+    this.collisionHelper?.setPlayerAttackCollisions(this.currentEnemies)
+
+    this.collisionHelper?.setPlayerPlatformCollisions(
+      this.currentPlatformLayout
+    )
+
+    this.initializePlayerCamera()
+    this.initializeTexts()
+    this.addMuteButtons()
   }
 
   public update(): void {
@@ -90,10 +114,10 @@ export default abstract class PlanetScene extends Phaser.Scene {
       this.velocityXModifier,
       this.velocityYModifier,
       this.planetFrictionModifier,
-      this.platformGroups
+      this.currentPlatformLayout
     )
 
-    this.enemies
+    this.currentEnemies
       .filter((enemy) => enemy.constructor.name === 'FlyingEnemy')
       .forEach((enemy) => {
         ;(<FlyingEnemy>enemy).fly(this.player)
@@ -106,7 +130,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   protected abstract initializeBackground(): void
-  protected abstract initializePlatforms(): void
+  protected abstract spawnPlatforms(): void
 
   private startCutscene(): void {
     if (!this.soundHelper) return
@@ -143,11 +167,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     cutscene.anims.play('cutscene_shuttle_1', true).once(
       'animationcomplete',
       () => {
-        this.initializeCharacters()
-        this.initializeCollisions()
-        this.initializePlayerCamera()
-        this.initializeTexts()
-        this.addMuteButtons()
+        this.finishSceneCreation()
 
         this.cutSceneGoingOn = false
         cutscene.anims.play('cutscene_shuttle_2', true)
@@ -156,16 +176,11 @@ export default abstract class PlanetScene extends Phaser.Scene {
     )
   }
 
-  protected initializeCharacters(): void {
+  protected initializePlayer(): void {
     this.player.init(
       this.velocityYModifier,
       CharacterConfigProvider.getPlayerConfig()
     )
-    this.spawnEnemies(this.enemyWaves[this.currentEnemyWave])
-  }
-
-  protected initializeCollisions(): void {
-    this.collisionHelper?.initializeCollisions(this.platformGroups)
   }
 
   protected initializePlayerCamera(): void {
@@ -202,10 +217,10 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   private spawnEnemies(enemySpawns: EnemySpawn[]): void {
-    this.enemies = []
+    this.currentEnemies = []
 
     for (const enemySpawn of enemySpawns) {
-      this.enemies.push(
+      this.currentEnemies.push(
         EnemyFactory.createEnemyByType(
           enemySpawn.type,
           this as PlanetScene,
@@ -214,11 +229,6 @@ export default abstract class PlanetScene extends Phaser.Scene {
         )
       )
     }
-
-    this.collisionHelper?.setCollisionsAfterEnemySpawn(
-      this.platformGroups,
-      this.enemies
-    )
   }
 
   private addMuteButtons(): void {
@@ -256,8 +266,37 @@ export default abstract class PlanetScene extends Phaser.Scene {
       .setVisible(false)
   }
 
+  public completeWave(): void {
+    this.cameras.main
+      .fadeOut(1500, 0, 0, 0)
+      .once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+        this.startNextWave()
+      })
+  }
+
   public startNextWave(): void {
-    this.spawnEnemies(this.enemyWaves[++this.currentEnemyWave])
+    this.currentEnemyWave++
+
+    this.removeCurrentPlatforms()
+    this.spawnPlatforms()
+    this.spawnEnemies(this.enemyWaves[this.currentEnemyWave])
+
+    const spawn: PlayerSpawn = CharacterSpawnConfigProvider.getPlayerSpawn(
+      this.currentEnemyWave
+    )
+    this.player
+      .getContainer()
+      .setPosition(
+        spawn.spawnTileX * gridWidth + (spawn.spawnOffsetX ?? 0),
+        spawn.spawnTileY * gridHeight + (spawn.spawnOffsetY ?? 0)
+      )
+
+    this.collisionHelper?.setNextWaveCollisions(
+      this.currentPlatformLayout,
+      this.currentEnemies
+    )
+
+    this.cameras.main.fadeIn(1500, 0, 0, 0)
   }
 
   public completeLevel(): void {
@@ -296,5 +335,12 @@ export default abstract class PlanetScene extends Phaser.Scene {
         this.add.text(x * 64, y * 64, `${x}-${y}`)
       }
     }
+  }
+
+  private removeCurrentPlatforms(): void {
+    this.collisionHelper?.removePlayerVsPlatformCollider()
+    this.collisionHelper?.removeEnemyVsPlatformCollider()
+
+    this.currentPlatformLayout?.destroy(true)
   }
 }

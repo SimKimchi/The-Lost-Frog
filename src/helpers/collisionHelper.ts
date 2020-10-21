@@ -11,41 +11,36 @@ export interface IEdge {
 export default class CollisionHelper {
   private physics: Phaser.Physics.Arcade.ArcadePhysics
   private player: Player
-  private enemies: Enemy[]
+  private playerVsPlatformCollider: Phaser.Physics.Arcade.Collider | null
+  private enemyVsPlatformCollider: Phaser.Physics.Arcade.Collider | null
 
   constructor(physics: Phaser.Physics.Arcade.ArcadePhysics, player: Player) {
     this.physics = physics
     this.player = player
-    this.enemies = []
+    this.playerVsPlatformCollider = null
+    this.enemyVsPlatformCollider = null
   }
 
-  public initializeCollisions(
-    platformGroup: Phaser.Physics.Arcade.StaticGroup | null
-  ): void {
-    this.setPlayerPlatformCollisions(platformGroup)
-    this.setEnemyWorldCollisions()
-  }
-
-  public setCollisionsAfterEnemySpawn(
-    platformGroup: Phaser.Physics.Arcade.StaticGroup | null,
+  public setNextWaveCollisions(
+    platformLayout: Phaser.Physics.Arcade.StaticGroup | null,
     enemies: Enemy[]
   ): void {
-    this.enemies = enemies
-    this.setEnemyPlatformCollisions(platformGroup)
-    this.setPlayerCollisionsWithEnemies()
-    this.setPlayerAttackCollisions()
+    this.setPlayerPlatformCollisions(platformLayout)
+    this.setEnemyPlatformCollisions(platformLayout, enemies)
+    this.setPlayerCollisionsWithEnemies(enemies)
+    this.setPlayerAttackCollisions(enemies)
   }
 
   public checkPlatformEdge(
     body: Phaser.Physics.Arcade.Body,
     platformSprite: Phaser.GameObjects.Sprite,
-    platformGroup: Phaser.Physics.Arcade.StaticGroup,
+    platformLayout: Phaser.Physics.Arcade.StaticGroup,
     direction: Direction | null
   ): IEdge {
     const isAtEdge = this.isAtEdge(body, platformSprite, direction)
     const adjacentPlatform = this.hasAdjacentPlatform(
       platformSprite,
-      platformGroup,
+      platformLayout,
       direction
     )
 
@@ -55,14 +50,14 @@ export default class CollisionHelper {
     }
   }
 
-  private setPlayerPlatformCollisions(
-    platformGroup: Phaser.Physics.Arcade.StaticGroup | null
+  public setPlayerPlatformCollisions(
+    platformLayout: Phaser.Physics.Arcade.StaticGroup | null
   ): void {
-    if (!platformGroup) return
+    if (!platformLayout) return
 
-    this.physics.add.collider(
+    this.playerVsPlatformCollider = this.physics.add.collider(
       [this.player.getContainer()],
-      platformGroup,
+      platformLayout,
       (player, platform) => {
         this.player.clingToWall(platform as Phaser.GameObjects.Sprite)
         if ((<Phaser.Physics.Arcade.Body>player.body).touching.down) {
@@ -72,7 +67,7 @@ export default class CollisionHelper {
     )
   }
 
-  private setEnemyWorldCollisions(): void {
+  public setEnemyWorldCollisions(enemies: Enemy[]): void {
     this.physics.world.on(
       'worldbounds',
       (
@@ -87,25 +82,41 @@ export default class CollisionHelper {
           touchingUp,
           touchingDown,
           touchingLeft,
-          touchingRight
+          touchingRight,
+          enemies
         )
     )
   }
 
-  private setEnemyPlatformCollisions(
-    platformGroup: Phaser.Physics.Arcade.StaticGroup | null
-  ): void {
-    if (!platformGroup) return
+  public removeEnemyVsPlatformCollider(): void {
+    if (!this.enemyVsPlatformCollider) return
 
-    const enemyContainers = this.enemies
+    this.physics.world.removeCollider(this.enemyVsPlatformCollider)
+    this.enemyVsPlatformCollider.destroy()
+  }
+
+  public removePlayerVsPlatformCollider(): void {
+    if (!this.playerVsPlatformCollider) return
+
+    this.physics.world.removeCollider(this.playerVsPlatformCollider)
+    this.playerVsPlatformCollider.destroy()
+  }
+
+  public setEnemyPlatformCollisions(
+    platformLayout: Phaser.Physics.Arcade.StaticGroup | null,
+    enemies: Enemy[]
+  ): void {
+    if (!platformLayout) return
+
+    const enemyContainers = enemies
       .filter((enemy) => enemy.constructor.name !== 'FlyingEnemy')
       .map((enemy) => {
         return enemy.getContainer()
       })
 
-    this.physics.add.collider(
+    this.enemyVsPlatformCollider = this.physics.add.collider(
       enemyContainers,
-      platformGroup,
+      platformLayout,
       (enemy, platform) => {
         const body = enemy.body as Phaser.Physics.Arcade.Body
         const platformSprite = platform as Phaser.GameObjects.Sprite
@@ -119,7 +130,7 @@ export default class CollisionHelper {
         const checkEdge = this.checkPlatformEdge(
           body,
           platformSprite,
-          platformGroup,
+          platformLayout,
           direction
         )
         if (checkEdge.isAtEdge && !checkEdge.adjacentPlatform) {
@@ -133,7 +144,7 @@ export default class CollisionHelper {
         }
         if (mustTurnAround) {
           ;(this.findCharacterByContainer(
-            this.enemies,
+            enemies,
             enemy as Phaser.GameObjects.Container
           ) as Enemy).turnAround()
         }
@@ -141,8 +152,8 @@ export default class CollisionHelper {
     )
   }
 
-  private setPlayerCollisionsWithEnemies(): void {
-    const enemyContainers = this.enemies.map((enemy) => {
+  public setPlayerCollisionsWithEnemies(enemies: Enemy[]): void {
+    const enemyContainers = enemies.map((enemy) => {
       return enemy.getContainer()
     })
 
@@ -159,12 +170,12 @@ export default class CollisionHelper {
     )
   }
 
-  private setPlayerAttackCollisions(): void {
+  public setPlayerAttackCollisions(enemies: Enemy[]): void {
     const attackSprites = this.player.getAttackSprites()
-    for (const key in this.enemies) {
+    for (const key in enemies) {
       this.physics.add.overlap(
         attackSprites,
-        this.enemies[key].getContainer(),
+        enemies[key].getContainer(),
         () => {
           if (!this.player.currentTongueSprite) return
           if (!this.player.currentTongueSprite.visible) return
@@ -174,7 +185,7 @@ export default class CollisionHelper {
           ) {
             this.player.bounce(1.25)
           }
-          this.enemies[key].handleHit(
+          enemies[key].handleHit(
             this.player.currentTongueSprite.getData('direction'),
             this.player.getContainer().getData('damage')
           )
@@ -188,14 +199,15 @@ export default class CollisionHelper {
     _touchingUp: boolean,
     _touchingDown: boolean,
     touchingLeft: boolean,
-    touchingRight: boolean
+    touchingRight: boolean,
+    enemies: Enemy[]
   ): void {
     if (!touchingLeft && !touchingRight) {
       return
     }
 
     const character = this.findCharacterByContainer(
-      [this.player, ...this.enemies],
+      [this.player, ...enemies],
       body.gameObject as Phaser.GameObjects.Container
     )
 
@@ -248,14 +260,14 @@ export default class CollisionHelper {
 
   private hasAdjacentPlatform(
     platformSprite: Phaser.GameObjects.Sprite,
-    platformGroup: Phaser.Physics.Arcade.StaticGroup,
+    platformLayout: Phaser.Physics.Arcade.StaticGroup,
     direction: Direction | null
   ): Phaser.GameObjects.Sprite | undefined {
     let axis = 'x'
     if (direction === Direction.Up || direction === Direction.Down) {
       axis = 'y'
     }
-    const platform = platformGroup.children.getArray().find((child) => {
+    const platform = platformLayout.children.getArray().find((child) => {
       const childSprite = child as Phaser.GameObjects.Sprite
       if (axis === 'x' && childSprite.y !== platformSprite.y) {
         return undefined

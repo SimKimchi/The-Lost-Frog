@@ -11,17 +11,21 @@ export default class DeathHelper {
   }
 
   public setEnemies(enemies: Enemy[]): void {
-    this.scene.enemies = enemies
+    this.scene.currentEnemies = enemies
   }
 
   private onEnemyDeath(): void {
-    if (!this.scene.enemies.every((x) => x.getContainer().body === undefined))
+    if (
+      !this.scene.currentEnemies.every(
+        (x) => x.getContainer().body === undefined
+      )
+    )
       return
 
     if (this.scene.currentEnemyWave === this.scene.enemyWaves.length - 1) {
       this.scene.completeLevel()
     } else {
-      this.scene.startNextWave()
+      this.scene.completeWave()
     }
   }
 

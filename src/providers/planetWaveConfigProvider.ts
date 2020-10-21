@@ -20,7 +20,10 @@ export default abstract class PlanetWaveConfigProvider {
         //   { type: EnemyType.Lizard, spawnTileX: 18, spawnTileY: 6 },
         //   { type: EnemyType.Lizard, spawnTileX: 20, spawnTileY: 2 },
         //   { type: EnemyType.Lizard, spawnTileX: 28, spawnTileY: 3 }
-      ]
+      ],
+      [{ type: EnemyType.Lizard, spawnTileX: 9, spawnTileY: 5 }],
+      [{ type: EnemyType.Lizard, spawnTileX: 9, spawnTileY: 5 }],
+      [{ type: EnemyType.Lizard, spawnTileX: 9, spawnTileY: 5 }]
     ]
   }
 

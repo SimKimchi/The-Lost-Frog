@@ -267,6 +267,56 @@ export default abstract class PlatformGroupFactory {
       { x: 28, y: 8, config: PlatformGroupFactory.jungleH4Config },
       { x: 29, y: 4, config: PlatformGroupFactory.jungleH3Config },
       { x: 29, y: 7, config: PlatformGroupFactory.jungleH4Config }
+    ],
+    [
+      { x: 0, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 1, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 2, y: 9, config: PlatformGroupFactory.jungleF3Config },
+
+      {
+        x: 0,
+        y: 1,
+        posOffsetX: 16,
+        config: PlatformGroupFactory.jungleV1Config
+      },
+      {
+        x: 0,
+        y: 2,
+        posOffsetX: 16,
+        config: PlatformGroupFactory.jungleV1Config
+      },
+      {
+        x: 0,
+        y: 3,
+        posOffsetX: 16,
+        config: PlatformGroupFactory.jungleV1Config
+      },
+      {
+        x: 0,
+        y: 4,
+        posOffsetX: 16,
+        config: PlatformGroupFactory.jungleV1Config
+      },
+      {
+        x: 0,
+        y: 5,
+        posOffsetX: 16,
+        config: PlatformGroupFactory.jungleV1Config
+      },
+      {
+        x: 0,
+        y: 6,
+        posOffsetX: 16,
+        config: PlatformGroupFactory.jungleV1Config
+      },
+      {
+        x: 0,
+        y: 7,
+        posOffsetX: 16,
+        config: PlatformGroupFactory.jungleV1Config
+      },
+      { x: 1, y: 0, config: PlatformGroupFactory.jungleH2Config },
+      { x: 2, y: 0, config: PlatformGroupFactory.jungleH3Config }
     ]
   ]
 

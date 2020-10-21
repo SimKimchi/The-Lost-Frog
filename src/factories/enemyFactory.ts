@@ -76,6 +76,7 @@ export default abstract class EnemyFactory {
 
     this.initializeEnemyBehavior(enemy, scene)
     enemy.setDeathBehavior(this.getEnemyDeathBehavior(enemy, scene))
+    enemy.updateAnimation()
 
     return enemy
   }

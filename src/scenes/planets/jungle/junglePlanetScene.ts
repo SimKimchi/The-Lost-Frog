@@ -42,8 +42,10 @@ export default class JunglePlanetScene extends PlanetScene {
       .setAlpha(0.75)
   }
 
-  protected initializePlatforms(): void {
-    this.platformGroups = PlatformGroupFactory.createJunglePlatformGroups(this)
+  protected spawnPlatforms(): void {
+    this.currentPlatformLayout = PlatformGroupFactory.createJunglePlatformGroups(
+      this
+    )
   }
 
   protected initializeSounds(): void {

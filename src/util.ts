@@ -85,3 +85,10 @@ export type EnemySpawn = {
   spawnTileX: number
   spawnTileY: number
 }
+
+export type PlayerSpawn = {
+  spawnTileX: number
+  spawnTileY: number
+  spawnOffsetX?: number
+  spawnOffsetY?: number
+}

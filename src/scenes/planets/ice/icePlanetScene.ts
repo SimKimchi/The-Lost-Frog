@@ -24,8 +24,10 @@ export default class IcePlanetScene extends PlanetScene {
     this.add.image(0, 0, 'background_ice_1').setOrigin(0).setScrollFactor(0.9)
   }
 
-  protected initializePlatforms(): void {
-    this.platformGroups = PlatformGroupFactory.createIcePlatformGroups(this)
+  protected spawnPlatforms(): void {
+    this.currentPlatformLayout = PlatformGroupFactory.createIcePlatformGroups(
+      this
+    )
   }
 
   protected initializeSounds(): void {
