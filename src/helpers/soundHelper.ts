@@ -16,9 +16,9 @@ export default class SoundHelper {
     this.soundManager.add('wall_jump', { volume: 0.1 })
   }
 
-  public setMusic(theme: string, loop = true): void {
+  public setMusic(theme: string, volume: number, loop = true): void {
     this.music = this.soundManager.add(theme, {
-      volume: 0.75,
+      volume: volume,
       loop: loop
     })
 

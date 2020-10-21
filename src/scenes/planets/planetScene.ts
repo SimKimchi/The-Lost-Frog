@@ -78,28 +78,22 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.initializeSounds()
     this.initializeBackground()
     this.initializePlatforms()
-    this.initializeCharacters()
-    this.initializeCollisions()
-    this.initializeCamera()
-    this.initializeTexts()
-    this.addMuteButtons()
     this.startCutscene()
     this.setDebug(false)
   }
 
   public update(): void {
-    // TODO: Start the scene after the cutscene is done (freeze enemies, spawn player on a specific frame, etc.)
-    //if (this.cutSceneGoingOn) return
-
     this.updateTexts()
 
-    this.inputHelper?.triggerKeyboardActions(
-      this.player,
-      this.velocityXModifier,
-      this.velocityYModifier,
-      this.planetFrictionModifier,
-      this.platformGroup
-    )
+    if (!this.cutSceneGoingOn) {
+      this.inputHelper?.triggerKeyboardActions(
+        this.player,
+        this.velocityXModifier,
+        this.velocityYModifier,
+        this.planetFrictionModifier,
+        this.platformGroup
+      )
+    }
 
     this.enemies
       .filter((enemy) => enemy.constructor.name === 'FlyingEnemy')
@@ -110,6 +104,11 @@ export default abstract class PlanetScene extends Phaser.Scene {
 
   public startNextWave(): void {
     this.spawnEnemies(this.enemyWaves[++this.currentEnemyWave])
+  }
+
+  protected initializeWorld(): void {
+    this.physics.world.setBounds(0, 0, 1920, 640)
+    this.physics.world.setBoundsCollision(true, true, false, true)
   }
 
   protected abstract initializeBackground(): void
@@ -123,25 +122,38 @@ export default abstract class PlanetScene extends Phaser.Scene {
       .setOrigin(0)
 
     this.anims.create({
-      key: 'cutscene_shuttle',
+      key: 'cutscene_shuttle_1',
       frames: this.anims.generateFrameNumbers('cutscene_shuttle', {
         start: 0,
+        end: 38
+      }),
+      frameRate: 10,
+      repeat: 0
+    })
+
+    this.anims.create({
+      key: 'cutscene_shuttle_2',
+      frames: this.anims.generateFrameNumbers('cutscene_shuttle', {
+        start: 38,
         end: 55
       }),
       frameRate: 10
     })
 
-    cutscene.anims.play('cutscene_shuttle', true).on(
+    cutscene.anims.play('cutscene_shuttle_1', true).once(
       'animationcomplete',
       () => {
+        this.initializeCharacters()
+        this.initializeCollisions()
+        this.initializeCamera()
+        this.initializeTexts()
+        this.addMuteButtons()
+
         this.cutSceneGoingOn = false
+        cutscene.anims.play('cutscene_shuttle_2', true)
       },
       this
     )
-  }
-  protected initializeWorld(): void {
-    this.physics.world.setBounds(0, 0, 1920, 640)
-    this.physics.world.setBoundsCollision(true, true, false, true)
   }
 
   protected initializeCharacters(): void {
