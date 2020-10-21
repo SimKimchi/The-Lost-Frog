@@ -169,12 +169,10 @@ export default abstract class Character {
         y: -this.knockback
       }
     }
-    this.scene.tweens.add({
-      targets: this.container.body.velocity,
-      duration: 200,
-      props
-    })
+    this.triggerKnockbackTween(props)
   }
+
+  protected abstract triggerKnockbackTween(props: Record<string, unknown>): void
 
   public setGravity(multiplier: number): void {
     if (!this.container) return

@@ -58,7 +58,9 @@ export default class FlyingEnemy extends Enemy {
 
     this.direction = enemyPos.x > playerPos.x ? Direction.Left : Direction.Right
 
-    this.updateAnimation()
+    if (playerPos.x - enemyPos.x < -2 || playerPos.x - enemyPos.x > 2) {
+      this.updateAnimation()
+    }
   }
 
   public updateAnimation(): void {
@@ -84,5 +86,15 @@ export default class FlyingEnemy extends Enemy {
         this.sprite.anims.play(`${this.assetPrefix}_fly_right`, true)
       }
     }
+  }
+
+  protected triggerKnockbackTween(props: Record<string, unknown>): void {
+    if (!this.container || !this.container.body.velocity) return
+
+    this.scene.tweens.add({
+      targets: this.container.body.velocity,
+      duration: 200,
+      props
+    })
   }
 }

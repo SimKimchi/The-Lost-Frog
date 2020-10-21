@@ -91,4 +91,20 @@ export default class Enemy extends Character {
       }
     })
   }
+
+  protected triggerKnockbackTween(props: Record<string, unknown>): void {
+    if (!this.container || !this.container.body.velocity) return
+
+    this.scene.tweens.add({
+      targets: this.container.body.velocity,
+      duration: 200,
+      props,
+      onComplete: () => {
+        if (!this.container || !this.container.body) return
+        this.turnAround() // Dont laugh
+        this.turnAround()
+      },
+      onCompleteScope: this
+    })
+  }
 }

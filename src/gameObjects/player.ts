@@ -4,7 +4,6 @@ import { CharacterConfig, Direction } from '../util'
 import PlanetScene from '../scenes/planets/planetScene'
 
 export default class Player extends Character {
-  private static readonly ATTACK_RANGE = 50
   private static readonly ATTACK_DURATION = 200
   private static readonly ATTACK_COOLDOWN = 400
 
@@ -310,6 +309,16 @@ export default class Player extends Character {
   protected makeInvulnerable(): void {
     super.makeInvulnerable()
     this.flickerSprite()
+  }
+
+  protected triggerKnockbackTween(props: Record<string, unknown>): void {
+    if (!this.container || !this.container.body.velocity) return
+
+    this.scene.tweens.add({
+      targets: this.container.body.velocity,
+      duration: 200,
+      props
+    })
   }
 
   private renderAttack(direction: Direction): void {
