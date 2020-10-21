@@ -77,12 +77,11 @@ export default class SoundHelper {
     this.soundManager.get('wall_jump').play()
   }
 
-<<<<<<< HEAD
   public playPlayerAttackSound(): void {
     this.soundManager.get('frog_attack').play()
-=======
+  }
+
   public playShuttleSound(): void {
     this.soundManager.get('shuttle_sound').play()
->>>>>>> main
   }
 }
