@@ -19,7 +19,7 @@ export default class Player extends Character {
   private inAttackCooldown: boolean
   public wallClingDirection: Direction | null
   protected die: (() => void) | null
-  protected readonly knockback = 42.5
+  protected readonly knockback = 1000
   public clingPlatform: Phaser.GameObjects.Sprite | null
 
   private constructor(scene: PlanetScene, die: () => void) {

@@ -161,22 +161,17 @@ export default abstract class Character {
 
     let props = {}
     if (direction === Direction.Right || direction === Direction.Left) {
-      const currentX = (<Phaser.Physics.Arcade.Body>this.container.body).x
       props = {
-        x:
-          direction === Direction.Right
-            ? currentX + this.knockback
-            : currentX - this.knockback
+        x: direction === Direction.Right ? this.knockback : -this.knockback
       }
     } else if (direction === Direction.Up) {
-      const currentY = (<Phaser.Physics.Arcade.Body>this.container.body).y
       props = {
-        y: currentY - this.knockback / 2
+        y: -this.knockback
       }
     }
     this.scene.tweens.add({
-      targets: this.container,
-      duration: 100,
+      targets: this.container.body.velocity,
+      duration: 200,
       props
     })
   }
