@@ -145,7 +145,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
       () => {
         this.initializeCharacters()
         this.initializeCollisions()
-        this.initializeCamera()
+        this.initializePlayerCamera()
         this.initializeTexts()
         this.addMuteButtons()
 
@@ -168,7 +168,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.collisionHelper?.initializeCollisions(this.platformGroup)
   }
 
-  protected initializeCamera(): void {
+  protected initializePlayerCamera(): void {
     this.cameras.main
       .startFollow(this.player.getContainer(), false, 0.1, 0.05, 0, 70)
       .setBounds(0, 0, 1920, 640)
@@ -186,12 +186,14 @@ export default abstract class PlanetScene extends Phaser.Scene {
         fill: '#FFFFFF'
       })
       .setScrollFactor(0, 0)
+      .setDepth(3)
     this.displayScore = this.add
       .text(150, 140, (this.game as TheLostFrogGame).displayScore(), {
         font: '20px monospace',
         fill: '#FFFFFF'
       })
       .setScrollFactor(0, 0)
+      .setDepth(3)
   }
 
   private updateTexts(): void {
