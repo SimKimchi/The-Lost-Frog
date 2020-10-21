@@ -115,11 +115,15 @@ export default abstract class PlanetScene extends Phaser.Scene {
   protected abstract initializePlatforms(): void
 
   private startCutscene(): void {
+    if (!this.soundHelper) return
+
     this.cutSceneGoingOn = true
 
     const cutscene = this.physics.add
       .staticSprite(0, 0, 'cutscene_shuttle')
       .setOrigin(0)
+
+    this.soundHelper.playShuttleSound()
 
     this.anims.create({
       key: 'cutscene_shuttle_1',
