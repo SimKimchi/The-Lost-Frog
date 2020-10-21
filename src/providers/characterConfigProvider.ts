@@ -5,7 +5,7 @@ export default abstract class CharacterConfigProvider {
     return {
       spawnX: 128,
       spawnY: 550,
-      spriteKey: 'dude',
+      spriteKey: 'frog',
       collideWorldBounds: true,
       animations: [
         {
@@ -24,17 +24,17 @@ export default abstract class CharacterConfigProvider {
         },
         {
           key: 'frog_run_left',
-          assetKey: 'dude',
-          frameStart: 0,
-          frameEnd: 3,
+          assetKey: 'frog_jump_left_anim',
+          frameStart: 2,
+          frameEnd: 5,
           frameRate: 10,
           repeat: -1
         },
         {
           key: 'frog_run_right',
-          assetKey: 'dude',
-          frameStart: 5,
-          frameEnd: 8,
+          assetKey: 'frog_jump_right_anim',
+          frameStart: 2,
+          frameEnd: 5,
           frameRate: 10,
           repeat: -1
         },

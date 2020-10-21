@@ -5,7 +5,7 @@ import PlanetScene from '../scenes/planets/planetScene'
 
 export default class Player extends Character {
   private static readonly ATTACK_RANGE = 50
-  private static readonly ATTACK_DURATION = 150
+  private static readonly ATTACK_DURATION = 200
   private static readonly ATTACK_COOLDOWN = 400
 
   protected readonly invulnerableTime = 1000
@@ -14,7 +14,8 @@ export default class Player extends Character {
   protected readonly gravity = 200
   private static instance: Player
   public canDoubleJump = true
-  private tongueSprite: Phaser.Physics.Arcade.Sprite | null
+  private tongueSprites: Phaser.Physics.Arcade.Sprite[]
+  public currentTongueSprite: Phaser.Physics.Arcade.Sprite | null | undefined
   private inAttackCooldown: boolean
   public wallClingDirection: Direction | null
   protected die: (() => void) | null
@@ -23,7 +24,8 @@ export default class Player extends Character {
 
   private constructor(scene: PlanetScene, die: () => void) {
     super(6, 1, 64, 64, 'frog', scene)
-    this.tongueSprite = null
+    this.tongueSprites = []
+    this.currentTongueSprite = null
     this.inAttackCooldown = false
     this.wallClingDirection = null
     this.die = die
@@ -41,15 +43,62 @@ export default class Player extends Character {
 
     if (!this.container) return
 
-    this.tongueSprite = this.scene.physics.add.sprite(0, 0, 'bomb')
-    ;(<Phaser.Physics.Arcade.Body>this.tongueSprite.body).setAllowGravity(false)
-    this.tongueSprite.setVisible(false)
-
-    this.container.add(this.tongueSprite)
+    const tongueSpriteUp = this.scene.physics.add.sprite(0, -48, 'tongue_up')
+    tongueSpriteUp.setData('key', 'tongue_up')
+    tongueSpriteUp.setData('direction', Direction.Up)
+    const tongueSpriteRight = this.scene.physics.add.sprite(
+      32,
+      -18,
+      'tongue_right'
+    )
+    tongueSpriteRight.setData('key', 'tongue_right')
+    tongueSpriteRight.setData('direction', Direction.Right)
+    const tongueSpriteDown = this.scene.physics.add.sprite(0, 12, 'tongue_down')
+    tongueSpriteDown.setData('key', 'tongue_down')
+    tongueSpriteDown.setData('direction', Direction.Down)
+    const tongueSpriteLeft = this.scene.physics.add.sprite(
+      -32,
+      -18,
+      'tongue_left'
+    )
+    tongueSpriteLeft.setData('key', 'tongue_left')
+    tongueSpriteLeft.setData('direction', Direction.Left)
+    this.tongueSprites = [
+      tongueSpriteUp,
+      tongueSpriteRight,
+      tongueSpriteDown,
+      tongueSpriteLeft
+    ]
+    this.tongueSprites.forEach((tongueSprite) => {
+      ;(<Phaser.Physics.Arcade.Body>tongueSprite.body).setAllowGravity(false)
+      tongueSprite.setVisible(false)
+      tongueSprite.setSize(64, 64)
+      this.scene.anims.create({
+        key: tongueSprite.getData('key'),
+        frames: [
+          ...this.scene.anims.generateFrameNumbers(
+            tongueSprite.getData('key'),
+            {
+              start: 7,
+              end: 14
+            }
+          ),
+          ...this.scene.anims.generateFrameNumbers(
+            tongueSprite.getData('key'),
+            {
+              start: 0,
+              end: 6
+            }
+          )
+        ],
+        frameRate: 60
+      })
+      this.container?.add(tongueSprite)
+    })
   }
 
-  public getAttackSprite(): Phaser.Physics.Arcade.Sprite {
-    return this.tongueSprite as Phaser.Physics.Arcade.Sprite
+  public getAttackSprites(): Phaser.Physics.Arcade.Sprite[] {
+    return this.tongueSprites
   }
 
   public jump(multiplier: number): void {
@@ -190,7 +239,6 @@ export default class Player extends Character {
   public attack(direction: Direction): void {
     if (this.inAttackCooldown || direction === this.wallClingDirection) return
 
-    // TODO jouer une animation d'attaque quand ce sera une spritesheet
     this.renderAttack(direction)
     this.setAttackDuration()
     this.setAttackCooldown()
@@ -265,24 +313,17 @@ export default class Player extends Character {
   }
 
   private renderAttack(direction: Direction): void {
-    if (!this.tongueSprite) return
+    this.currentTongueSprite = this.tongueSprites.find(
+      (tongueSprite) => tongueSprite.getData('direction') === direction
+    )
+    if (!this.currentTongueSprite) return
 
-    if (direction === Direction.Right) {
-      this.tongueSprite.x = Player.ATTACK_RANGE
-      this.tongueSprite.y = 2
-    } else if (direction === Direction.Left) {
-      this.tongueSprite.x = -Player.ATTACK_RANGE
-      this.tongueSprite.y = 2
-    } else if (direction === Direction.Up) {
-      this.tongueSprite.x = 0
-      this.tongueSprite.y = -Player.ATTACK_RANGE
-    } else if (direction === Direction.Down) {
-      this.tongueSprite.x = 0
-      this.tongueSprite.y = Player.ATTACK_RANGE
-    }
-
-    this.tongueSprite.setData('direction', direction)
-    this.tongueSprite.setVisible(true)
+    this.scene.soundHelper?.playPlayerAttackSound()
+    this.currentTongueSprite.anims.play(
+      this.currentTongueSprite.getData('key'),
+      true
+    )
+    this.currentTongueSprite.setVisible(true)
   }
 
   private setAttackDuration(): void {
@@ -305,9 +346,10 @@ export default class Player extends Character {
   }
 
   private endAttack(player: Player): void {
-    if (!player.tongueSprite) return
+    if (!player.currentTongueSprite) return
 
-    player.tongueSprite.setVisible(false)
+    player.currentTongueSprite.setVisible(false)
+    player.currentTongueSprite = null
   }
 
   private resetAttackCooldown(player: Player): void {

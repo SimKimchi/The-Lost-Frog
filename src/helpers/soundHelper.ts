@@ -14,6 +14,7 @@ export default class SoundHelper {
     this.soundManager.add('double_jump', { volume: 0.1 })
     this.soundManager.add('wall_cling', { volume: 0.1 })
     this.soundManager.add('wall_jump', { volume: 0.1 })
+    this.soundManager.add('frog_attack', { volume: 0.1 })
   }
 
   public setMusic(theme: string, loop = true): void {
@@ -73,5 +74,9 @@ export default class SoundHelper {
 
   public playPlayerWallJumpSound(): void {
     this.soundManager.get('wall_jump').play()
+  }
+
+  public playPlayerAttackSound(): void {
+    this.soundManager.get('frog_attack').play()
   }
 }

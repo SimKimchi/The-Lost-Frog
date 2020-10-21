@@ -160,18 +160,22 @@ export default class CollisionHelper {
   }
 
   private setPlayerAttackCollisions(): void {
-    const attackSprite = this.player.getAttackSprite()
+    const attackSprites = this.player.getAttackSprites()
     for (const key in this.enemies) {
       this.physics.add.overlap(
-        attackSprite,
+        attackSprites,
         this.enemies[key].getContainer(),
         () => {
-          if (!attackSprite.visible) return
-          if (attackSprite.getData('direction') === Direction.Down) {
+          if (!this.player.currentTongueSprite) return
+          if (!this.player.currentTongueSprite.visible) return
+          if (
+            this.player.currentTongueSprite.getData('direction') ===
+            Direction.Down
+          ) {
             this.player.bounce(1.25)
           }
           this.enemies[key].handleHit(
-            attackSprite.getData('direction'),
+            this.player.currentTongueSprite.getData('direction'),
             this.player.getContainer().getData('damage')
           )
         }

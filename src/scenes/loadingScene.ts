@@ -256,7 +256,22 @@ export default class LoadingScene extends Phaser.Scene {
   }
 
   private loadCharacters(): void {
-    this.load.image('bomb', jungleAssets.images.bomb)
+    this.load.spritesheet('tongue_up', genericAssets.images.tongue_up, {
+      frameWidth: 32,
+      frameHeight: 64
+    })
+    this.load.spritesheet('tongue_down', genericAssets.images.tongue_down, {
+      frameWidth: 32,
+      frameHeight: 64
+    })
+    this.load.spritesheet('tongue_right', genericAssets.images.tongue_right, {
+      frameWidth: 64,
+      frameHeight: 32
+    })
+    this.load.spritesheet('tongue_left', genericAssets.images.tongue_left, {
+      frameWidth: 64,
+      frameHeight: 32
+    })
     this.load.spritesheet(
       'enemy_lizard_left',
       jungleAssets.images.enemy_lizard_left,
@@ -289,13 +304,9 @@ export default class LoadingScene extends Phaser.Scene {
         frameHeight: 16
       }
     )
-    this.load.spritesheet('dude', jungleAssets.images.dude, {
-      frameWidth: 32,
-      frameHeight: 48
-    })
     this.load.spritesheet(
       'frog_idle_anim',
-      jungleAssets.images.frog_idle_anim,
+      genericAssets.images.frog_idle_anim,
       {
         frameWidth: 256,
         frameHeight: 256
@@ -303,7 +314,7 @@ export default class LoadingScene extends Phaser.Scene {
     )
     this.load.spritesheet(
       'frog_jump_left_anim',
-      jungleAssets.images.frog_jump_left_anim,
+      genericAssets.images.frog_jump_left_anim,
       {
         frameWidth: 256,
         frameHeight: 256
@@ -311,7 +322,7 @@ export default class LoadingScene extends Phaser.Scene {
     )
     this.load.spritesheet(
       'frog_jump_right_anim',
-      jungleAssets.images.frog_jump_right_anim,
+      genericAssets.images.frog_jump_right_anim,
       {
         frameWidth: 256,
         frameHeight: 256
@@ -367,6 +378,7 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.audio('double_jump', genericAssets.sounds.double_jump)
     this.load.audio('wall_cling', genericAssets.sounds.wall_cling)
     this.load.audio('wall_jump', genericAssets.sounds.wall_jump)
+    this.load.audio('frog_attack', genericAssets.sounds.frog_attack)
   }
 
   private loadSpikes(): void {
