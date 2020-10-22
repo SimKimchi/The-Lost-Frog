@@ -1,33 +1,3 @@
-html,
-body,
-.container {
-  height: 100%;
-}
-body {
-  font-family: 'PlayMeGames', sans-serif;
-  letter-spacing: 1px;
-  background-color: #37946e;
-}
-.container {
-  position: relative;
-  background-color: #f4c373;
-}
-h1 {
-  padding: 10px 0;
-}
-h2 {
-  padding-top: 10px;
-}
-h5 {
-  padding-left: 15px;
-}
-span {
-  font-size: 12px;
-  position: absolute;
-  bottom: 0;
-  right: 5px;
-}
-
 @font-face {
   font-family: 'PlayMeGames';
   src: url('PlayMeGamesReguler.eot');

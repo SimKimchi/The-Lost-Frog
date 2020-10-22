@@ -20,7 +20,6 @@ const config: Phaser.Types.Core.GameConfig = {
       gravity: { y: 1500 }
     }
   },
-  parent: 'game-container',
   scene: [
     LoadingScene,
     MainMenuScene,
