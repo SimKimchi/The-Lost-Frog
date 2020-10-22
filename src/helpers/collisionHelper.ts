@@ -120,7 +120,7 @@ export default class CollisionHelper {
       (enemy, platform) => {
         const body = enemy.body as Phaser.Physics.Arcade.Body
         const platformSprite = platform as Phaser.GameObjects.Sprite
-        let mustTurnAround = this.checkWallCollision(body)
+        const mustTurnAroundWallCollision = this.checkWallCollision(body)
         let direction = null
         if (body.velocity.x > 0) {
           direction = Direction.Right
@@ -133,16 +133,15 @@ export default class CollisionHelper {
           platformLayout,
           direction
         )
-        if (checkEdge.isAtEdge && !checkEdge.adjacentPlatform) {
-          mustTurnAround = true
-        }
+        let mustTurnAroundPlatformEdge =
+          checkEdge.isAtEdge && !checkEdge.adjacentPlatform
         if (
           (enemy.body as Phaser.Physics.Arcade.Body).touching.down &&
-          platformSprite.width <= body.width
+          platformSprite.getData('letEnemiesFall')
         ) {
-          mustTurnAround = false
+          mustTurnAroundPlatformEdge = false
         }
-        if (mustTurnAround) {
+        if (mustTurnAroundWallCollision || mustTurnAroundPlatformEdge) {
           ;(this.findCharacterByContainer(
             enemies,
             enemy as Phaser.GameObjects.Container
@@ -234,7 +233,10 @@ export default class CollisionHelper {
   }
 
   private checkWallCollision(body: Phaser.Physics.Arcade.Body): boolean {
-    return body.touching.left || body.touching.right
+    return (
+      (body.touching.left && body.velocity.x <= 0) ||
+      (body.touching.right && body.velocity.x >= 0)
+    )
   }
 
   private isAtEdge(

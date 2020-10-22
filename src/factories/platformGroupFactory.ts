@@ -59,16 +59,15 @@ export default abstract class PlatformGroupFactory {
       {
         x: 16,
         y: 9,
-        posOffsetX: 48,
+        posOffsetX: 32,
         config: PlatformGroupFactory.jungleF1Config
       },
       {
         x: 17,
         y: 9,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleF3Config
+        config: PlatformGroupFactory.jungleF2Config
       },
-
+      { x: 18, y: 9, config: PlatformGroupFactory.jungleF2Config },
       {
         x: 19,
         y: 9,
@@ -807,6 +806,7 @@ export default abstract class PlatformGroupFactory {
 
       sprite.setData('clingSides', platform.config.clingSides ?? false)
       sprite.setData('clingUnder', platform.config.clingUnder ?? false)
+      sprite.setData('letEnemiesFall', platform.config.letEnemiesFall ?? false)
     }
 
     return platformGroup

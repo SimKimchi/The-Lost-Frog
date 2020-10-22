@@ -61,7 +61,8 @@ export default abstract class PlatformConfigProvider {
       spriteKey: 'platform_jungle_branch_h1',
       checkDownCollision: false,
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      letEnemiesFall: true
     }
   }
 
@@ -72,7 +73,8 @@ export default abstract class PlatformConfigProvider {
       spriteKey: 'platform_jungle_branch_h2',
       checkDownCollision: false,
       checkLeftCollision: false,
-      checkRightCollision: false
+      checkRightCollision: false,
+      letEnemiesFall: true
     }
   }
 
