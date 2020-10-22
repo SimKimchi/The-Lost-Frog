@@ -9,7 +9,6 @@ export default class Player extends Character {
   private static readonly HURT_DURATION = 200
 
   protected readonly invulnerableTime = 1000
-  protected readonly moveSpeed = 250
   protected readonly jumpStrength = 550
   protected readonly gravity = 200
   private static instance: Player
@@ -26,7 +25,7 @@ export default class Player extends Character {
   public lastJumpCoordinates: { x: number; y: number }
 
   private constructor(scene: PlanetScene, die: () => void) {
-    super(6, 1, 64, 64, 'frog', scene)
+    super(6, 1, 64, 64, 250, 'frog', scene)
     this.tongueSprites = []
     this.currentTongueSprite = null
     this.wallClingDirection = null

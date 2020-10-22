@@ -5,7 +5,6 @@ import { CharacterConfig, Direction } from '../util'
 
 // TODO Ajouter scene comme champ privé
 export default abstract class Character {
-  protected abstract moveSpeed: number
   protected abstract jumpStrength: number
   protected abstract gravity: number
   protected abstract invulnerableTime: number
@@ -14,6 +13,7 @@ export default abstract class Character {
   protected currentHp: number
   protected maxHp: number
   protected damage: number
+  protected moveSpeed: number
   protected direction: Direction
   protected idle: boolean
   protected sprite: Phaser.GameObjects.Sprite | null
@@ -29,6 +29,7 @@ export default abstract class Character {
     damage: number,
     bodyWidth: number,
     bodyHeight: number,
+    moveSpeed: number,
     assetPrefix: string,
     scene: PlanetScene
   ) {
@@ -38,6 +39,7 @@ export default abstract class Character {
     this.damage = damage
     this.spriteWidth = bodyWidth
     this.spriteHeight = bodyHeight
+    this.moveSpeed = moveSpeed
     this.direction = Direction.Right
     this.invulnerable = false
     this.assetPrefix = assetPrefix

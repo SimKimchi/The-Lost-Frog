@@ -22,10 +22,24 @@ export default abstract class EnemyFactory {
         enemy = EnemyFactory.createOwl(scene, spawnX, spawnY)
         break
       case EnemyType.Fox:
-        // TODO: Implémenter la création du fox
-        enemy = EnemyFactory.createLizard(scene, spawnX, spawnY)
+        enemy = EnemyFactory.createFox(scene, spawnX, spawnY)
     }
     return enemy
+  }
+
+  private static createLizard(
+    scene: PlanetScene,
+    spawnX: number,
+    spawnY: number
+  ): Enemy {
+    const lizard = new Enemy(3, 1, 56, 28, 75, 100, 'lizard', scene)
+
+    const config: CharacterConfig = CharacterConfigProvider.getLizardConfig(
+      spawnX,
+      spawnY
+    )
+
+    return this.createEnemy(scene, scene.velocityYModifier, lizard, config)
   }
 
   private static createOwl(
@@ -33,7 +47,7 @@ export default abstract class EnemyFactory {
     spawnX: number,
     spawnY: number
   ): FlyingEnemy {
-    const owl = new FlyingEnemy(8, 1, 96, 96, 250, 'owl', scene)
+    const owl = new FlyingEnemy(8, 1, 96, 96, 85, 250, 'owl', scene)
 
     const owlSpawnOffsetX = 16
     const owlSpawnOffsetY = 16
@@ -51,19 +65,19 @@ export default abstract class EnemyFactory {
     ) as FlyingEnemy
   }
 
-  private static createLizard(
+  private static createFox(
     scene: PlanetScene,
     spawnX: number,
     spawnY: number
   ): Enemy {
-    const lizard = new Enemy(3, 1, 56, 28, 100, 'lizard', scene)
+    const fox = new Enemy(6, 1, 96, 96, 150, 300, 'fox', scene)
 
-    const config: CharacterConfig = CharacterConfigProvider.getLizardConfig(
+    const config: CharacterConfig = CharacterConfigProvider.getFoxConfig(
       spawnX,
       spawnY
     )
 
-    return this.createEnemy(scene, scene.velocityYModifier, lizard, config)
+    return this.createEnemy(scene, scene.velocityYModifier, fox, config)
   }
 
   private static createEnemy(
