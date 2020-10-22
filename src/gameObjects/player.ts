@@ -21,7 +21,7 @@ export default class Player extends Character {
   protected readonly knockback = 1000
   public clingPlatform: Phaser.GameObjects.Sprite | null
   private isHurting = false
-  private isDead = false
+  private playerIsDead = false
   public lastJumpCoordinates: { x: number; y: number }
 
   private constructor(scene: PlanetScene, die: () => void) {
@@ -192,7 +192,7 @@ export default class Player extends Character {
     if (!this.container || !this.sprite) return
 
     // * Hurt or Dead
-    if (this.isHurting || this.isDead) {
+    if (this.isHurting || this.playerIsDead) {
       if (this.direction === Direction.Right) {
         this.sprite.anims.play(`${this.assetPrefix}_hurt_right`, true)
       } else if (this.direction === Direction.Left) {
@@ -376,7 +376,7 @@ export default class Player extends Character {
   }
 
   public setDead(): void {
-    this.isDead = true
+    this.playerIsDead = true
   }
 
   public repositionAfterFall(): void {

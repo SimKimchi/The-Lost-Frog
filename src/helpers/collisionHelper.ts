@@ -138,7 +138,7 @@ export default class CollisionHelper {
     if (!platformLayout) return
 
     const enemyContainers = enemies
-      .filter((enemy) => enemy.constructor.name !== 'FlyingEnemy')
+      .filter((enemy) => !(enemy instanceof FlyingEnemy))
       .map((enemy) => {
         return enemy.getContainer()
       })
@@ -323,15 +323,23 @@ export default class CollisionHelper {
 
       if (direction === Direction.Left) {
         if (
-          childSprite.x + childSprite.getData('offsetX') + childSprite.width / 2 ===
-          platformSprite.x - platformSprite.getData('offsetX') - platformSprite.width / 2
+          childSprite.x +
+            childSprite.getData('offsetX') +
+            childSprite.width / 2 ===
+          platformSprite.x -
+            platformSprite.getData('offsetX') -
+            platformSprite.width / 2
         ) {
           return child
         }
       } else if (direction === Direction.Right) {
         if (
-          childSprite.x + childSprite.getData('offsetX') - childSprite.width / 2 ===
-          platformSprite.x - platformSprite.getData('offsetX') + platformSprite.width / 2
+          childSprite.x +
+            childSprite.getData('offsetX') -
+            childSprite.width / 2 ===
+          platformSprite.x -
+            platformSprite.getData('offsetX') +
+            platformSprite.width / 2
         ) {
           return child
         }
