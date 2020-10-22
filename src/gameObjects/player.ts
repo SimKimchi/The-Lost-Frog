@@ -20,6 +20,7 @@ export default class Player extends Character {
   protected die: (() => void) | null
   protected readonly knockback = 1000
   public clingPlatform: Phaser.GameObjects.Sprite | null
+  public lastJumpCoordinates: { x: number; y: number }
 
   private constructor(scene: PlanetScene, die: () => void) {
     super(6, 1, 64, 64, 'frog', scene)
@@ -29,6 +30,7 @@ export default class Player extends Character {
     this.wallClingDirection = null
     this.die = die
     this.clingPlatform = null
+    this.lastJumpCoordinates = { x: 132, y: 550 }
   }
 
   public static getPlayer(scene: PlanetScene, die: () => void): Player {
@@ -116,6 +118,7 @@ export default class Player extends Character {
       )
       this.scene.soundHelper?.playPlayerJumpSound()
 
+      this.lastJumpCoordinates = { x: this.container.x, y: this.container.y }
       this.updateAnimation()
     } else if (this.canDoubleJump) {
       this.canDoubleJump = false
@@ -268,7 +271,7 @@ export default class Player extends Character {
     this.updateAnimation()
   }
 
-  public handleHit(direction: Direction, damage: number): void {
+  public handleHit(direction: Direction | null, damage: number): void {
     if (this.isInvulnerable()) return
 
     this.scene.sound.get('hurt').play()
@@ -329,6 +332,13 @@ export default class Player extends Character {
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setDragY(0)
 
     this.updateAnimation()
+  }
+
+  public repositionAfterFall(): void {
+    this.container?.setPosition(
+      this.lastJumpCoordinates.x,
+      this.lastJumpCoordinates.y - 5
+    )
   }
 
   protected makeInvulnerable(): void {

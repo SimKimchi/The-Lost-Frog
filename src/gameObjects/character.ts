@@ -138,9 +138,13 @@ export default abstract class Character {
     this.idle = true
   }
 
-  public handleHit(direction: Direction, damage: number): void {
+  public handleHit(direction: Direction | null, damage: number): void {
     this.makeInvulnerable()
-    this.triggerKnockback(direction)
+
+    if (direction) {
+      this.triggerKnockback(direction)
+    }
+
     this.takeDamage(damage)
   }
 
