@@ -93,6 +93,20 @@ export default abstract class CharacterConfigProvider {
           frameStart: 18,
           frameEnd: 20,
           frameRate: 13
+        },
+        {
+          key: 'frog_hurt_right',
+          assetKey: 'frog_hurt_right',
+          frameStart: 1,
+          frameEnd: 3,
+          frameRate: 13
+        },
+        {
+          key: 'frog_hurt_left',
+          assetKey: 'frog_hurt_left',
+          frameStart: 1,
+          frameEnd: 3,
+          frameRate: 13
         }
       ],
       hitAreaWidth: 28,
