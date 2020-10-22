@@ -150,6 +150,10 @@ export default abstract class Character {
     this.takeDamage(damage)
   }
 
+  public isDead(): boolean {
+    return this.currentHp === 0
+  }
+
   protected takeDamage(damage: number): void {
     this.currentHp -= damage
 
