@@ -18,7 +18,7 @@ export default class LoadingScene extends Phaser.Scene {
       .fillStyle(0x222222, 0.8)
       .fillRect(width / 2 - 160, height / 2 - 25, 320, 50)
 
-    this.make
+    const loadingText = this.make
       .text({
         x: width / 2,
         y: height / 2 - 50,
@@ -69,10 +69,12 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.on(
       'complete',
       function (this: LoadingScene) {
+        loadingText.setText('Complete!')
+        assetText.destroy()
         this.make
           .text({
             x: width / 2,
-            y: height / 2 + 200,
+            y: height / 2 + 50,
             text: 'Click or press any key to continue!',
             style: {
               font: '20px monospace',
