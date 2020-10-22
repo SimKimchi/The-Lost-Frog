@@ -110,7 +110,8 @@ export default abstract class EnemyFactory {
     enemy: Enemy,
     scene: PlanetScene
   ): void {
-    if (enemy.constructor.name === 'FlyingEnemy') return
+    if (enemy instanceof FlyingEnemy) return
+
     const direction = getRandomInt(2)
     if (direction === 1) {
       enemy.run(-scene.velocityXModifier)
