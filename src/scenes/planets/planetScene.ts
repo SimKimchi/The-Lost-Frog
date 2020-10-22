@@ -123,7 +123,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     )
 
     this.currentEnemies
-      .filter((enemy) => enemy.constructor.name === 'FlyingEnemy')
+      .filter((enemy) => enemy instanceof FlyingEnemy)
       .forEach((enemy) => {
         ;(<FlyingEnemy>enemy).fly(this.player)
       })

@@ -138,7 +138,7 @@ export default class CollisionHelper {
     if (!platformLayout) return
 
     const enemyContainers = enemies
-      .filter((enemy) => enemy.constructor.name !== 'FlyingEnemy')
+      .filter((enemy) => !(enemy instanceof FlyingEnemy))
       .map((enemy) => {
         return enemy.getContainer()
       })
