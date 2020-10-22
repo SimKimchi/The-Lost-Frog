@@ -11,7 +11,7 @@ export default class InputHelper {
     collisionHelper: CollisionHelper
   ) {
     this.hotKeys = keyboard.addKeys(
-      'SPACE,A,S,D,E,W,UP,DOWN,LEFT,RIGHT'
+      'SPACE,A,S,D,E,W,UP,DOWN,LEFT,RIGHT,ENTER'
     ) as HotKeys
     this.collisionHelper = collisionHelper
   }
@@ -32,6 +32,10 @@ export default class InputHelper {
       platformGroup
     )
     this.handleAttack(player)
+  }
+
+  public enterIsDown(): boolean {
+    return this.hotKeys.ENTER.isDown
   }
 
   private handleMovement(

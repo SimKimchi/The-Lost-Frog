@@ -30,9 +30,11 @@ export default class DeathHelper {
   }
 
   public playerDeath(): void {
+    this.scene.cutSceneGoingOn = true
     this.scene.physics.pause()
     this.scene.soundHelper?.pauseMusic()
-
+    this.scene.soundHelper?.setMusic('gameover_theme', 0.5, false)
+    this.scene.soundHelper?.playMusic()
     this.displayGameOver()
     this.allowRetry()
   }
@@ -40,7 +42,7 @@ export default class DeathHelper {
   private displayGameOver(): void {
     const gameOverText = this.scene.add
       .text(0, 0, 'Game over!', {
-        font: '45px monospace',
+        font: '50px monospace',
         fill: '#FFFFFF'
       })
       .setScrollFactor(0, 0)
@@ -49,8 +51,8 @@ export default class DeathHelper {
       this.scene.game.scale.height / 2 - gameOverText.height / 2
     )
     const retryText = this.scene.add
-      .text(0, 0, 'Try again?', {
-        font: '25px monospace',
+      .text(0, 0, 'Click or press Enter to try again', {
+        font: '18px monospace',
         fill: '#FFFFFF'
       })
       .setScrollFactor(0, 0)
@@ -64,7 +66,8 @@ export default class DeathHelper {
     this.scene.input.on(
       'pointerdown',
       function (this: PlanetScene) {
-        this.scene.restart() // TODO tester this.restart
+        this.soundHelper?.pauseMusic()
+        this.scene.restart()
         ;(this.game as TheLostFrogGame).resetScore()
       },
       this.scene
@@ -72,7 +75,10 @@ export default class DeathHelper {
     this.scene.input.keyboard.on(
       'keydown',
       function (this: PlanetScene) {
-        this.scene.restart() // TODO tester this.restart
+        if (!this.inputHelper?.enterIsDown()) return
+
+        this.soundHelper?.pauseMusic()
+        this.scene.restart()
         ;(this.game as TheLostFrogGame).resetScore()
       },
       this.scene

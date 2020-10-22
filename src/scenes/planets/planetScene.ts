@@ -19,6 +19,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
   public abstract enemyWaves: EnemySpawn[][]
   public currentEnemyWave: number
   public soundHelper: SoundHelper | null
+  public cutSceneGoingOn: boolean
   protected player: Player
   protected currentPlatformLayout: Phaser.Physics.Arcade.StaticGroup | null
   protected displayScore: Phaser.GameObjects.Text | null
@@ -26,7 +27,6 @@ export default abstract class PlanetScene extends Phaser.Scene {
   protected inputHelper: InputHelper | null
   protected collisionHelper: CollisionHelper | null
   protected deathHelper: DeathHelper | null
-  protected cutSceneGoingOn: boolean
 
   constructor(
     planetSceneName: string,
