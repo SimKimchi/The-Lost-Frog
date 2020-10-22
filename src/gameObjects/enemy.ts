@@ -69,7 +69,7 @@ export default class Enemy extends Character {
     this.die = deathBehavior
   }
 
-  public handleHit(direction: Direction, damage: number): void {
+  public handleHit(direction: Direction | null, damage: number): void {
     if (this.isInvulnerable()) return
 
     this.scene.soundHelper?.playEnemyHitSound()

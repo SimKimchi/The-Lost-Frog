@@ -67,7 +67,7 @@ export default class CollisionHelper {
     )
   }
 
-  public setEnemyWorldCollisions(enemies: Enemy[]): void {
+  public setWorldCollisions(enemies: Enemy[]): void {
     this.physics.world.on(
       'worldbounds',
       (
@@ -196,12 +196,12 @@ export default class CollisionHelper {
   private onBodyTouchesWorldBound(
     body: Phaser.Physics.Arcade.Body,
     _touchingUp: boolean,
-    _touchingDown: boolean,
+    touchingDown: boolean,
     touchingLeft: boolean,
     touchingRight: boolean,
     enemies: Enemy[]
   ): void {
-    if (!touchingLeft && !touchingRight) {
+    if (!touchingLeft && !touchingRight && !touchingDown) {
       return
     }
 
@@ -209,9 +209,19 @@ export default class CollisionHelper {
       [this.player, ...enemies],
       body.gameObject as Phaser.GameObjects.Container
     )
+    if (!character) return
 
-    if (character && character instanceof Enemy) {
-      ;(character as Enemy).turnAround()
+    if (character instanceof Enemy) {
+      if (touchingLeft || touchingRight) {
+        ;(character as Enemy).turnAround()
+      } else if (touchingDown) {
+        ;(character as Enemy).handleHit(Direction.Down, 9001)
+      }
+    } else if (character instanceof Player) {
+      if (touchingDown) {
+        ;(character as Player).repositionAfterFall()
+        ;(character as Player).handleHit(null, 1)
+      }
     }
   }
 

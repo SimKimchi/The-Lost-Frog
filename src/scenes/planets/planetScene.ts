@@ -84,7 +84,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
       this.currentPlatformLayout,
       this.currentEnemies
     )
-    this.collisionHelper?.setEnemyWorldCollisions(this.currentEnemies)
+    this.collisionHelper?.setWorldCollisions(this.currentEnemies)
 
     this.startCutscene()
     this.setDebug(false)
