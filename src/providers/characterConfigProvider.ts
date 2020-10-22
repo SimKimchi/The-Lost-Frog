@@ -161,7 +161,7 @@ export default abstract class CharacterConfigProvider {
       collideWorldBounds: true,
       animations: [
         {
-          key: 'lizard_left',
+          key: 'lizard_run_left',
           assetKey: 'enemy_lizard_left',
           frameStart: 0,
           frameEnd: 4,
@@ -169,7 +169,7 @@ export default abstract class CharacterConfigProvider {
           repeat: -1
         },
         {
-          key: 'lizard_right',
+          key: 'lizard_run_right',
           assetKey: 'enemy_lizard_right',
           frameStart: 0,
           frameEnd: 4,
@@ -228,7 +228,7 @@ export default abstract class CharacterConfigProvider {
           assetKey: 'enemy_owl_fly_left',
           frameStart: 0,
           frameEnd: 16,
-          frameRate: 25,
+          frameRate: 30,
           repeat: -1
         },
         {
@@ -236,7 +236,7 @@ export default abstract class CharacterConfigProvider {
           assetKey: 'enemy_owl_fly_right',
           frameStart: 0,
           frameEnd: 16,
-          frameRate: 25,
+          frameRate: 30,
           repeat: -1
         },
         {
@@ -245,6 +245,53 @@ export default abstract class CharacterConfigProvider {
           frameStart: 0,
           frameEnd: 8,
           frameRate: 20,
+          repeat: -1
+        }
+      ],
+      hitAreaWidth: 96,
+      hitAreaHeight: 96,
+      spriteOffsetX: 0,
+      spriteOffsetY: 0
+    }
+  }
+
+  public static getFoxConfig(spawnX: number, spawnY: number): CharacterConfig {
+    return {
+      spawnX,
+      spawnY,
+      spriteKey: 'enemy_fox',
+      collideWorldBounds: true,
+      animations: [
+        {
+          key: 'fox_run_left',
+          assetKey: 'enemy_fox_run',
+          frameStart: 8,
+          frameEnd: 15,
+          frameRate: 16,
+          repeat: -1
+        },
+        {
+          key: 'fox_run_right',
+          assetKey: 'enemy_fox_run',
+          frameStart: 0,
+          frameEnd: 7,
+          frameRate: 16,
+          repeat: -1
+        },
+        {
+          key: 'fox_hurt_left',
+          assetKey: 'enemy_fox_hurt',
+          frameStart: 4,
+          frameEnd: 7,
+          frameRate: 15,
+          repeat: -1
+        },
+        {
+          key: 'fox_hurt_right',
+          assetKey: 'enemy_fox_hurt',
+          frameStart: 0,
+          frameEnd: 3,
+          frameRate: 15,
           repeat: -1
         }
       ],

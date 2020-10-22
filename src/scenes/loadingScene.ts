@@ -418,6 +418,18 @@ export default class LoadingScene extends Phaser.Scene {
       frameWidth: 64,
       frameHeight: 64
     })
+    this.load.spritesheet('enemy_fox_run', volcanoAssets.images.enemy_fox_run, {
+      frameWidth: 64,
+      frameHeight: 64
+    })
+    this.load.spritesheet(
+      'enemy_fox_hurt',
+      volcanoAssets.images.enemy_fox_hurt,
+      {
+        frameWidth: 64,
+        frameHeight: 64
+      }
+    )
   }
 
   private loadSounds(): void {

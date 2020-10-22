@@ -11,11 +11,21 @@ export default class FlyingEnemy extends Enemy {
     damage: number,
     bodyWidth: number,
     bodyHeight: number,
+    moveSpeed: number,
     scoreWorth: number,
     assetPrefix: string,
     scene: PlanetScene
   ) {
-    super(maxHp, damage, bodyWidth, bodyHeight, scoreWorth, assetPrefix, scene)
+    super(
+      maxHp,
+      damage,
+      bodyWidth,
+      bodyHeight,
+      moveSpeed,
+      scoreWorth,
+      assetPrefix,
+      scene
+    )
   }
 
   public init(planetGravity: number, config: CharacterConfig): void {
