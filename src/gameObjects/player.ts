@@ -6,6 +6,7 @@ import PlanetScene from '../scenes/planets/planetScene'
 export default class Player extends Character {
   private static readonly ATTACK_DURATION = 200
   private static readonly ATTACK_COOLDOWN = 400
+  private static readonly HURT_DURATION = 200
 
   protected readonly invulnerableTime = 1000
   protected readonly moveSpeed = 250
@@ -15,18 +16,19 @@ export default class Player extends Character {
   public canDoubleJump = true
   private tongueSprites: Phaser.Physics.Arcade.Sprite[]
   public currentTongueSprite: Phaser.Physics.Arcade.Sprite | null | undefined
-  private inAttackCooldown: boolean
+  private inAttackCooldown = false
   public wallClingDirection: Direction | null
   protected die: (() => void) | null
   protected readonly knockback = 1000
   public clingPlatform: Phaser.GameObjects.Sprite | null
+  private isHurting = false
+  private isDead = false
   public lastJumpCoordinates: { x: number; y: number }
 
   private constructor(scene: PlanetScene, die: () => void) {
     super(6, 1, 64, 64, 'frog', scene)
     this.tongueSprites = []
     this.currentTongueSprite = null
-    this.inAttackCooldown = false
     this.wallClingDirection = null
     this.die = die
     this.clingPlatform = null
@@ -190,8 +192,16 @@ export default class Player extends Character {
   public updateAnimation(): void {
     if (!this.container || !this.sprite) return
 
+    // * Hurt or Dead
+    if (this.isHurting || this.isDead) {
+      if (this.direction === Direction.Right) {
+        this.sprite.anims.play(`${this.assetPrefix}_hurt_right`, true)
+      } else if (this.direction === Direction.Left) {
+        this.sprite.anims.play(`${this.assetPrefix}_hurt_left`, true)
+      }
+    }
     // * Attack
-    if (this.currentTongueSprite) {
+    else if (this.currentTongueSprite) {
       if (this.currentTongueSprite.getData('direction') === Direction.Up) {
         this.sprite.anims.play(`${this.assetPrefix}_attack_up`, true)
       } else if (
@@ -278,6 +288,16 @@ export default class Player extends Character {
     if (this.isInvulnerable()) return
 
     this.scene.sound.get('hurt').play()
+    this.isHurting = true
+    this.scene.time.addEvent({
+      delay: Player.HURT_DURATION,
+      args: [this],
+      callback: (player: Player) => {
+        player.isHurting = false
+        player.updateAnimation()
+      },
+      callbackScope: this.scene
+    })
     super.handleHit(direction, damage)
   }
 
@@ -335,6 +355,10 @@ export default class Player extends Character {
     ;(<Phaser.Physics.Arcade.Body>this.container.body).setDragY(0)
 
     this.updateAnimation()
+  }
+
+  public setDead(): void {
+    this.isDead = true
   }
 
   public repositionAfterFall(): void {

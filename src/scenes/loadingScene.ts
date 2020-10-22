@@ -305,6 +305,22 @@ export default class LoadingScene extends Phaser.Scene {
       }
     )
     this.load.spritesheet(
+      'frog_hurt_right',
+      genericAssets.images.frog_hurt_right,
+      {
+        frameWidth: 256,
+        frameHeight: 256
+      }
+    )
+    this.load.spritesheet(
+      'frog_hurt_left',
+      genericAssets.images.frog_hurt_left,
+      {
+        frameWidth: 256,
+        frameHeight: 256
+      }
+    )
+    this.load.spritesheet(
       'frog_idle_anim',
       genericAssets.images.frog_idle_anim,
       {

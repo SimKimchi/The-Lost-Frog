@@ -55,6 +55,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
 
   public init(): void {
     this.player = Player.getPlayer(this, () => {
+      this.player.setDead()
       this.deathHelper?.playerDeath()
     })
     this.currentPlatformLayout = null
