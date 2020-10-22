@@ -22,7 +22,7 @@ export default class SoundHelper {
 
   public setMusic(theme: string, volume: number, loop = true): void {
     this.music = this.soundManager.add(theme, {
-      volume: volume,
+      volume: 0,
       loop: loop
     })
 

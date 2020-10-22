@@ -33,30 +33,27 @@ export default abstract class PlatformGroupFactory {
   private static junglePlatformLayouts: Platform[][] = [
     // Jungle Level 4
     [
+      // Left Floor of wall
       { x: 0, y: 9, config: PlatformGroupFactory.jungleF2Config },
       { x: 1, y: 9, config: PlatformGroupFactory.jungleF2Config },
       { x: 2, y: 9, config: PlatformGroupFactory.jungleF2Config },
       { x: 3, y: 9, config: PlatformGroupFactory.jungleF2Config },
       { x: 4, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 5, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 6, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 7, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 8, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 9, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 10, y: 9, config: PlatformGroupFactory.jungleF3Config },
-      { x: 25, y: 9, config: PlatformGroupFactory.jungleF1Config },
-      { x: 26, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 27, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 28, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 29, y: 9, config: PlatformGroupFactory.jungleF2Config },
-
+      // Standing Wall 1
       { x: 4,  y: 8, posOffsetX: 16, config: PlatformGroupFactory.jungleV1Config },
       { x: 4,  y: 7, posOffsetX: 16, config: PlatformGroupFactory.jungleV1Config },
       { x: 4,  y: 6, posOffsetX: 16, config: PlatformGroupFactory.jungleV1Config },
       { x: 4,  y: 5, posOffsetX: 16, config: PlatformGroupFactory.jungleV1Config },
       { x: 4,  y: 4, posOffsetX: 16, config: PlatformGroupFactory.jungleV1Config },
       { x: 4,  y: 3, posOffsetX: 16, config: PlatformGroupFactory.jungleV1Config },
-
+      // Right floor of wall
+      { x: 5, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 6, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 7, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 8, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 9, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 10, y: 9, config: PlatformGroupFactory.jungleF3Config },
+      // Hanging wall 1 with platform
       { x: 9,  y: 5, posOffsetX: 16, config: PlatformGroupFactory.jungleV1Config },
       { x: 9,  y: 4, posOffsetX: 16, config: PlatformGroupFactory.jungleV1Config },
       { x: 9,  y: 3, posOffsetX: 16, config: PlatformGroupFactory.jungleV1Config },
@@ -66,13 +63,39 @@ export default abstract class PlatformGroupFactory {
       { x: 9,  y: 3, posOffsetX: 16, config: PlatformGroupFactory.jungleH2Config },
       { x: 10,  y: 3, config: PlatformGroupFactory.jungleH2Config },
       { x: 11,  y: 3, config: PlatformGroupFactory.jungleH3Config },
-
+      // Standing Wall 2
+      { x: 13,  y: 9, posOffsetX: 16, config: PlatformGroupFactory.jungleV1Config },
       { x: 13,  y: 8, posOffsetX: 16, config: PlatformGroupFactory.jungleV1Config },
       { x: 13,  y: 7, posOffsetX: 16, config: PlatformGroupFactory.jungleV1Config },
       { x: 13,  y: 6, posOffsetX: 16, config: PlatformGroupFactory.jungleV1Config },
       { x: 13,  y: 5, posOffsetX: 16, config: PlatformGroupFactory.jungleV1Config },
       { x: 13,  y: 4, posOffsetX: 16, config: PlatformGroupFactory.jungleV1Config },
       { x: 13,  y: 3, posOffsetX: 16, config: PlatformGroupFactory.jungleV1Config },
+      // Free Platform 1
+      { x: 16,  y: 8, config: PlatformGroupFactory.jungleH1Config },
+      { x: 17,  y: 8, config: PlatformGroupFactory.jungleH3Config },
+      // Free Platform 2
+      { x: 19,  y: 6, config: PlatformGroupFactory.jungleH1Config },
+      { x: 20,  y: 6, config: PlatformGroupFactory.jungleH3Config },
+      // Free Platform 2
+      { x: 22,  y: 4, config: PlatformGroupFactory.jungleH1Config },
+      { x: 23,  y: 4, config: PlatformGroupFactory.jungleH3Config },
+      // Right Wall Platform
+      { x: 26,  y: 3, config: PlatformGroupFactory.jungleH2Config },
+      { x: 27,  y: 3, config: PlatformGroupFactory.jungleH2Config },
+      { x: 28,  y: 3, config: PlatformGroupFactory.jungleH2Config },
+      { x: 29,  y: 3, config: PlatformGroupFactory.jungleH2Config },
+      // Free Platform 4
+      { x: 22,  y: 7, config: PlatformGroupFactory.jungleH1Config },
+      { x: 23,  y: 7, config: PlatformGroupFactory.jungleH3Config },
+      // Right floor
+      { x: 25, y: 9, posOffsetX: 32, config: PlatformGroupFactory.jungleF1Config },
+      { x: 26, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 27, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 28, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 29, y: 9, config: PlatformGroupFactory.jungleF2Config },
+
+      
     ],
     // Jungle Level 1
     [

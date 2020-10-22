@@ -5,8 +5,10 @@ export default abstract class PlanetWaveConfigProvider {
     return [
       // Jungle Level 4
       [
-        // { type: EnemyType.Lizard, spawnTileX: 6, spawnTileY: 8 }
-        { type: EnemyType.Lizard, spawnTileX: 11, spawnTileY: 2 }
+        { type: EnemyType.Lizard, spawnTileX: 6, spawnTileY: 8 },
+        { type: EnemyType.Lizard, spawnTileX: 11, spawnTileY: 2 },
+        { type: EnemyType.Lizard, spawnTileX: 27, spawnTileY: 2 },
+        { type: EnemyType.Lizard, spawnTileX: 27, spawnTileY: 8 },
       ],
       // Jungle Level 1
       [
