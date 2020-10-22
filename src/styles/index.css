@@ -4,12 +4,13 @@ body,
   height: 100%;
 }
 body {
-  font-family: 'Comic Sans ms';
-  background-color: #668c39;
+  font-family: 'PlayMeGames', sans-serif;
+  letter-spacing: 1px;
+  background-color: #37946e;
 }
 .container {
   position: relative;
-  background-color: #c1d1af;
+  background-color: #f4c373;
 }
 h1 {
   padding: 10px 0;
@@ -25,4 +26,17 @@ span {
   position: absolute;
   bottom: 0;
   right: 5px;
+}
+
+@font-face {
+  font-family: 'PlayMeGames';
+  src: url('PlayMeGamesReguler.eot');
+  src: url('PlayMeGamesReguler.eot?#iefix') format('embedded-opentype'),
+    url('PlayMeGamesReguler.woff2') format('woff2'),
+    url('PlayMeGamesReguler.woff') format('woff'),
+    url('PlayMeGamesReguler.ttf') format('truetype'),
+    url('PlayMeGamesReguler.svg#PlayMeGamesReguler') format('svg');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
 }

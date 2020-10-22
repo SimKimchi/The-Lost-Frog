@@ -19,7 +19,7 @@ export default class CreditsScene extends Phaser.Scene {
 
     this.add
       .text(width / 2, height / 2 - 200, 'The Lost Frog', {
-        font: '45px monospace',
+        font: '45px PlayMeGames',
         fill: '#ffffff'
       })
       .setOrigin(0.5, 0.5)
@@ -60,7 +60,7 @@ Special thanks for our testers :
     Renard Rusé
 `,
         {
-          font: '14px monospace',
+          font: '14px PlayMeGames',
           fill: '#ffffff'
         }
       )
@@ -68,7 +68,7 @@ Special thanks for our testers :
 
     this.add
       .text(100, 50, '[Go back]', {
-        font: '15px monospace',
+        font: '15px PlayMeGames',
         fill: '#ffffff'
       })
       .setInteractive()

@@ -27,20 +27,20 @@ export default class MainMenuScene extends Phaser.Scene {
 
     this.add
       .text(width / 2, height / 2 - 200, 'The Lost Frog', {
-        font: '45px monospace',
+        font: '45px PlayMeGames',
         fill: '#ffffff'
       })
       .setOrigin(0.5, 0.5)
     this.add
       .text(width / 2, height / 2 - 150, '(main menu design coming soon :D)', {
-        font: '16px monospace',
+        font: '16px PlayMeGames',
         fill: '#ffffff'
       })
       .setOrigin(0.5, 0.5)
 
     this.playTextOption = this.add
       .text(width / 2, height / 2, '[Play!]', {
-        font: '35px monospace',
+        font: '35px PlayMeGames',
         fill: '#ffffff'
       })
       .setInteractive()
@@ -56,7 +56,7 @@ export default class MainMenuScene extends Phaser.Scene {
 
     this.creditsTextOption = this.add
       .text(width / 2, height / 2 + 100, 'See credits', {
-        font: '18px monospace',
+        font: '18px PlayMeGames',
         fill: '#ffffff'
       })
       .setInteractive()

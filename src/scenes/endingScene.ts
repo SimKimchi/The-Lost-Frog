@@ -19,13 +19,13 @@ export default class EndingScene extends Phaser.Scene {
 
     this.add
       .text(width / 2, height / 2 - 200, 'The Lost Frog', {
-        font: '45px monospace',
+        font: '45px PlayMeGames',
         fill: '#ffffff'
       })
       .setOrigin(0.5, 0.5)
     this.add
       .text(width / 2, height / 2, 'Thanks for playing our game!', {
-        font: '30px monospace',
+        font: '30px PlayMeGames',
         fill: '#ffffff'
       })
       .setOrigin(0.5, 0.5)

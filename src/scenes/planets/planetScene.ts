@@ -198,14 +198,14 @@ export default abstract class PlanetScene extends Phaser.Scene {
   protected initializeTexts(): void {
     this.displayHp = this.add
       .text(150, 110, this.player.getDisplayHp(), {
-        font: ' 20px monospace',
+        font: ' 20px PlayMeGames',
         fill: '#FFFFFF'
       })
       .setScrollFactor(0, 0)
       .setDepth(3)
     this.displayScore = this.add
       .text(150, 140, (this.game as TheLostFrogGame).displayScore(), {
-        font: '20px monospace',
+        font: '20px PlayMeGames',
         fill: '#FFFFFF'
       })
       .setScrollFactor(0, 0)

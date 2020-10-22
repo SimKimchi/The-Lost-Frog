@@ -35,20 +35,20 @@ export default class PlanetTransitionScene extends Phaser.Scene {
 
     this.add
       .text(width / 2, height / 2 - 200, this.sceneTitle, {
-        font: '45px monospace',
+        font: '45px PlayMeGames',
         fill: '#ffffff'
       })
       .setOrigin(0.5, 0.5)
     this.add
       .text(width / 2, height / 2, this.sceneDescription, {
-        font: '16px monospace',
+        font: '16px PlayMeGames',
         fill: '#ffffff'
       })
       .setOrigin(0.5, 0.5)
 
     this.add
       .text(width / 2, height / 2 + 125, '[Land on the planet!]', {
-        font: '35px monospace',
+        font: '35px PlayMeGames',
         fill: '#ffffff'
       })
       .setInteractive()

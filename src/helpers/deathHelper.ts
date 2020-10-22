@@ -42,7 +42,7 @@ export default class DeathHelper {
   private displayGameOver(): void {
     const gameOverText = this.scene.add
       .text(0, 0, 'Game over!', {
-        font: '50px monospace',
+        font: '50px PlayMeGames',
         fill: '#FFFFFF'
       })
       .setScrollFactor(0, 0)
@@ -52,7 +52,7 @@ export default class DeathHelper {
     )
     const retryText = this.scene.add
       .text(0, 0, 'Click or press Enter to try again', {
-        font: '18px monospace',
+        font: '18px PlayMeGames',
         fill: '#FFFFFF'
       })
       .setScrollFactor(0, 0)

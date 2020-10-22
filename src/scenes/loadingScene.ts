@@ -24,7 +24,7 @@ export default class LoadingScene extends Phaser.Scene {
         y: height / 2 - 50,
         text: 'Loading...',
         style: {
-          font: '20px monospace',
+          font: '20px PlayMeGames',
           fill: '#ffffff'
         }
       })
@@ -36,7 +36,7 @@ export default class LoadingScene extends Phaser.Scene {
         y: height / 2,
         text: '0%',
         style: {
-          font: '18px monospace',
+          font: '18px PlayMeGames',
           fill: '#ffffff'
         }
       })
@@ -48,7 +48,7 @@ export default class LoadingScene extends Phaser.Scene {
         y: height / 2 + 50,
         text: '',
         style: {
-          font: '18px monospace',
+          font: '18px PlayMeGames',
           fill: '#ffffff'
         }
       })
@@ -77,7 +77,7 @@ export default class LoadingScene extends Phaser.Scene {
             y: height / 2 + 50,
             text: 'Click or press any key to continue!',
             style: {
-              font: '20px monospace',
+              font: '20px PlayMeGames',
               fill: '#ffffff'
             }
           })
