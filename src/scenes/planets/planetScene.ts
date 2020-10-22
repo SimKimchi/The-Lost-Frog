@@ -24,6 +24,8 @@ export default abstract class PlanetScene extends Phaser.Scene {
   protected currentPlatformLayout: Phaser.Physics.Arcade.StaticGroup | null
   protected displayScore: Phaser.GameObjects.Text | null
   protected displayHp: Phaser.GameObjects.Text | null
+  protected displayWave: Phaser.GameObjects.Text | null
+  protected displayEnemies: Phaser.GameObjects.Text | null
   protected inputHelper: InputHelper | null
   protected collisionHelper: CollisionHelper | null
   protected deathHelper: DeathHelper | null
@@ -44,6 +46,8 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.currentPlatformLayout = null
     this.displayScore = null
     this.displayHp = null
+    this.displayWave = null
+    this.displayEnemies = null
     this.currentEnemies = []
     this.currentEnemyWave = 0
     this.inputHelper = null
@@ -198,23 +202,51 @@ export default abstract class PlanetScene extends Phaser.Scene {
   protected initializeTexts(): void {
     this.displayHp = this.add
       .text(150, 110, this.player.getDisplayHp(), {
-        font: ' 20px monospace',
+        font: '23px monospace',
         fill: '#FFFFFF'
       })
       .setScrollFactor(0, 0)
       .setDepth(3)
+      .setStroke('black', 2)
     this.displayScore = this.add
-      .text(150, 140, (this.game as TheLostFrogGame).displayScore(), {
-        font: '20px monospace',
+      .text(150, 135, (this.game as TheLostFrogGame).displayScore(), {
+        font: '16px monospace',
         fill: '#FFFFFF'
       })
       .setScrollFactor(0, 0)
       .setDepth(3)
+      .setStroke('black', 2)
+    this.displayWave = this.add
+      .text(150, 155, `Region: 1 / ${this.enemyWaves.length}`, {
+        font: '16px monospace',
+        fill: '#FFFFFF'
+      })
+      .setScrollFactor(0, 0)
+      .setDepth(3)
+      .setStroke('black', 2)
+    this.displayEnemies = this.add
+      .text(150, 175, `Predators left: ${this.currentEnemies.length}`, {
+        font: '16px monospace',
+        fill: '#FFFFFF'
+      })
+      .setScrollFactor(0, 0)
+      .setDepth(3)
+      .setStroke('black', 2)
   }
 
   private updateTexts(): void {
     this.displayHp?.setText(this.player.getDisplayHp())
     this.displayScore?.setText((this.game as TheLostFrogGame).displayScore())
+    this.displayWave?.setText(
+      `Region: ${this.currentEnemyWave + 1} / ${this.enemyWaves.length}`
+    )
+    const s =
+      this.currentEnemies.filter((el) => !el.isDead()).length === 1 ? '' : 's'
+    this.displayEnemies?.setText(
+      `Predator${s} left: ${
+        this.currentEnemies.filter((el) => !el.isDead()).length
+      }`
+    )
   }
 
   private spawnEnemies(enemySpawns: EnemySpawn[]): void {
