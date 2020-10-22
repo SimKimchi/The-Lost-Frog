@@ -33,10 +33,10 @@ export default abstract class EnemyFactory {
     spawnX: number,
     spawnY: number
   ): FlyingEnemy {
-    const owl = new FlyingEnemy(8, 1, 64, 64, 250, 'owl', scene)
+    const owl = new FlyingEnemy(8, 1, 96, 96, 250, 'owl', scene)
 
-    const owlSpawnOffsetX = 32
-    const owlSpawnOffsetY = 32
+    const owlSpawnOffsetX = 16
+    const owlSpawnOffsetY = 16
 
     const config: CharacterConfig = CharacterConfigProvider.getOwlConfig(
       spawnX + owlSpawnOffsetX,

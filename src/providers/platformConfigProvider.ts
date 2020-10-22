@@ -166,7 +166,7 @@ export default abstract class PlatformConfigProvider {
   public static getIceSpikesConfig(): PlatformConfig {
     return {
       width: 64,
-      height: 0.1,
+      height: 32,
       spriteKey: 'spikes_ice',
       damageUp: true
     }

@@ -31,7 +31,7 @@ export type PlatformConfig = {
   damageRight?: boolean
   clingSides?: boolean
   clingUnder?: boolean
-  letEnemiesFall?: true
+  letEnemiesFall?: boolean
 }
 
 export type AnimationConfig = {

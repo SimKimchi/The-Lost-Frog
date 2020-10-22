@@ -86,6 +86,8 @@ export default class FlyingEnemy extends Enemy {
         this.sprite.anims.play(`${this.assetPrefix}_fly_right`, true)
       }
     }
+
+    this.sprite.setDisplaySize(this.spriteWidth, this.spriteHeight)
   }
 
   protected triggerKnockbackTween(props: Record<string, unknown>): void {

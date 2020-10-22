@@ -47,6 +47,7 @@ export default class Player extends Character {
     const tongueSpriteUp = this.scene.physics.add.sprite(-2, -48, 'tongue_up')
     tongueSpriteUp.setData('key', 'tongue_up')
     tongueSpriteUp.setData('direction', Direction.Up)
+    tongueSpriteUp.setSize(32, 64)
     const tongueSpriteRight = this.scene.physics.add.sprite(
       36,
       -9,
@@ -54,6 +55,7 @@ export default class Player extends Character {
     )
     tongueSpriteRight.setData('key', 'tongue_right')
     tongueSpriteRight.setData('direction', Direction.Right)
+    tongueSpriteRight.setSize(64, 32)
     const tongueSpriteDown = this.scene.physics.add.sprite(
       -2,
       20,
@@ -61,6 +63,7 @@ export default class Player extends Character {
     )
     tongueSpriteDown.setData('key', 'tongue_down')
     tongueSpriteDown.setData('direction', Direction.Down)
+    tongueSpriteDown.setSize(32, 64)
     const tongueSpriteLeft = this.scene.physics.add.sprite(
       -36,
       -9,
@@ -68,6 +71,7 @@ export default class Player extends Character {
     )
     tongueSpriteLeft.setData('key', 'tongue_left')
     tongueSpriteLeft.setData('direction', Direction.Left)
+    tongueSpriteLeft.setSize(64, 32)
     this.tongueSprites = [
       tongueSpriteUp,
       tongueSpriteRight,
@@ -77,7 +81,6 @@ export default class Player extends Character {
     this.tongueSprites.forEach((tongueSprite) => {
       ;(<Phaser.Physics.Arcade.Body>tongueSprite.body).setAllowGravity(false)
       tongueSprite.setVisible(false)
-      tongueSprite.setSize(64, 64)
       this.scene.anims.create({
         key: tongueSprite.getData('key'),
         frames: [

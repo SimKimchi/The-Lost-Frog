@@ -1,5 +1,6 @@
 import Character from '../gameObjects/character'
 import Enemy from '../gameObjects/enemy'
+import FlyingEnemy from '../gameObjects/flyingEnemy'
 import Player from '../gameObjects/player'
 import { Direction } from '../util'
 
@@ -62,12 +63,36 @@ export default class CollisionHelper {
         this.player.clingToWall(platform as Phaser.GameObjects.Sprite)
         if ((<Phaser.Physics.Arcade.Body>player.body).touching.down) {
           this.player.canDoubleJump = true
+
+          const damageUp: boolean = platform.getData('damageUp')
+
+          if (damageUp) {
+            this.player.handleHit(null, 1)
+          }
+        } else if ((<Phaser.Physics.Arcade.Body>player.body).touching.left) {
+          const damageLeft: boolean = platform.getData('damageLeft')
+
+          if (damageLeft) {
+            this.player.handleHit(null, 1)
+          }
+        } else if ((<Phaser.Physics.Arcade.Body>player.body).touching.right) {
+          const damageRight: boolean = platform.getData('damageRight')
+
+          if (damageRight) {
+            this.player.handleHit(null, 1)
+          }
+        } else if ((<Phaser.Physics.Arcade.Body>player.body).touching.up) {
+          const damageDown: boolean = platform.getData('damageDown')
+
+          if (damageDown) {
+            this.player.handleHit(null, 1)
+          }
         }
       }
     )
   }
 
-  public setWorldCollisions(enemies: Enemy[]): void {
+  public setWorldCollisionListener(enemies: Enemy[]): void {
     this.physics.world.on(
       'worldbounds',
       (
@@ -86,6 +111,10 @@ export default class CollisionHelper {
           enemies
         )
     )
+  }
+
+  public removeWorldCollisionsListener(): void {
+    this.physics.world.removeListener('worldbounds')
   }
 
   public removeEnemyVsPlatformCollider(): void {
@@ -175,9 +204,14 @@ export default class CollisionHelper {
       this.physics.add.overlap(
         attackSprites,
         enemies[key].getContainer(),
-        () => {
-          if (!this.player.currentTongueSprite) return
-          if (!this.player.currentTongueSprite.visible) return
+        (attackSprite) => {
+          if (
+            !this.player.currentTongueSprite ||
+            attackSprite !== this.player.currentTongueSprite ||
+            !this.player.currentTongueSprite.visible
+          )
+            return
+
           if (
             this.player.currentTongueSprite.getData('direction') ===
             Direction.Down
@@ -214,7 +248,7 @@ export default class CollisionHelper {
     if (character instanceof Enemy) {
       if (touchingLeft || touchingRight) {
         ;(character as Enemy).turnAround()
-      } else if (touchingDown) {
+      } else if (touchingDown && !(character instanceof FlyingEnemy)) {
         ;(character as Enemy).handleHit(Direction.Down, 9001)
       }
     } else if (character instanceof Player) {

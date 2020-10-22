@@ -83,7 +83,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
       this.currentPlatformLayout,
       this.currentEnemies
     )
-    this.collisionHelper?.setWorldCollisions(this.currentEnemies)
+    this.collisionHelper?.setWorldCollisionListener(this.currentEnemies)
 
     this.startCutscene()
     this.setDebug(false)
@@ -185,7 +185,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
 
   protected initializePlayerCamera(): void {
     this.cameras.main
-      .startFollow(this.player.getContainer(), false, 0.1, 0.05, 0, 70)
+      .startFollow(this.player.getContainer(), false, 0.1, 0.05, 0, 50)
       .setBounds(0, 0, 1920, 640)
       .setZoom(1.4)
   }
@@ -275,10 +275,13 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   private startNextWave(): void {
+    this.cutSceneGoingOn = true
     this.currentEnemyWave++
 
+    this.player.stopWallCling()
     this.removeCurrentPlatforms()
     this.spawnPlatforms()
+    this.collisionHelper?.removeWorldCollisionsListener()
     this.spawnEnemies(this.enemyWaves[this.currentEnemyWave])
     this.repositionPlayer()
 
@@ -287,19 +290,21 @@ export default abstract class PlanetScene extends Phaser.Scene {
       this.currentEnemies
     )
 
+    this.collisionHelper?.setWorldCollisionListener(this.currentEnemies)
+
     this.cameras.main.fadeIn(1500, 0, 0, 0)
+    this.cutSceneGoingOn = false
   }
 
   private repositionPlayer(): void {
     const spawn: PlayerSpawn = CharacterSpawnConfigProvider.getPlayerSpawn(
       this.currentEnemyWave
     )
-    this.player
-      .getContainer()
-      .setPosition(
-        spawn.spawnTileX * gridWidth + (spawn.spawnOffsetX ?? 0),
-        spawn.spawnTileY * gridHeight + (spawn.spawnOffsetY ?? 0)
-      )
+    const spawnX = spawn.spawnTileX * gridWidth + (spawn.spawnOffsetX ?? 0)
+    const spawnY = spawn.spawnTileY * gridHeight + (spawn.spawnOffsetY ?? 0)
+
+    this.player.getContainer().setPosition(spawnX, spawnY)
+    this.player.lastJumpCoordinates = { x: spawnX, y: spawnY }
   }
 
   public completeLevel(): void {

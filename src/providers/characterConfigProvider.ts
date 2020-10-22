@@ -145,7 +145,7 @@ export default abstract class CharacterConfigProvider {
           repeat: -1
         }
       ],
-      hitAreaWidth: 48,
+      hitAreaWidth: 72,
       hitAreaHeight: 24,
       spriteOffsetX: 0,
       spriteOffsetY: -2
@@ -200,8 +200,8 @@ export default abstract class CharacterConfigProvider {
           repeat: -1
         }
       ],
-      hitAreaWidth: 64,
-      hitAreaHeight: 64,
+      hitAreaWidth: 96,
+      hitAreaHeight: 96,
       spriteOffsetX: 0,
       spriteOffsetY: 0
     }

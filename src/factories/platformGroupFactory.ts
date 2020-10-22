@@ -19,6 +19,7 @@ export default abstract class PlatformGroupFactory {
   private static iceF1Config = PlatformConfigProvider.getIceF1Config()
   private static iceF2Config = PlatformConfigProvider.getIceF2Config()
   private static iceF3Config = PlatformConfigProvider.getIceF3Config()
+  private static iceSpikesConfig = PlatformConfigProvider.getIceSpikesConfig()
   private static volcanoH1Config = PlatformConfigProvider.getVolcanoH1Config()
   private static volcanoH2Config = PlatformConfigProvider.getVolcanoH2Config()
   private static volcanoH3Config = PlatformConfigProvider.getVolcanoH3Config()
@@ -273,6 +274,66 @@ export default abstract class PlatformGroupFactory {
       { x: 2, y: 9, config: PlatformGroupFactory.jungleF3Config },
 
       {
+        x: 4,
+        y: 9,
+        posOffsetX: 32,
+        config: PlatformGroupFactory.jungleF1Config
+      },
+      { x: 5, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 6, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 7, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 8, y: 9, config: PlatformGroupFactory.jungleF3Config },
+
+      {
+        x: 11,
+        y: 9,
+        posOffsetX: 32,
+        config: PlatformGroupFactory.jungleF1Config
+      },
+      { x: 12, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 13, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 14, y: 9, config: PlatformGroupFactory.jungleF3Config },
+
+      {
+        x: 16,
+        y: 9,
+        posOffsetX: 32,
+        config: PlatformGroupFactory.jungleF1Config
+      },
+      {
+        x: 17,
+        y: 9,
+        config: PlatformGroupFactory.jungleF2Config
+      },
+      { x: 18, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      {
+        x: 19,
+        y: 9,
+        posOffsetX: 32,
+        config: PlatformGroupFactory.jungleF1Config
+      },
+      { x: 20, y: 9, config: PlatformGroupFactory.jungleF3Config },
+
+      {
+        x: 22,
+        y: 9,
+        posOffsetX: 32,
+        config: PlatformGroupFactory.jungleF1Config
+      },
+      { x: 23, y: 9, config: PlatformGroupFactory.jungleF3Config },
+
+      {
+        x: 25,
+        y: 9,
+        posOffsetX: 32,
+        config: PlatformGroupFactory.jungleF1Config
+      },
+      { x: 26, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 27, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 28, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 29, y: 9, config: PlatformGroupFactory.jungleF3Config },
+
+      {
         x: 0,
         y: 1,
         posOffsetX: 16,
@@ -316,6 +377,71 @@ export default abstract class PlatformGroupFactory {
       },
       { x: 1, y: 0, config: PlatformGroupFactory.jungleH2Config },
       { x: 2, y: 0, config: PlatformGroupFactory.jungleH3Config }
+    ],
+    [
+      { x: 0, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 1, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 2, y: 9, config: PlatformGroupFactory.jungleF3Config },
+
+      {
+        x: 4,
+        y: 9,
+        posOffsetX: 32,
+        config: PlatformGroupFactory.jungleF1Config
+      },
+      { x: 5, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 6, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 7, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 8, y: 9, config: PlatformGroupFactory.jungleF3Config },
+
+      {
+        x: 11,
+        y: 9,
+        posOffsetX: 32,
+        config: PlatformGroupFactory.jungleF1Config
+      },
+      { x: 12, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 13, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 14, y: 9, config: PlatformGroupFactory.jungleF3Config },
+
+      {
+        x: 16,
+        y: 9,
+        posOffsetX: 32,
+        config: PlatformGroupFactory.jungleF1Config
+      },
+      {
+        x: 17,
+        y: 9,
+        config: PlatformGroupFactory.jungleF2Config
+      },
+      { x: 18, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      {
+        x: 19,
+        y: 9,
+        posOffsetX: 32,
+        config: PlatformGroupFactory.jungleF1Config
+      },
+      { x: 20, y: 9, config: PlatformGroupFactory.jungleF3Config },
+
+      {
+        x: 22,
+        y: 9,
+        posOffsetX: 32,
+        config: PlatformGroupFactory.jungleF1Config
+      },
+      { x: 23, y: 9, config: PlatformGroupFactory.jungleF3Config },
+
+      {
+        x: 25,
+        y: 9,
+        posOffsetX: 32,
+        config: PlatformGroupFactory.jungleF1Config
+      },
+      { x: 26, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 27, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 28, y: 9, config: PlatformGroupFactory.jungleF2Config },
+      { x: 29, y: 9, config: PlatformGroupFactory.jungleF3Config }
     ]
   ]
 
@@ -464,7 +590,11 @@ export default abstract class PlatformGroupFactory {
         posOffsetX: 16,
         config: PlatformGroupFactory.iceV1Config
       },
-      { x: 5, y: 8, config: PlatformGroupFactory.iceH1Config },
+      {
+        x: 5,
+        y: 8,
+        config: PlatformGroupFactory.iceSpikesConfig
+      },
       { x: 6, y: 2, config: PlatformGroupFactory.iceH1Config },
       { x: 6, y: 8, config: PlatformGroupFactory.iceH1Config },
       { x: 7, y: 2, config: PlatformGroupFactory.iceH1Config },
