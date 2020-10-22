@@ -17,7 +17,7 @@ export default class SoundHelper {
     this.soundManager.add('wall_cling', { volume: 0.1 })
     this.soundManager.add('wall_jump', { volume: 0.1 })
     this.soundManager.add('frog_attack', { volume: 0.1 })
-    this.soundManager.add('shuttle_sound', { volume: 0.1 })
+    this.soundManager.add('shuttle_sound', { volume: 0.075 })
   }
 
   public setMusic(theme: string, volume: number, loop = true): void {

@@ -12,7 +12,8 @@ export default class VolcanoPlanetScene extends PlanetScene {
   }
 
   public goToNextPlanet(): void {
-    alert('Thanks for playing our game!')
+    this.soundHelper?.stopAllSounds()
+    this.game.scene.switch('IcePlanetScene', 'EndingScene')
   }
 
   protected initializeBackground(): void {

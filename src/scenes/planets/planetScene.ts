@@ -86,7 +86,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.collisionHelper?.setEnemyWorldCollisions(this.currentEnemies)
 
     this.startCutscene()
-    this.setDebug(true)
+    this.setDebug(false)
   }
 
   private finishSceneCreation(): void {
@@ -274,13 +274,23 @@ export default abstract class PlanetScene extends Phaser.Scene {
       })
   }
 
-  public startNextWave(): void {
+  private startNextWave(): void {
     this.currentEnemyWave++
 
     this.removeCurrentPlatforms()
     this.spawnPlatforms()
     this.spawnEnemies(this.enemyWaves[this.currentEnemyWave])
+    this.repositionPlayer()
 
+    this.collisionHelper?.setNextWaveCollisions(
+      this.currentPlatformLayout,
+      this.currentEnemies
+    )
+
+    this.cameras.main.fadeIn(1500, 0, 0, 0)
+  }
+
+  private repositionPlayer(): void {
     const spawn: PlayerSpawn = CharacterSpawnConfigProvider.getPlayerSpawn(
       this.currentEnemyWave
     )
@@ -290,13 +300,6 @@ export default abstract class PlanetScene extends Phaser.Scene {
         spawn.spawnTileX * gridWidth + (spawn.spawnOffsetX ?? 0),
         spawn.spawnTileY * gridHeight + (spawn.spawnOffsetY ?? 0)
       )
-
-    this.collisionHelper?.setNextWaveCollisions(
-      this.currentPlatformLayout,
-      this.currentEnemies
-    )
-
-    this.cameras.main.fadeIn(1500, 0, 0, 0)
   }
 
   public completeLevel(): void {

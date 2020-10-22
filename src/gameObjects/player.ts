@@ -98,6 +98,8 @@ export default class Player extends Character {
       })
       this.container?.add(tongueSprite)
     })
+
+    this.updateAnimation()
   }
 
   public getAttackSprites(): Phaser.Physics.Arcade.Sprite[] {
