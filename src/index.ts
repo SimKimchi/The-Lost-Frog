@@ -8,6 +8,7 @@ import LoadingScene from './scenes/loadingScene'
 import MainMenuScene from './scenes/mainMenuScene'
 import CreditsScene from './scenes/creditsScene'
 import JunglePlanetTransitionScene from './scenes/planetTransitions/jungle/JunglePlanetTransitionScene'
+import EndingScene from './scenes/endingScene'
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
@@ -29,7 +30,8 @@ const config: Phaser.Types.Core.GameConfig = {
     IcePlanetTransitionScene,
     IcePlanetScene,
     VolcanoPlanetTransitionScene,
-    VolcanoPlanetScene
+    VolcanoPlanetScene,
+    EndingScene
   ]
 }
 

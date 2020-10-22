@@ -79,7 +79,7 @@ export default class PlanetTransitionScene extends Phaser.Scene {
   private playMusic(): void {
     if (!this.soundHelper) return
 
-    this.soundHelper.setMusic('transition_theme', 0.5, false)
+    this.soundHelper.setMusic('transition_theme', 0.3, false)
   }
 
   protected goToScene(): void {

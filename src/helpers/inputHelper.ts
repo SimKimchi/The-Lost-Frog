@@ -84,7 +84,7 @@ export default class InputHelper {
     velocityYModifier: number,
     platformGroup: Phaser.Physics.Arcade.StaticGroup
   ): void {
-    // TODO Voir si ça vaut la peine de remettre du drag avec le cling (ça buggait dans la planète de glace, draguait trop loin et on pouvait cloimb à l'infini)
+    // TODO Voir si ça vaut la peine de remettre du drag avec le cling (ça buggait dans la planète de glace, draguait trop loin et on pouvait climb à l'infini)
     let checkEdge: IEdge = { isAtEdge: false, adjacentPlatform: undefined }
     if (player.wallClingDirection === Direction.Up) {
       if (this.hotKeys.S.isDown) {
