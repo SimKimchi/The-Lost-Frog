@@ -323,15 +323,15 @@ export default class CollisionHelper {
 
       if (direction === Direction.Left) {
         if (
-          childSprite.x + childSprite.width / 2 ===
-          platformSprite.x - platformSprite.width / 2
+          childSprite.x + childSprite.getData('offsetX') + childSprite.width / 2 ===
+          platformSprite.x - platformSprite.getData('offsetX') - platformSprite.width / 2
         ) {
           return child
         }
       } else if (direction === Direction.Right) {
         if (
-          childSprite.x - childSprite.width / 2 ===
-          platformSprite.x + platformSprite.width / 2
+          childSprite.x + childSprite.getData('offsetX') - childSprite.width / 2 ===
+          platformSprite.x - platformSprite.getData('offsetX') + platformSprite.width / 2
         ) {
           return child
         }
