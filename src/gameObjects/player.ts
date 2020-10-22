@@ -200,6 +200,26 @@ export default class Player extends Character {
         this.sprite.anims.play(`${this.assetPrefix}_hurt_left`, true)
       }
     }
+    // * Wall cling
+    else if (this.wallClingDirection !== null) {
+      if (this.wallClingDirection === Direction.Up) {
+        if (this.direction === Direction.Right) {
+          this.sprite.anims.play(
+            `${this.assetPrefix}_cling_up_facing_right`,
+            true
+          )
+        } else {
+          this.sprite.anims.play(
+            `${this.assetPrefix}_cling_up_facing_left`,
+            true
+          )
+        }
+      } else if (this.wallClingDirection === Direction.Left) {
+        this.sprite.anims.play(`${this.assetPrefix}_cling_left`, true)
+      } else {
+        this.sprite.anims.play(`${this.assetPrefix}_cling_right`, true)
+      }
+    }
     // * Attack
     else if (this.currentTongueSprite) {
       if (this.currentTongueSprite.getData('direction') === Direction.Up) {
@@ -216,14 +236,6 @@ export default class Player extends Character {
         this.currentTongueSprite.getData('direction') === Direction.Left
       ) {
         this.sprite.anims.play(`${this.assetPrefix}_attack_left`, true)
-      }
-    }
-    // * Wall cling
-    else if (this.wallClingDirection !== null) {
-      if (this.isFacingLeft()) {
-        this.sprite.anims.play(`${this.assetPrefix}_idle_left`, true)
-      } else {
-        this.sprite.anims.play(`${this.assetPrefix}_idle_right`, true)
       }
     }
     // * Jump
@@ -324,6 +336,9 @@ export default class Player extends Character {
       platform.getData('clingUnder')
     ) {
       this.wallClingDirection = Direction.Up
+      if (this.sprite) {
+        this.sprite.y -= 16
+      }
     }
 
     if (this.wallClingDirection === null) return
@@ -348,6 +363,9 @@ export default class Player extends Character {
   public stopWallCling(): void {
     if (!this.container) return
 
+    if (this.sprite && this.wallClingDirection === Direction.Up) {
+      this.sprite.y += 16
+    }
     this.wallClingDirection = null
     this.clingPlatform = null
     this.canDoubleJump = true

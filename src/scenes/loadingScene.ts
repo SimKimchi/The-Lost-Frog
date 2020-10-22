@@ -351,6 +351,38 @@ export default class LoadingScene extends Phaser.Scene {
       frameHeight: 256
     })
     this.load.spritesheet(
+      'frog_cling_up_facing_right',
+      genericAssets.images.frog_cling_up_facing_right,
+      {
+        frameWidth: 256,
+        frameHeight: 256
+      }
+    )
+    this.load.spritesheet(
+      'frog_cling_up_facing_left',
+      genericAssets.images.frog_cling_up_facing_left,
+      {
+        frameWidth: 256,
+        frameHeight: 256
+      }
+    )
+    this.load.spritesheet(
+      'frog_cling_right',
+      genericAssets.images.frog_cling_right,
+      {
+        frameWidth: 256,
+        frameHeight: 256
+      }
+    )
+    this.load.spritesheet(
+      'frog_cling_left',
+      genericAssets.images.frog_cling_left,
+      {
+        frameWidth: 256,
+        frameHeight: 256
+      }
+    )
+    this.load.spritesheet(
       'enemy_owl_idle_left',
       iceAssets.images.enemy_owl_idle_left,
       {
