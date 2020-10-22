@@ -44,8 +44,11 @@ export default class FlyingEnemy extends Enemy {
     if (distance < this.aggroRange) {
       const velocityX =
         playerPos.x < enemyPos.x ? -this.moveSpeed : this.moveSpeed
-      const velocityY =
+      let velocityY =
         playerPos.y < enemyPos.y ? -this.moveSpeed : this.moveSpeed
+      if (playerPos.y - enemyPos.y > -2 && playerPos.y - enemyPos.y < 2) {
+        velocityY = 0
+      }
       ;(<Phaser.Physics.Arcade.Body>this.getContainer().body).setVelocity(
         velocityX,
         velocityY

@@ -105,9 +105,41 @@ export default abstract class CharacterConfigProvider {
         {
           key: 'frog_hurt_left',
           assetKey: 'frog_hurt_left',
-          frameStart: 1,
-          frameEnd: 3,
+          frameStart: 0,
+          frameEnd: 2,
           frameRate: 13,
+          repeat: -1
+        },
+        {
+          key: 'frog_cling_up_facing_right',
+          assetKey: 'frog_cling_up_facing_right',
+          frameStart: 0,
+          frameEnd: 2,
+          frameRate: 7,
+          repeat: -1
+        },
+        {
+          key: 'frog_cling_up_facing_left',
+          assetKey: 'frog_cling_up_facing_left',
+          frameStart: 0,
+          frameEnd: 2,
+          frameRate: 7,
+          repeat: -1
+        },
+        {
+          key: 'frog_cling_left',
+          assetKey: 'frog_cling_left',
+          frameStart: 0,
+          frameEnd: 2,
+          frameRate: 7,
+          repeat: -1
+        },
+        {
+          key: 'frog_cling_right',
+          assetKey: 'frog_cling_right',
+          frameStart: 0,
+          frameEnd: 2,
+          frameRate: 7,
           repeat: -1
         }
       ],
