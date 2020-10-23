@@ -17,7 +17,8 @@ export default class EndingScene extends Phaser.Scene {
   public create(): void {
     const width = this.game.scale.width
     const height = this.game.scale.height
-
+    this.add.sprite(150, height / 2, 'frogault')
+    this.add.sprite(width - 150, height / 2, 'froguette')
     this.add
       .text(width / 2, height / 2 - 200, 'The Lost Frog', {
         font: '45px PlayMeGames',

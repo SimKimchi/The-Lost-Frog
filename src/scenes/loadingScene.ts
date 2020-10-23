@@ -259,6 +259,8 @@ export default class LoadingScene extends Phaser.Scene {
   }
 
   private loadCharacters(): void {
+    this.load.image('frogault', genericAssets.images.frogault)
+    this.load.image('froguette', genericAssets.images.froguette)
     this.load.spritesheet('tongue_up', genericAssets.images.tongue_up, {
       frameWidth: 32,
       frameHeight: 64
