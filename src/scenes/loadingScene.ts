@@ -171,6 +171,7 @@ export default class LoadingScene extends Phaser.Scene {
       'background_volcano_5',
       volcanoAssets.images.background_volcano_5
     )
+    this.load.image('screen_transition', genericAssets.images.screen_transition)
   }
 
   private loadForegrounds(): void {

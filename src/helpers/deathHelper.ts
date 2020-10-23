@@ -46,6 +46,7 @@ export default class DeathHelper {
         fill: '#FFFFFF'
       })
       .setScrollFactor(0, 0)
+      .setStroke('black', 4)
     gameOverText.setPosition(
       this.scene.game.scale.width / 2 - gameOverText.width / 2,
       this.scene.game.scale.height / 2 - gameOverText.height / 2
@@ -56,6 +57,7 @@ export default class DeathHelper {
         fill: '#FFFFFF'
       })
       .setScrollFactor(0, 0)
+      .setStroke('black', 3)
     retryText.setPosition(
       this.scene.game.scale.width / 2 - retryText.width / 2,
       this.scene.game.scale.height / 2 - retryText.height / 2 + 50
