@@ -8,7 +8,7 @@ export default class IcePlanetScene extends PlanetScene {
   public enemyWaves: EnemySpawn[][] = PlanetWaveConfigProvider.getIceWaveConfig()
 
   constructor() {
-    super('IcePlanetScene', 1, 1, 0.97)
+    super('IcePlanetScene', 1, 1, 0.95)
   }
 
   public goToNextPlanet(): void {

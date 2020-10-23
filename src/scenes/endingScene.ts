@@ -1,3 +1,4 @@
+import { TheLostFrogGame } from '..'
 import SoundHelper from '../helpers/soundHelper'
 
 export default class EndingScene extends Phaser.Scene {
@@ -24,7 +25,41 @@ export default class EndingScene extends Phaser.Scene {
       })
       .setOrigin(0.5, 0.5)
     this.add
-      .text(width / 2, height / 2, 'Thanks for playing our game!', {
+      .text(
+        width / 2,
+        height / 2 - 150,
+        (this.game as TheLostFrogGame).displayFinalScore(),
+        {
+          font: '15px PlayMeGames',
+          fill: '#ffffff'
+        }
+      )
+      .setOrigin(0.5, 0.5)
+    this.add
+      .text(
+        width / 2,
+        height / 2,
+        `After fighting off countless wild predators,
+Frogault finally saw Froguette and rushed to her. It must've
+been by a miracle that she was not hurt at all after everything
+she went through.
+
+Froguette explained to his beloved half how she got kidnapped
+while gathering her special ingredients to make his favorite
+bug soup. Now, they can safely return to Tadpolurn and have
+a nice dinner.
+
+
+Thank you player for helping Frogault save his wife!`,
+        {
+          font: '16px PlayMeGames',
+          fill: '#ffffff'
+        }
+      )
+      .setOrigin(0.5, 0.5)
+      .setStroke('black', 2)
+    this.add
+      .text(width / 2, height - 100, 'Thanks for playing our game!', {
         font: '30px PlayMeGames',
         fill: '#ffffff'
       })

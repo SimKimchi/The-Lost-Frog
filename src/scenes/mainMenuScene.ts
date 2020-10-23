@@ -39,7 +39,7 @@ export default class MainMenuScene extends Phaser.Scene {
       .setOrigin(0.5, 0.5)
 
     this.playTextOption = this.add
-      .text(width / 2, height / 2, '[Play!]', {
+      .text(width / 2, height / 2, '[ Play! ]', {
         font: '35px PlayMeGames',
         fill: '#ffffff'
       })
@@ -109,17 +109,17 @@ export default class MainMenuScene extends Phaser.Scene {
   }
 
   private menuGoDown(): void {
-    if (this.playTextOption?.text.startsWith('[')) {
+    if (this.playTextOption?.text.startsWith('[ ')) {
       this.playTextOption?.setText('Play!')
-      this.creditsTextOption?.setText('[See credits]')
+      this.creditsTextOption?.setText('[ See credits ]')
       this.playTextOption.setData('selected', false)
       this.creditsTextOption?.setData('selected', true)
     }
   }
 
   private menuGoUp(): void {
-    if (this.creditsTextOption?.text.startsWith('[')) {
-      this.playTextOption?.setText('[Play!]')
+    if (this.creditsTextOption?.text.startsWith('[ ')) {
+      this.playTextOption?.setText('[ Play! ]')
       this.creditsTextOption?.setText('See credits')
       this.playTextOption?.setData('selected', true)
       this.creditsTextOption.setData('selected', false)
