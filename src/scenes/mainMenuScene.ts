@@ -25,12 +25,7 @@ export default class MainMenuScene extends Phaser.Scene {
     const width = this.game.scale.width
     const height = this.game.scale.height
 
-    this.add
-      .text(width / 2, height / 2 - 150, 'The Lost Frog', {
-        font: '55px PlayMeGames',
-        fill: '#ffffff'
-      })
-      .setOrigin(0.5, 0.5)
+    this.add.image(0, 0, 'screen_title').setOrigin(0).setDisplaySize(960, 640)
 
     this.playTextOption = this.add
       .text(width / 2, height / 2, '[ Play! ]', {
@@ -47,6 +42,7 @@ export default class MainMenuScene extends Phaser.Scene {
       )
       .setOrigin(0.5, 0.5)
       .setData('selected', true)
+      .setStroke('black', 4)
 
     this.creditsTextOption = this.add
       .text(width / 2, height / 2 + 100, 'See credits', {
@@ -62,6 +58,7 @@ export default class MainMenuScene extends Phaser.Scene {
         this
       )
       .setOrigin(0.5, 0.5)
+      .setStroke('black', 4)
 
     this.input.keyboard.on(
       'keydown',
