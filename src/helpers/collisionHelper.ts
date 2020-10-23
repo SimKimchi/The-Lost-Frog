@@ -3,6 +3,7 @@ import Enemy from '../gameObjects/enemy'
 import FlyingEnemy from '../gameObjects/flyingEnemy'
 import Player from '../gameObjects/player'
 import { Direction } from '../util'
+import InputHelper from './inputHelper'
 
 export interface IEdge {
   isAtEdge: boolean
@@ -14,12 +15,17 @@ export default class CollisionHelper {
   private player: Player
   private playerVsPlatformCollider: Phaser.Physics.Arcade.Collider | null
   private enemyVsPlatformCollider: Phaser.Physics.Arcade.Collider | null
+  private inputHelper: InputHelper | null = null
 
   constructor(physics: Phaser.Physics.Arcade.ArcadePhysics, player: Player) {
     this.physics = physics
     this.player = player
     this.playerVsPlatformCollider = null
     this.enemyVsPlatformCollider = null
+  }
+
+  public setInputHelper(inputHelper: InputHelper): void {
+    this.inputHelper = inputHelper
   }
 
   public setNextWaveCollisions(
@@ -62,7 +68,10 @@ export default class CollisionHelper {
       [this.player.getContainer()],
       platformLayout,
       (player, platform) => {
-        this.player.clingToWall(platform as Phaser.GameObjects.Sprite)
+
+        if (this.inputHelper?.hotKeys.F.isDown) {
+          this.player.clingToWall(platform as Phaser.GameObjects.Sprite)
+        }
         if ((<Phaser.Physics.Arcade.Body>player.body).touching.down) {
           this.player.canDoubleJump = true
 

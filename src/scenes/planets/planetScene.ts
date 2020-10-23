@@ -81,6 +81,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
       this.input.keyboard,
       this.collisionHelper
     )
+    this.collisionHelper.setInputHelper(this.inputHelper)
     this.soundHelper = new SoundHelper(this.sound)
     this.deathHelper = new DeathHelper(this)
     this.cutSceneGoingOn = false
