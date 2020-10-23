@@ -24,11 +24,13 @@ export default class CollisionHelper {
 
   public setNextWaveCollisions(
     platformLayout: Phaser.Physics.Arcade.StaticGroup | null,
-    enemies: Enemy[]
+    enemies: Enemy[],
+    items: Phaser.Physics.Arcade.Sprite[]
   ): void {
     this.setPlayerPlatformCollisions(platformLayout)
     this.setEnemyPlatformCollisions(platformLayout, enemies)
     this.setPlayerCollisionsWithEnemies(enemies)
+    this.setPlayerCollisionsWithItems(items)
     this.setPlayerAttackCollisions(enemies)
   }
 
@@ -198,6 +200,19 @@ export default class CollisionHelper {
     )
   }
 
+  public setPlayerCollisionsWithItems(
+    items: Phaser.Physics.Arcade.Sprite[]
+  ): void {
+    this.physics.add.overlap(
+      this.player.getContainer(),
+      items,
+      (_player, item) => {
+        item.destroy()
+        this.player.heal()
+      }
+    )
+  }
+
   public setPlayerAttackCollisions(enemies: Enemy[]): void {
     const attackSprites = this.player.getAttackSprites()
     for (const key in enemies) {
@@ -324,18 +339,26 @@ export default class CollisionHelper {
       if (direction === Direction.Left) {
         if (
           childSprite.x + childSprite.width / 2 ===
-          platformSprite.x - platformSprite.width / 2
-          || (childSprite.x + childSprite.getData('offsetX') + childSprite.width / 2 ===
-          platformSprite.x - platformSprite.getData('offsetX') - platformSprite.width / 2)
+            platformSprite.x - platformSprite.width / 2 ||
+          childSprite.x +
+            childSprite.getData('offsetX') +
+            childSprite.width / 2 ===
+            platformSprite.x -
+              platformSprite.getData('offsetX') -
+              platformSprite.width / 2
         ) {
           return child
         }
       } else if (direction === Direction.Right) {
         if (
           childSprite.x - childSprite.width / 2 ===
-          platformSprite.x + platformSprite.width / 2
-          || (childSprite.x + childSprite.getData('offsetX') - childSprite.width / 2 ===
-          platformSprite.x - platformSprite.getData('offsetX') + platformSprite.width / 2)
+            platformSprite.x + platformSprite.width / 2 ||
+          childSprite.x +
+            childSprite.getData('offsetX') -
+            childSprite.width / 2 ===
+            platformSprite.x -
+              platformSprite.getData('offsetX') +
+              platformSprite.width / 2
         ) {
           return child
         }

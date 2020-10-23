@@ -10,10 +10,6 @@ export default class DeathHelper {
     this.scene.events.on('enemyKilled', this.onEnemyDeath, this)
   }
 
-  public setEnemies(enemies: Enemy[]): void {
-    this.scene.currentEnemies = enemies
-  }
-
   private onEnemyDeath(): void {
     if (
       !this.scene.currentEnemies.every(

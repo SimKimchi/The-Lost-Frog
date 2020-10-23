@@ -2,6 +2,7 @@ import 'phaser'
 import Character from './character'
 import { CharacterConfig, Direction } from '../util'
 import PlanetScene from '../scenes/planets/planetScene'
+import { TheLostFrogGame } from '..'
 
 export default class Player extends Character {
   private static readonly ATTACK_DURATION = 200
@@ -380,10 +381,23 @@ export default class Player extends Character {
   }
 
   public repositionAfterFall(): void {
+    this.stopWallCling()
+
     this.container?.setPosition(
       this.lastJumpCoordinates.x,
       this.lastJumpCoordinates.y - 5
     )
+  }
+
+  public heal(): void {
+    this.currentHp += 2
+
+    if (this.currentHp > this.maxHp) {
+      this.currentHp = this.maxHp
+    }
+
+    this.scene.soundHelper?.playHealSound()
+    ;(this.scene.game as TheLostFrogGame).increaseScore(50)
   }
 
   protected makeInvulnerable(): void {

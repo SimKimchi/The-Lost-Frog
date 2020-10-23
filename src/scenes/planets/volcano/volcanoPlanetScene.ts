@@ -1,11 +1,13 @@
 import 'phaser'
-import { EnemySpawn } from '../../../util'
+import { EnemySpawn, ItemSpawn } from '../../../util'
 import PlanetScene from '../planetScene'
 import PlatformGroupFactory from '../../../factories/platformGroupFactory'
 import PlanetWaveConfigProvider from '../../../providers/planetWaveConfigProvider'
+import ItemConfigProvider from '../../../providers/itemConfigProvider'
 
 export default class VolcanoPlanetScene extends PlanetScene {
   public enemyWaves: EnemySpawn[][] = PlanetWaveConfigProvider.getVolcanoWaveConfig()
+  public itemWaves: ItemSpawn[][] = ItemConfigProvider.getVolcanoItemConfig()
 
   constructor() {
     super('VolcanoPlanetScene', 1, 1, 0.3)
