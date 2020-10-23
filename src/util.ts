@@ -66,7 +66,7 @@ export type HotKeys = {
   RIGHT: Phaser.Input.Keyboard.Key
   ENTER: Phaser.Input.Keyboard.Key
   BACKSPACE: Phaser.Input.Keyboard.Key
-  F: Phaser.Input.Keyboard.Key
+  SHIFT: Phaser.Input.Keyboard.Key
 }
 
 export function getRandomInt(max: number): number {

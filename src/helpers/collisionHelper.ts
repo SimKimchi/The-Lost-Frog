@@ -68,10 +68,8 @@ export default class CollisionHelper {
       [this.player.getContainer()],
       platformLayout,
       (player, platform) => {
+        this.player.clingToWall(platform as Phaser.GameObjects.Sprite)
 
-        if (this.inputHelper?.hotKeys.F.isDown) {
-          this.player.clingToWall(platform as Phaser.GameObjects.Sprite)
-        }
         if ((<Phaser.Physics.Arcade.Body>player.body).touching.down) {
           this.player.canDoubleJump = true
 

@@ -11,7 +11,7 @@ export default class InputHelper {
     collisionHelper: CollisionHelper
   ) {
     this.hotKeys = keyboard.addKeys(
-      'SPACE,A,S,D,E,W,UP,DOWN,LEFT,RIGHT,ENTER,F'
+      'SPACE,A,S,D,E,W,UP,DOWN,LEFT,RIGHT,ENTER,SHIFT'
     ) as HotKeys
     this.collisionHelper = collisionHelper
   }
