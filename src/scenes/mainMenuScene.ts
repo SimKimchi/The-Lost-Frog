@@ -26,14 +26,8 @@ export default class MainMenuScene extends Phaser.Scene {
     const height = this.game.scale.height
 
     this.add
-      .text(width / 2, height / 2 - 200, 'The Lost Frog', {
-        font: '45px PlayMeGames',
-        fill: '#ffffff'
-      })
-      .setOrigin(0.5, 0.5)
-    this.add
-      .text(width / 2, height / 2 - 150, '(main menu design coming soon :D)', {
-        font: '16px PlayMeGames',
+      .text(width / 2, height / 2 - 150, 'The Lost Frog', {
+        font: '55px PlayMeGames',
         fill: '#ffffff'
       })
       .setOrigin(0.5, 0.5)
