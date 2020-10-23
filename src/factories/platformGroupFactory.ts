@@ -31,7 +31,7 @@ export default abstract class PlatformGroupFactory {
   private static volcanoF3Config = PlatformConfigProvider.getVolcanoF3Config()
 
   private static junglePlatformLayouts: Platform[][] = [
-    // Jungle Level 4
+    // Jungle Level 1
     [
       // Left Floor of wall
       { x: 0, y: 9, config: PlatformGroupFactory.jungleF2Config },
@@ -97,842 +97,1010 @@ export default abstract class PlatformGroupFactory {
 
       
     ],
-    // Jungle Level 1
-    [
-      { x: 0, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 1, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 2, y: 9, config: PlatformGroupFactory.jungleF3Config },
-
-      {
-        x: 4,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.jungleF1Config
-      },
-      { x: 5, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 6, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 7, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 8, y: 9, config: PlatformGroupFactory.jungleF3Config },
-
-      {
-        x: 11,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.jungleF1Config
-      },
-      { x: 12, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 13, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 14, y: 9, config: PlatformGroupFactory.jungleF3Config },
-
-      {
-        x: 16,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.jungleF1Config
-      },
-      {
-        x: 17,
-        y: 9,
-        config: PlatformGroupFactory.jungleF2Config
-      },
-      { x: 18, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      {
-        x: 19,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.jungleF1Config
-      },
-      { x: 20, y: 9, config: PlatformGroupFactory.jungleF3Config },
-
-      {
-        x: 22,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.jungleF1Config
-      },
-      { x: 23, y: 9, config: PlatformGroupFactory.jungleF3Config },
-
-      {
-        x: 25,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.jungleF1Config
-      },
-      { x: 26, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 27, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 28, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 29, y: 9, config: PlatformGroupFactory.jungleF3Config },
-
-      { x: 0, y: 0, config: PlatformGroupFactory.jungleH1Config },
-      {
-        x: 0,
-        y: 1,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 0,
-        y: 2,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 0,
-        y: 3,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 0,
-        y: 4,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 0,
-        y: 5,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 0,
-        y: 6,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 0,
-        y: 7,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      { x: 1, y: 0, config: PlatformGroupFactory.jungleH2Config },
-      { x: 2, y: 0, config: PlatformGroupFactory.jungleH3Config },
-      {
-        x: 4,
-        y: 1,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 4,
-        y: 2,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 4,
-        y: 3,
-        posOffsetX: -16,
-        config: PlatformGroupFactory.jungleBranchH1Config
-      },
-      {
-        x: 4,
-        y: 3,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 4,
-        y: 4,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 4,
-        y: 4,
-        posOffsetX: 48.01,
-        posOffsetY: 16,
-        config: PlatformGroupFactory.jungleBranchH2Config
-      },
-      {
-        x: 4,
-        y: 5,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      { x: 6, y: 3, config: PlatformGroupFactory.jungleH1Config },
-      { x: 7, y: 3, config: PlatformGroupFactory.jungleH2Config },
-      { x: 8, y: 3, config: PlatformGroupFactory.jungleH3Config },
-      { x: 8, y: 7, config: PlatformGroupFactory.jungleH1Config },
-      { x: 9, y: 7, config: PlatformGroupFactory.jungleH3Config },
-      { x: 10, y: 7, config: PlatformGroupFactory.jungleSpikesConfig },
-      { x: 10, y: 5, config: PlatformGroupFactory.jungleH1Config },
-      { x: 11, y: 5, config: PlatformGroupFactory.jungleH2Config },
-      { x: 12, y: 5, config: PlatformGroupFactory.jungleH3Config },
-      { x: 14, y: 2, config: PlatformGroupFactory.jungleH1Config },
-      {
-        x: 14,
-        y: 3,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 14,
-        y: 4,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 14,
-        y: 5,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 14,
-        y: 6,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      { x: 15, y: 2, config: PlatformGroupFactory.jungleH3Config },
-      {
-        x: 16,
-        y: 4,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 16,
-        y: 5,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 16,
-        y: 6,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 16,
-        y: 7,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 16,
-        y: 8,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      { x: 18, y: 6, config: PlatformGroupFactory.jungleH1Config },
-      { x: 19, y: 3, config: PlatformGroupFactory.jungleH1Config },
-      { x: 19, y: 6, config: PlatformGroupFactory.jungleH3Config },
-      { x: 20, y: 3, config: PlatformGroupFactory.jungleH2Config },
-      { x: 20, y: 5, config: PlatformGroupFactory.jungleH1Config },
-      { x: 21, y: 3, config: PlatformGroupFactory.jungleH3Config },
-      { x: 21, y: 5, config: PlatformGroupFactory.jungleH3Config },
-      { x: 22, y: 6, config: PlatformGroupFactory.jungleH4Config },
-      { x: 24, y: 2, config: PlatformGroupFactory.jungleH1Config },
-      { x: 24, y: 6, config: PlatformGroupFactory.jungleH1Config },
-      { x: 25, y: 2, config: PlatformGroupFactory.jungleH2Config },
-      { x: 25, y: 6, config: PlatformGroupFactory.jungleH3Config },
-      { x: 26, y: 2, config: PlatformGroupFactory.jungleH2Config },
-      { x: 27, y: 2, config: PlatformGroupFactory.jungleH3Config },
-      { x: 28, y: 4, config: PlatformGroupFactory.jungleH1Config },
-      { x: 28, y: 8, config: PlatformGroupFactory.jungleH4Config },
-      { x: 29, y: 4, config: PlatformGroupFactory.jungleH3Config },
-      { x: 29, y: 7, config: PlatformGroupFactory.jungleH4Config }
-    ],
     // Jungle Level 2
-    [
-      { x: 0, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 1, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 2, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      {
-        x: 4,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.jungleF1Config
-      },
-      { x: 5, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 6, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 7, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 8, y: 9, config: PlatformGroupFactory.jungleF3Config },
+    // [
+    //   { x: 0, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 1, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 2, y: 9, config: PlatformGroupFactory.jungleF3Config },
 
-      {
-        x: 11,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.jungleF1Config
-      },
-      { x: 12, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 13, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 14, y: 9, config: PlatformGroupFactory.jungleF3Config },
+    //   {
+    //     x: 4,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.jungleF1Config
+    //   },
+    //   { x: 5, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 6, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 7, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 8, y: 9, config: PlatformGroupFactory.jungleF3Config },
 
-      {
-        x: 16,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.jungleF1Config
-      },
-      {
-        x: 17,
-        y: 9,
-        config: PlatformGroupFactory.jungleF2Config
-      },
-      { x: 18, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      {
-        x: 19,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.jungleF1Config
-      },
-      { x: 20, y: 9, config: PlatformGroupFactory.jungleF3Config },
+    //   {
+    //     x: 11,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.jungleF1Config
+    //   },
+    //   { x: 12, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 13, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 14, y: 9, config: PlatformGroupFactory.jungleF3Config },
 
-      {
-        x: 22,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.jungleF1Config
-      },
-      { x: 23, y: 9, config: PlatformGroupFactory.jungleF3Config },
+    //   {
+    //     x: 16,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.jungleF1Config
+    //   },
+    //   {
+    //     x: 17,
+    //     y: 9,
+    //     config: PlatformGroupFactory.jungleF2Config
+    //   },
+    //   { x: 18, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   {
+    //     x: 19,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.jungleF1Config
+    //   },
+    //   { x: 20, y: 9, config: PlatformGroupFactory.jungleF3Config },
 
-      {
-        x: 25,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.jungleF1Config
-      },
-      { x: 26, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 27, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 28, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 29, y: 9, config: PlatformGroupFactory.jungleF3Config },
+    //   {
+    //     x: 22,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.jungleF1Config
+    //   },
+    //   { x: 23, y: 9, config: PlatformGroupFactory.jungleF3Config },
 
-      {
-        x: 0,
-        y: 1,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 0,
-        y: 2,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 0,
-        y: 3,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 0,
-        y: 4,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 0,
-        y: 5,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 0,
-        y: 6,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      {
-        x: 0,
-        y: 7,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.jungleV1Config
-      },
-      { x: 1, y: 0, config: PlatformGroupFactory.jungleH2Config },
-      { x: 2, y: 0, config: PlatformGroupFactory.jungleH3Config }
-    ],
-    // Jungle Level 3
-    [
-      { x: 0, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 1, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 2, y: 9, config: PlatformGroupFactory.jungleF3Config },
+    //   {
+    //     x: 25,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.jungleF1Config
+    //   },
+    //   { x: 26, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 27, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 28, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 29, y: 9, config: PlatformGroupFactory.jungleF3Config },
 
-      {
-        x: 4,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.jungleF1Config
-      },
-      { x: 5, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 6, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 7, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 8, y: 9, config: PlatformGroupFactory.jungleF3Config },
+    //   { x: 0, y: 0, config: PlatformGroupFactory.jungleH1Config },
+    //   {
+    //     x: 0,
+    //     y: 1,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 0,
+    //     y: 2,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 0,
+    //     y: 3,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 0,
+    //     y: 4,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 0,
+    //     y: 5,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 0,
+    //     y: 6,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 0,
+    //     y: 7,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   { x: 1, y: 0, config: PlatformGroupFactory.jungleH2Config },
+    //   { x: 2, y: 0, config: PlatformGroupFactory.jungleH3Config },
+    //   {
+    //     x: 4,
+    //     y: 1,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 4,
+    //     y: 2,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 4,
+    //     y: 3,
+    //     posOffsetX: -16,
+    //     config: PlatformGroupFactory.jungleBranchH1Config
+    //   },
+    //   {
+    //     x: 4,
+    //     y: 3,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 4,
+    //     y: 4,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 4,
+    //     y: 4,
+    //     posOffsetX: 48.01,
+    //     posOffsetY: 16,
+    //     config: PlatformGroupFactory.jungleBranchH2Config
+    //   },
+    //   {
+    //     x: 4,
+    //     y: 5,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   { x: 6, y: 3, config: PlatformGroupFactory.jungleH1Config },
+    //   { x: 7, y: 3, config: PlatformGroupFactory.jungleH2Config },
+    //   { x: 8, y: 3, config: PlatformGroupFactory.jungleH3Config },
+    //   { x: 8, y: 7, config: PlatformGroupFactory.jungleH1Config },
+    //   { x: 9, y: 7, config: PlatformGroupFactory.jungleH3Config },
+    //   { x: 10, y: 7, config: PlatformGroupFactory.jungleSpikesConfig },
+    //   { x: 10, y: 5, config: PlatformGroupFactory.jungleH1Config },
+    //   { x: 11, y: 5, config: PlatformGroupFactory.jungleH2Config },
+    //   { x: 12, y: 5, config: PlatformGroupFactory.jungleH3Config },
+    //   { x: 14, y: 2, config: PlatformGroupFactory.jungleH1Config },
+    //   {
+    //     x: 14,
+    //     y: 3,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 14,
+    //     y: 4,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 14,
+    //     y: 5,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 14,
+    //     y: 6,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   { x: 15, y: 2, config: PlatformGroupFactory.jungleH3Config },
+    //   {
+    //     x: 16,
+    //     y: 4,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 16,
+    //     y: 5,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 16,
+    //     y: 6,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 16,
+    //     y: 7,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 16,
+    //     y: 8,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   { x: 18, y: 6, config: PlatformGroupFactory.jungleH1Config },
+    //   { x: 19, y: 3, config: PlatformGroupFactory.jungleH1Config },
+    //   { x: 19, y: 6, config: PlatformGroupFactory.jungleH3Config },
+    //   { x: 20, y: 3, config: PlatformGroupFactory.jungleH2Config },
+    //   { x: 20, y: 5, config: PlatformGroupFactory.jungleH1Config },
+    //   { x: 21, y: 3, config: PlatformGroupFactory.jungleH3Config },
+    //   { x: 21, y: 5, config: PlatformGroupFactory.jungleH3Config },
+    //   { x: 22, y: 6, config: PlatformGroupFactory.jungleH4Config },
+    //   { x: 24, y: 2, config: PlatformGroupFactory.jungleH1Config },
+    //   { x: 24, y: 6, config: PlatformGroupFactory.jungleH1Config },
+    //   { x: 25, y: 2, config: PlatformGroupFactory.jungleH2Config },
+    //   { x: 25, y: 6, config: PlatformGroupFactory.jungleH3Config },
+    //   { x: 26, y: 2, config: PlatformGroupFactory.jungleH2Config },
+    //   { x: 27, y: 2, config: PlatformGroupFactory.jungleH3Config },
+    //   { x: 28, y: 4, config: PlatformGroupFactory.jungleH1Config },
+    //   { x: 28, y: 8, config: PlatformGroupFactory.jungleH4Config },
+    //   { x: 29, y: 4, config: PlatformGroupFactory.jungleH3Config },
+    //   { x: 29, y: 7, config: PlatformGroupFactory.jungleH4Config }
+    // ],
+    // // Jungle Level 2
+    // [
+    //   { x: 0, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 1, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 2, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   {
+    //     x: 4,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.jungleF1Config
+    //   },
+    //   { x: 5, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 6, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 7, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 8, y: 9, config: PlatformGroupFactory.jungleF3Config },
 
-      {
-        x: 11,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.jungleF1Config
-      },
-      { x: 12, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 13, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 14, y: 9, config: PlatformGroupFactory.jungleF3Config },
+    //   {
+    //     x: 11,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.jungleF1Config
+    //   },
+    //   { x: 12, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 13, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 14, y: 9, config: PlatformGroupFactory.jungleF3Config },
 
-      {
-        x: 16,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.jungleF1Config
-      },
-      {
-        x: 17,
-        y: 9,
-        config: PlatformGroupFactory.jungleF2Config
-      },
-      { x: 18, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      {
-        x: 19,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.jungleF1Config
-      },
-      { x: 20, y: 9, config: PlatformGroupFactory.jungleF3Config },
+    //   {
+    //     x: 16,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.jungleF1Config
+    //   },
+    //   {
+    //     x: 17,
+    //     y: 9,
+    //     config: PlatformGroupFactory.jungleF2Config
+    //   },
+    //   { x: 18, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   {
+    //     x: 19,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.jungleF1Config
+    //   },
+    //   { x: 20, y: 9, config: PlatformGroupFactory.jungleF3Config },
 
-      {
-        x: 22,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.jungleF1Config
-      },
-      { x: 23, y: 9, config: PlatformGroupFactory.jungleF3Config },
+    //   {
+    //     x: 22,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.jungleF1Config
+    //   },
+    //   { x: 23, y: 9, config: PlatformGroupFactory.jungleF3Config },
 
-      {
-        x: 25,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.jungleF1Config
-      },
-      { x: 26, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 27, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 28, y: 9, config: PlatformGroupFactory.jungleF2Config },
-      { x: 29, y: 9, config: PlatformGroupFactory.jungleF3Config }
-    ]
+    //   {
+    //     x: 25,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.jungleF1Config
+    //   },
+    //   { x: 26, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 27, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 28, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 29, y: 9, config: PlatformGroupFactory.jungleF3Config },
+
+    //   {
+    //     x: 0,
+    //     y: 1,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 0,
+    //     y: 2,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 0,
+    //     y: 3,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 0,
+    //     y: 4,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 0,
+    //     y: 5,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 0,
+    //     y: 6,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   {
+    //     x: 0,
+    //     y: 7,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.jungleV1Config
+    //   },
+    //   { x: 1, y: 0, config: PlatformGroupFactory.jungleH2Config },
+    //   { x: 2, y: 0, config: PlatformGroupFactory.jungleH3Config }
+    // ],
+    // // Jungle Level 3
+    // [
+    //   { x: 0, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 1, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 2, y: 9, config: PlatformGroupFactory.jungleF3Config },
+
+    //   {
+    //     x: 4,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.jungleF1Config
+    //   },
+    //   { x: 5, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 6, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 7, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 8, y: 9, config: PlatformGroupFactory.jungleF3Config },
+
+    //   {
+    //     x: 11,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.jungleF1Config
+    //   },
+    //   { x: 12, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 13, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 14, y: 9, config: PlatformGroupFactory.jungleF3Config },
+
+    //   {
+    //     x: 16,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.jungleF1Config
+    //   },
+    //   {
+    //     x: 17,
+    //     y: 9,
+    //     config: PlatformGroupFactory.jungleF2Config
+    //   },
+    //   { x: 18, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   {
+    //     x: 19,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.jungleF1Config
+    //   },
+    //   { x: 20, y: 9, config: PlatformGroupFactory.jungleF3Config },
+
+    //   {
+    //     x: 22,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.jungleF1Config
+    //   },
+    //   { x: 23, y: 9, config: PlatformGroupFactory.jungleF3Config },
+
+    //   {
+    //     x: 25,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.jungleF1Config
+    //   },
+    //   { x: 26, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 27, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 28, y: 9, config: PlatformGroupFactory.jungleF2Config },
+    //   { x: 29, y: 9, config: PlatformGroupFactory.jungleF3Config }
+    // ]
   ]
 
   private static icePlatformLayouts: Platform[][] = [
     // Ice Level 1
     [
+      // Left Floor
       { x: 0, y: 9, config: PlatformGroupFactory.iceF2Config },
       { x: 1, y: 9, config: PlatformGroupFactory.iceF2Config },
-      { x: 2, y: 9, config: PlatformGroupFactory.iceF3Config },
-
-      {
-        x: 4,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.iceF1Config
-      },
+      { x: 2, y: 9, config: PlatformGroupFactory.iceF2Config },
+      { x: 3, y: 9, config: PlatformGroupFactory.iceF2Config },
+      { x: 4, y: 9, config: PlatformGroupFactory.iceF2Config },
       { x: 5, y: 9, config: PlatformGroupFactory.iceF2Config },
-      { x: 6, y: 9, config: PlatformGroupFactory.iceF2Config },
-      { x: 7, y: 9, config: PlatformGroupFactory.iceF2Config },
-      { x: 8, y: 9, config: PlatformGroupFactory.iceF3Config },
-
-      {
-        x: 11,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.iceF1Config
-      },
-      { x: 12, y: 9, config: PlatformGroupFactory.iceF2Config },
-      { x: 13, y: 9, config: PlatformGroupFactory.iceF2Config },
-      { x: 14, y: 9, config: PlatformGroupFactory.iceF3Config },
-
-      {
-        x: 16,
-        y: 9,
-        posOffsetX: 48,
-        config: PlatformGroupFactory.iceF1Config
-      },
-      {
-        x: 17,
-        y: 9,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceF3Config
-      },
-
-      {
-        x: 19,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.iceF1Config
-      },
-      { x: 20, y: 9, config: PlatformGroupFactory.iceF3Config },
-
-      {
-        x: 22,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.iceF1Config
-      },
-      { x: 23, y: 9, config: PlatformGroupFactory.iceF3Config },
-
-      {
-        x: 25,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.iceF1Config
-      },
+      { x: 6, y: 9, config: PlatformGroupFactory.iceF3Config },
+      // Middle Platform
+      { x: 7, y: 7, config: PlatformGroupFactory.iceH1Config },
+      { x: 8, y: 7, config: PlatformGroupFactory.iceH1Config },
+      { x: 9, y: 7, config: PlatformGroupFactory.iceH1Config },
+      { x: 10, y: 7, config: PlatformGroupFactory.iceH1Config },
+      { x: 11, y: 7, config: PlatformGroupFactory.iceH1Config },
+      { x: 12, y: 7, config: PlatformGroupFactory.iceH1Config },
+      { x: 13, y: 7, config: PlatformGroupFactory.iceH1Config },
+      { x: 14, y: 7, config: PlatformGroupFactory.iceH1Config },
+      { x: 15, y: 7, config: PlatformGroupFactory.iceH1Config },
+      { x: 16, y: 7, config: PlatformGroupFactory.iceH1Config },
+      { x: 17, y: 7, config: PlatformGroupFactory.iceH1Config },
+      { x: 18, y: 7, config: PlatformGroupFactory.iceH1Config },
+      { x: 19, y: 7, config: PlatformGroupFactory.iceH1Config },
+      { x: 20, y: 7, config: PlatformGroupFactory.iceH1Config },
+      { x: 21, y: 7, config: PlatformGroupFactory.iceH1Config },
+      { x: 22, y: 7, config: PlatformGroupFactory.iceH1Config },
+      { x: 23, y: 7, config: PlatformGroupFactory.iceH1Config },
+      // Middle Floor
+      { x: 14, y: 9, posOffsetX: 32, config: PlatformGroupFactory.iceF1Config },
+      { x: 15, y: 9, config: PlatformGroupFactory.iceF2Config },
+      { x: 16, y: 9, config: PlatformGroupFactory.iceF3Config },
+      // Left Tiny Platform
+      { x: 8, y: 5, config: PlatformGroupFactory.iceH1Config },
+      // Left Platform
+      { x: 3, y: 3, config: PlatformGroupFactory.iceH1Config },
+      { x: 4, y: 3, config: PlatformGroupFactory.iceH1Config },
+      { x: 5, y: 3, config: PlatformGroupFactory.iceH1Config },
+      // Upper Left Platform
+      { x: 8, y: 1, config: PlatformGroupFactory.iceH1Config },
+      { x: 9, y: 1, config: PlatformGroupFactory.iceH1Config },
+      { x: 10, y: 1, config: PlatformGroupFactory.iceH1Config },
+      // Upper Platform
+      { x: 13, y: 2, config: PlatformGroupFactory.iceH1Config },
+      { x: 14, y: 2, config: PlatformGroupFactory.iceH1Config },
+      { x: 15, y: 2, config: PlatformGroupFactory.iceH1Config },
+      // Upper Right Platform
+      { x: 18, y: 1, config: PlatformGroupFactory.iceH1Config },
+      { x: 19, y: 1, config: PlatformGroupFactory.iceH1Config },
+      { x: 20, y: 1, config: PlatformGroupFactory.iceH1Config },
+      // Right Tiny Platform
+      { x: 21, y: 5, config: PlatformGroupFactory.iceH1Config },
+      // Right Platform
+      { x: 23, y: 3, config: PlatformGroupFactory.iceH1Config },
+      { x: 24, y: 3, config: PlatformGroupFactory.iceH1Config },
+      { x: 25, y: 3, config: PlatformGroupFactory.iceH1Config },
+      { x: 26, y: 3, config: PlatformGroupFactory.iceH1Config },
+      // Right Floor
+      { x: 23, y: 9, posOffsetX: 32, config: PlatformGroupFactory.iceF1Config },
+      { x: 24, y: 9, config: PlatformGroupFactory.iceF2Config },
+      { x: 25, y: 9, config: PlatformGroupFactory.iceF2Config },
       { x: 26, y: 9, config: PlatformGroupFactory.iceF2Config },
       { x: 27, y: 9, config: PlatformGroupFactory.iceF2Config },
       { x: 28, y: 9, config: PlatformGroupFactory.iceF2Config },
-      { x: 29, y: 9, config: PlatformGroupFactory.iceF3Config },
+      { x: 29, y: 9, config: PlatformGroupFactory.iceF2Config },
 
-      {
-        x: 0,
-        y: 0,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      {
-        x: 0,
-        y: 1,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      {
-        x: 0,
-        y: 2,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      {
-        x: 0,
-        y: 3,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      {
-        x: 0,
-        y: 4,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      {
-        x: 0,
-        y: 5,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      {
-        x: 0,
-        y: 6,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      {
-        x: 0,
-        y: 7,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      {
-        x: 4,
-        y: 1,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      {
-        x: 4,
-        y: 2,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      {
-        x: 4,
-        y: 3,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      {
-        x: 4,
-        y: 4,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      {
-        x: 4,
-        y: 5,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      {
-        x: 5,
-        y: 8,
-        config: PlatformGroupFactory.iceSpikesConfig
-      },
-      { x: 6, y: 2, config: PlatformGroupFactory.iceH1Config },
-      { x: 6, y: 8, config: PlatformGroupFactory.iceH1Config },
-      { x: 7, y: 2, config: PlatformGroupFactory.iceH1Config },
-      { x: 8, y: 2, config: PlatformGroupFactory.iceH1Config },
-      { x: 8, y: 7, config: PlatformGroupFactory.iceH1Config },
-      { x: 9, y: 5, config: PlatformGroupFactory.iceH1Config },
-      { x: 9, y: 7, config: PlatformGroupFactory.iceH1Config },
-      { x: 10, y: 5, config: PlatformGroupFactory.iceH1Config },
-      { x: 11, y: 5, config: PlatformGroupFactory.iceH1Config },
-      { x: 14, y: 2, config: PlatformGroupFactory.iceH1Config },
-      {
-        x: 14,
-        y: 3,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      {
-        x: 14,
-        y: 4,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      {
-        x: 14,
-        y: 5,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      {
-        x: 14,
-        y: 6,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      { x: 15, y: 2, config: PlatformGroupFactory.iceH1Config },
-      {
-        x: 16,
-        y: 4,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      {
-        x: 16,
-        y: 5,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      {
-        x: 16,
-        y: 6,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      {
-        x: 16,
-        y: 7,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      {
-        x: 16,
-        y: 8,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.iceV1Config
-      },
-      { x: 18, y: 6, config: PlatformGroupFactory.iceH1Config },
-      { x: 19, y: 3, config: PlatformGroupFactory.iceH1Config },
-      { x: 19, y: 6, config: PlatformGroupFactory.iceH1Config },
-      { x: 20, y: 3, config: PlatformGroupFactory.iceH1Config },
-      { x: 20, y: 5, config: PlatformGroupFactory.iceH1Config },
-      { x: 21, y: 3, config: PlatformGroupFactory.iceH1Config },
-      { x: 21, y: 5, config: PlatformGroupFactory.iceH1Config },
-      { x: 22, y: 6, config: PlatformGroupFactory.iceH1Config },
-      { x: 24, y: 2, config: PlatformGroupFactory.iceH1Config },
-      { x: 24, y: 6, config: PlatformGroupFactory.iceH1Config },
-      { x: 25, y: 2, config: PlatformGroupFactory.iceH1Config },
-      { x: 25, y: 6, config: PlatformGroupFactory.iceH1Config },
-      { x: 26, y: 2, config: PlatformGroupFactory.iceH1Config },
-      { x: 26, y: 5, config: PlatformGroupFactory.iceH1Config },
-      { x: 27, y: 2, config: PlatformGroupFactory.iceH1Config },
-      { x: 28, y: 4, config: PlatformGroupFactory.iceH1Config },
-      { x: 29, y: 4, config: PlatformGroupFactory.iceH1Config }
-    ]
+      
+    ],
+    // Ice Level 1
+    // [
+    //   { x: 0, y: 9, config: PlatformGroupFactory.iceF2Config },
+    //   { x: 1, y: 9, config: PlatformGroupFactory.iceF2Config },
+    //   { x: 2, y: 9, config: PlatformGroupFactory.iceF3Config },
+
+    //   {
+    //     x: 4,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.iceF1Config
+    //   },
+    //   { x: 5, y: 9, config: PlatformGroupFactory.iceF2Config },
+    //   { x: 6, y: 9, config: PlatformGroupFactory.iceF2Config },
+    //   { x: 7, y: 9, config: PlatformGroupFactory.iceF2Config },
+    //   { x: 8, y: 9, config: PlatformGroupFactory.iceF3Config },
+
+    //   {
+    //     x: 11,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.iceF1Config
+    //   },
+    //   { x: 12, y: 9, config: PlatformGroupFactory.iceF2Config },
+    //   { x: 13, y: 9, config: PlatformGroupFactory.iceF2Config },
+    //   { x: 14, y: 9, config: PlatformGroupFactory.iceF3Config },
+
+    //   {
+    //     x: 16,
+    //     y: 9,
+    //     posOffsetX: 48,
+    //     config: PlatformGroupFactory.iceF1Config
+    //   },
+    //   {
+    //     x: 17,
+    //     y: 9,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceF3Config
+    //   },
+
+    //   {
+    //     x: 19,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.iceF1Config
+    //   },
+    //   { x: 20, y: 9, config: PlatformGroupFactory.iceF3Config },
+
+    //   {
+    //     x: 22,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.iceF1Config
+    //   },
+    //   { x: 23, y: 9, config: PlatformGroupFactory.iceF3Config },
+
+    //   {
+    //     x: 25,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.iceF1Config
+    //   },
+    //   { x: 26, y: 9, config: PlatformGroupFactory.iceF2Config },
+    //   { x: 27, y: 9, config: PlatformGroupFactory.iceF2Config },
+    //   { x: 28, y: 9, config: PlatformGroupFactory.iceF2Config },
+    //   { x: 29, y: 9, config: PlatformGroupFactory.iceF3Config },
+
+    //   {
+    //     x: 0,
+    //     y: 0,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   {
+    //     x: 0,
+    //     y: 1,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   {
+    //     x: 0,
+    //     y: 2,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   {
+    //     x: 0,
+    //     y: 3,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   {
+    //     x: 0,
+    //     y: 4,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   {
+    //     x: 0,
+    //     y: 5,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   {
+    //     x: 0,
+    //     y: 6,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   {
+    //     x: 0,
+    //     y: 7,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   {
+    //     x: 4,
+    //     y: 1,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   {
+    //     x: 4,
+    //     y: 2,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   {
+    //     x: 4,
+    //     y: 3,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   {
+    //     x: 4,
+    //     y: 4,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   {
+    //     x: 4,
+    //     y: 5,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   {
+    //     x: 5,
+    //     y: 8,
+    //     config: PlatformGroupFactory.iceSpikesConfig
+    //   },
+    //   { x: 6, y: 2, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 6, y: 8, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 7, y: 2, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 8, y: 2, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 8, y: 7, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 9, y: 5, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 9, y: 7, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 10, y: 5, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 11, y: 5, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 14, y: 2, config: PlatformGroupFactory.iceH1Config },
+    //   {
+    //     x: 14,
+    //     y: 3,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   {
+    //     x: 14,
+    //     y: 4,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   {
+    //     x: 14,
+    //     y: 5,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   {
+    //     x: 14,
+    //     y: 6,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   { x: 15, y: 2, config: PlatformGroupFactory.iceH1Config },
+    //   {
+    //     x: 16,
+    //     y: 4,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   {
+    //     x: 16,
+    //     y: 5,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   {
+    //     x: 16,
+    //     y: 6,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   {
+    //     x: 16,
+    //     y: 7,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   {
+    //     x: 16,
+    //     y: 8,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.iceV1Config
+    //   },
+    //   { x: 18, y: 6, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 19, y: 3, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 19, y: 6, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 20, y: 3, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 20, y: 5, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 21, y: 3, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 21, y: 5, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 22, y: 6, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 24, y: 2, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 24, y: 6, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 25, y: 2, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 25, y: 6, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 26, y: 2, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 26, y: 5, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 27, y: 2, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 28, y: 4, config: PlatformGroupFactory.iceH1Config },
+    //   { x: 29, y: 4, config: PlatformGroupFactory.iceH1Config }
+    // ]
   ]
 
   private static volcanoPlatformLayouts: Platform[][] = [
     // Volcano Level 1
     [
-      { x: 0, y: 9, config: PlatformGroupFactory.volcanoF2Config },
-      { x: 1, y: 9, config: PlatformGroupFactory.volcanoF2Config },
-      { x: 2, y: 9, config: PlatformGroupFactory.volcanoF3Config },
+      // Left Boundary
+      { x: 0, y: 9, config: PlatformGroupFactory.volcanoV1Config},
+      { x: 0, y: 8, config: PlatformGroupFactory.volcanoV1Config},
+      { x: 0, y: 7, config: PlatformGroupFactory.volcanoV1Config},
+      { x: 0, y: 6, config: PlatformGroupFactory.volcanoV1Config},
+      { x: 0, y: 5, config: PlatformGroupFactory.volcanoV1Config},
+      { x: 0, y: 4, config: PlatformGroupFactory.volcanoV1Config},
+      { x: 0, y: 3, config: PlatformGroupFactory.volcanoV1Config},
+      { x: 0, y: 2, config: PlatformGroupFactory.volcanoV1Config},
+      { x: 0, y: 1, config: PlatformGroupFactory.volcanoV1Config},
+      // Right Boundary
+      { x: 29, y: 9, posOffsetX: 32, config: PlatformGroupFactory.volcanoV1Config},
+      { x: 29, y: 8, posOffsetX: 32, config: PlatformGroupFactory.volcanoV1Config},
+      { x: 29, y: 7, posOffsetX: 32, config: PlatformGroupFactory.volcanoV1Config},
+      { x: 29, y: 6, posOffsetX: 32, config: PlatformGroupFactory.volcanoV1Config},
+      { x: 29, y: 5, posOffsetX: 32, config: PlatformGroupFactory.volcanoV1Config},
+      { x: 29, y: 4, posOffsetX: 32, config: PlatformGroupFactory.volcanoV1Config},
+      { x: 29, y: 3, posOffsetX: 32, config: PlatformGroupFactory.volcanoV1Config},
+      { x: 29, y: 2, posOffsetX: 32, config: PlatformGroupFactory.volcanoV1Config},
+      { x: 29, y: 1, posOffsetX: 32, config: PlatformGroupFactory.volcanoV1Config},
+      // Start floor
+      { x: 0, y: 9, config: PlatformGroupFactory.volcanoF2Config},
+      { x: 1, y: 9, config: PlatformGroupFactory.volcanoF2Config},
+      { x: 2, y: 9, config: PlatformGroupFactory.volcanoF2Config},
+      { x: 3, y: 9, config: PlatformGroupFactory.volcanoF2Config},
+      { x: 4, y: 9, config: PlatformGroupFactory.volcanoF3Config},
+      // Ceilling 1
+      { x: 0, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 1, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 2, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 3, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 4, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 5, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 6, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 7, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 8, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 9, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 10, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 11, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 12, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 13, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 14, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 15, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 16, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 17, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 18, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 19, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 20, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 21, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 22, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 23, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 24, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 25, y: 6, config: PlatformGroupFactory.volcanoH2Config},
+      // Small bottom floors
+      { x: 9, y: 9, config: PlatformGroupFactory.volcanoF2Config},
+      { x: 10, y: 9, config: PlatformGroupFactory.volcanoF2Config},
+      { x: 17, y: 9, config: PlatformGroupFactory.volcanoF2Config},
+      { x: 18, y: 9, config: PlatformGroupFactory.volcanoF2Config},
+      // Right floor
+      { x: 24, y: 9, posOffsetX: 32, config: PlatformGroupFactory.volcanoF1Config},
+      { x: 25, y: 9, config: PlatformGroupFactory.volcanoF2Config},
+      { x: 26, y: 9, config: PlatformGroupFactory.volcanoF2Config},
+      { x: 27, y: 9, config: PlatformGroupFactory.volcanoF2Config},
+      { x: 28, y: 9, config: PlatformGroupFactory.volcanoF2Config},
+      { x: 29, y: 9, config: PlatformGroupFactory.volcanoF2Config},
+      // Ceilling 2
+      { x: 4, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 5, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 6, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 7, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 8, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 9, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 12, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 13, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 14, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 15, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 18, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 19, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 20, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 21, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 22, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 23, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 24, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 25, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 26, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 27, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 28, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 29, y: 3, config: PlatformGroupFactory.volcanoH2Config},
+      // Tiny room 2 platforms
+      { x: 18, y: 5, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 19, y: 5, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 12, y: 5, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 13, y: 5, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 8, y: 5, config: PlatformGroupFactory.volcanoH2Config},
+      { x: 9, y: 5, config: PlatformGroupFactory.volcanoH2Config},
+      // TODO spikes
 
-      {
-        x: 4,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.volcanoF1Config
-      },
-      { x: 5, y: 9, config: PlatformGroupFactory.volcanoF2Config },
-      { x: 6, y: 9, config: PlatformGroupFactory.volcanoF2Config },
-      { x: 7, y: 9, config: PlatformGroupFactory.volcanoF2Config },
-      { x: 8, y: 9, config: PlatformGroupFactory.volcanoF3Config },
-
-      {
-        x: 11,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.volcanoF1Config
-      },
-      { x: 12, y: 9, config: PlatformGroupFactory.volcanoF2Config },
-      { x: 13, y: 9, config: PlatformGroupFactory.volcanoF2Config },
-      { x: 14, y: 9, config: PlatformGroupFactory.volcanoF3Config },
-
-      {
-        x: 16,
-        y: 9,
-        posOffsetX: 48,
-        config: PlatformGroupFactory.volcanoF1Config
-      },
-      {
-        x: 17,
-        y: 9,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.volcanoF3Config
-      },
-
-      {
-        x: 19,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.volcanoF1Config
-      },
-      { x: 20, y: 9, config: PlatformGroupFactory.volcanoF3Config },
-
-      {
-        x: 22,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.volcanoF1Config
-      },
-      { x: 23, y: 9, config: PlatformGroupFactory.volcanoF3Config },
-
-      {
-        x: 25,
-        y: 9,
-        posOffsetX: 32,
-        config: PlatformGroupFactory.volcanoF1Config
-      },
-      { x: 26, y: 9, config: PlatformGroupFactory.volcanoF2Config },
-      { x: 27, y: 9, config: PlatformGroupFactory.volcanoF2Config },
-      { x: 28, y: 9, config: PlatformGroupFactory.volcanoF2Config },
-      { x: 29, y: 9, config: PlatformGroupFactory.volcanoF3Config },
-
-      {
-        x: 4,
-        y: 1,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.volcanoV1Config
-      },
-      {
-        x: 4,
-        y: 2,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.volcanoV2Config
-      },
-      {
-        x: 4,
-        y: 3,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.volcanoV2Config
-      },
-      {
-        x: 4,
-        y: 4,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.volcanoV2Config
-      },
-      {
-        x: 4,
-        y: 5,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.volcanoV3Config
-      },
-      { x: 5, y: 8, config: PlatformGroupFactory.volcanoH1Config },
-      { x: 6, y: 2, config: PlatformGroupFactory.volcanoH1Config },
-      { x: 6, y: 8, config: PlatformGroupFactory.volcanoH3Config },
-      { x: 7, y: 2, config: PlatformGroupFactory.volcanoH2Config },
-      { x: 8, y: 2, config: PlatformGroupFactory.volcanoH3Config },
-      { x: 8, y: 7, config: PlatformGroupFactory.volcanoH1Config },
-      { x: 9, y: 5, config: PlatformGroupFactory.volcanoH1Config },
-      { x: 9, y: 7, config: PlatformGroupFactory.volcanoH3Config },
-      { x: 10, y: 5, config: PlatformGroupFactory.volcanoH2Config },
-      { x: 11, y: 5, config: PlatformGroupFactory.volcanoH3Config },
-      { x: 14, y: 2, config: PlatformGroupFactory.volcanoH1Config },
-      {
-        x: 14,
-        y: 3,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.volcanoV1Config
-      },
-      {
-        x: 14,
-        y: 4,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.volcanoV2Config
-      },
-      {
-        x: 14,
-        y: 5,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.volcanoV2Config
-      },
-      {
-        x: 14,
-        y: 6,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.volcanoV2Config
-      },
-      { x: 15, y: 2, config: PlatformGroupFactory.volcanoH3Config },
-      {
-        x: 16,
-        y: 4,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.volcanoV1Config
-      },
-      {
-        x: 16,
-        y: 5,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.volcanoV2Config
-      },
-      {
-        x: 16,
-        y: 6,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.volcanoV2Config
-      },
-      {
-        x: 16,
-        y: 7,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.volcanoV2Config
-      },
-      {
-        x: 16,
-        y: 8,
-        posOffsetX: 16,
-        config: PlatformGroupFactory.volcanoV3Config
-      },
-      { x: 18, y: 6, config: PlatformGroupFactory.volcanoH1Config },
-      { x: 19, y: 3, config: PlatformGroupFactory.volcanoH1Config },
-      { x: 19, y: 6, config: PlatformGroupFactory.volcanoH2Config },
-      { x: 20, y: 3, config: PlatformGroupFactory.volcanoH2Config },
-      { x: 20, y: 6, config: PlatformGroupFactory.volcanoH2Config },
-      { x: 21, y: 3, config: PlatformGroupFactory.volcanoH3Config },
-      { x: 21, y: 6, config: PlatformGroupFactory.volcanoH2Config },
-      { x: 22, y: 6, config: PlatformGroupFactory.volcanoH2Config },
-      { x: 24, y: 2, config: PlatformGroupFactory.volcanoH1Config },
-      { x: 24, y: 6, config: PlatformGroupFactory.volcanoH1Config },
-      { x: 25, y: 2, config: PlatformGroupFactory.volcanoH2Config },
-      { x: 25, y: 6, config: PlatformGroupFactory.volcanoH3Config },
-      { x: 26, y: 2, config: PlatformGroupFactory.volcanoH2Config },
-      { x: 26, y: 5, config: PlatformGroupFactory.volcanoH2Config },
-      { x: 27, y: 2, config: PlatformGroupFactory.volcanoH3Config },
-      { x: 28, y: 4, config: PlatformGroupFactory.volcanoH1Config },
-      { x: 28, y: 8, config: PlatformGroupFactory.volcanoH2Config },
-      { x: 29, y: 4, config: PlatformGroupFactory.volcanoH3Config },
-      { x: 29, y: 7, config: PlatformGroupFactory.volcanoH2Config }
     ]
+    // Volcano Level 1
+    // [
+    //   { x: 0, y: 9, config: PlatformGroupFactory.volcanoF2Config },
+    //   { x: 1, y: 9, config: PlatformGroupFactory.volcanoF2Config },
+    //   { x: 2, y: 9, config: PlatformGroupFactory.volcanoF3Config },
+
+    //   {
+    //     x: 4,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.volcanoF1Config
+    //   },
+    //   { x: 5, y: 9, config: PlatformGroupFactory.volcanoF2Config },
+    //   { x: 6, y: 9, config: PlatformGroupFactory.volcanoF2Config },
+    //   { x: 7, y: 9, config: PlatformGroupFactory.volcanoF2Config },
+    //   { x: 8, y: 9, config: PlatformGroupFactory.volcanoF3Config },
+
+    //   {
+    //     x: 11,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.volcanoF1Config
+    //   },
+    //   { x: 12, y: 9, config: PlatformGroupFactory.volcanoF2Config },
+    //   { x: 13, y: 9, config: PlatformGroupFactory.volcanoF2Config },
+    //   { x: 14, y: 9, config: PlatformGroupFactory.volcanoF3Config },
+
+    //   {
+    //     x: 16,
+    //     y: 9,
+    //     posOffsetX: 48,
+    //     config: PlatformGroupFactory.volcanoF1Config
+    //   },
+    //   {
+    //     x: 17,
+    //     y: 9,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.volcanoF3Config
+    //   },
+
+    //   {
+    //     x: 19,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.volcanoF1Config
+    //   },
+    //   { x: 20, y: 9, config: PlatformGroupFactory.volcanoF3Config },
+
+    //   {
+    //     x: 22,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.volcanoF1Config
+    //   },
+    //   { x: 23, y: 9, config: PlatformGroupFactory.volcanoF3Config },
+
+    //   {
+    //     x: 25,
+    //     y: 9,
+    //     posOffsetX: 32,
+    //     config: PlatformGroupFactory.volcanoF1Config
+    //   },
+    //   { x: 26, y: 9, config: PlatformGroupFactory.volcanoF2Config },
+    //   { x: 27, y: 9, config: PlatformGroupFactory.volcanoF2Config },
+    //   { x: 28, y: 9, config: PlatformGroupFactory.volcanoF2Config },
+    //   { x: 29, y: 9, config: PlatformGroupFactory.volcanoF3Config },
+
+    //   {
+    //     x: 4,
+    //     y: 1,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.volcanoV1Config
+    //   },
+    //   {
+    //     x: 4,
+    //     y: 2,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.volcanoV2Config
+    //   },
+    //   {
+    //     x: 4,
+    //     y: 3,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.volcanoV2Config
+    //   },
+    //   {
+    //     x: 4,
+    //     y: 4,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.volcanoV2Config
+    //   },
+    //   {
+    //     x: 4,
+    //     y: 5,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.volcanoV3Config
+    //   },
+    //   { x: 5, y: 8, config: PlatformGroupFactory.volcanoH1Config },
+    //   { x: 6, y: 2, config: PlatformGroupFactory.volcanoH1Config },
+    //   { x: 6, y: 8, config: PlatformGroupFactory.volcanoH3Config },
+    //   { x: 7, y: 2, config: PlatformGroupFactory.volcanoH2Config },
+    //   { x: 8, y: 2, config: PlatformGroupFactory.volcanoH3Config },
+    //   { x: 8, y: 7, config: PlatformGroupFactory.volcanoH1Config },
+    //   { x: 9, y: 5, config: PlatformGroupFactory.volcanoH1Config },
+    //   { x: 9, y: 7, config: PlatformGroupFactory.volcanoH3Config },
+    //   { x: 10, y: 5, config: PlatformGroupFactory.volcanoH2Config },
+    //   { x: 11, y: 5, config: PlatformGroupFactory.volcanoH3Config },
+    //   { x: 14, y: 2, config: PlatformGroupFactory.volcanoH1Config },
+    //   {
+    //     x: 14,
+    //     y: 3,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.volcanoV1Config
+    //   },
+    //   {
+    //     x: 14,
+    //     y: 4,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.volcanoV2Config
+    //   },
+    //   {
+    //     x: 14,
+    //     y: 5,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.volcanoV2Config
+    //   },
+    //   {
+    //     x: 14,
+    //     y: 6,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.volcanoV2Config
+    //   },
+    //   { x: 15, y: 2, config: PlatformGroupFactory.volcanoH3Config },
+    //   {
+    //     x: 16,
+    //     y: 4,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.volcanoV1Config
+    //   },
+    //   {
+    //     x: 16,
+    //     y: 5,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.volcanoV2Config
+    //   },
+    //   {
+    //     x: 16,
+    //     y: 6,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.volcanoV2Config
+    //   },
+    //   {
+    //     x: 16,
+    //     y: 7,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.volcanoV2Config
+    //   },
+    //   {
+    //     x: 16,
+    //     y: 8,
+    //     posOffsetX: 16,
+    //     config: PlatformGroupFactory.volcanoV3Config
+    //   },
+    //   { x: 18, y: 6, config: PlatformGroupFactory.volcanoH1Config },
+    //   { x: 19, y: 3, config: PlatformGroupFactory.volcanoH1Config },
+    //   { x: 19, y: 6, config: PlatformGroupFactory.volcanoH2Config },
+    //   { x: 20, y: 3, config: PlatformGroupFactory.volcanoH2Config },
+    //   { x: 20, y: 6, config: PlatformGroupFactory.volcanoH2Config },
+    //   { x: 21, y: 3, config: PlatformGroupFactory.volcanoH3Config },
+    //   { x: 21, y: 6, config: PlatformGroupFactory.volcanoH2Config },
+    //   { x: 22, y: 6, config: PlatformGroupFactory.volcanoH2Config },
+    //   { x: 24, y: 2, config: PlatformGroupFactory.volcanoH1Config },
+    //   { x: 24, y: 6, config: PlatformGroupFactory.volcanoH1Config },
+    //   { x: 25, y: 2, config: PlatformGroupFactory.volcanoH2Config },
+    //   { x: 25, y: 6, config: PlatformGroupFactory.volcanoH3Config },
+    //   { x: 26, y: 2, config: PlatformGroupFactory.volcanoH2Config },
+    //   { x: 26, y: 5, config: PlatformGroupFactory.volcanoH2Config },
+    //   { x: 27, y: 2, config: PlatformGroupFactory.volcanoH3Config },
+    //   { x: 28, y: 4, config: PlatformGroupFactory.volcanoH1Config },
+    //   { x: 28, y: 8, config: PlatformGroupFactory.volcanoH2Config },
+    //   { x: 29, y: 4, config: PlatformGroupFactory.volcanoH3Config },
+    //   { x: 29, y: 7, config: PlatformGroupFactory.volcanoH2Config }
+    // ]
   ]
 
   public static createJunglePlatformGroups(
