@@ -54,6 +54,10 @@ export class TheLostFrogGame extends Phaser.Game {
   public displayScore(): string {
     return `Highscore: ${this.highScore}`
   }
+
+  public displayFinalScore(): string {
+    return `Final Score: ${this.highScore} !`
+  }
 }
 
 new TheLostFrogGame(config)

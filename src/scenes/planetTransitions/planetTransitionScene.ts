@@ -30,24 +30,28 @@ export default class PlanetTransitionScene extends Phaser.Scene {
     this.soundHelper = new SoundHelper(this.sound)
   }
   public create(): void {
+    this.add.image(0, 0, 'screen_transition').setOrigin(0)
+
     const width = this.game.scale.width
     const height = this.game.scale.height
 
     this.add
-      .text(width / 2, height / 2 - 200, this.sceneTitle, {
+      .text(350, 50, this.sceneTitle, {
         font: '45px PlayMeGames',
         fill: '#ffffff'
       })
       .setOrigin(0.5, 0.5)
+      .setStroke('black', 2)
     this.add
-      .text(width / 2, height / 2, this.sceneDescription, {
+      .text(350, 165, this.sceneDescription, {
         font: '16px PlayMeGames',
         fill: '#ffffff'
       })
       .setOrigin(0.5, 0.5)
+      .setStroke('black', 2)
 
     this.add
-      .text(width / 2, height / 2 + 125, '[Land on the planet!]', {
+      .text(width / 2, height - 75, '[ Land on the planet! ]', {
         font: '35px PlayMeGames',
         fill: '#ffffff'
       })
@@ -60,6 +64,7 @@ export default class PlanetTransitionScene extends Phaser.Scene {
         this
       )
       .setOrigin(0.5, 0.5)
+      .setStroke('black', 4)
 
     this.input.keyboard.on(
       'keydown',

@@ -67,7 +67,7 @@ Special thanks for our testers :
       .setOrigin(0.5, 0.5)
 
     this.add
-      .text(100, 50, '[Go back]', {
+      .text(100, 50, '[ Go back ]', {
         font: '15px PlayMeGames',
         fill: '#ffffff'
       })

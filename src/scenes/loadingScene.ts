@@ -171,6 +171,7 @@ export default class LoadingScene extends Phaser.Scene {
       'background_volcano_5',
       volcanoAssets.images.background_volcano_5
     )
+    this.load.image('screen_transition', genericAssets.images.screen_transition)
   }
 
   private loadForegrounds(): void {
@@ -258,6 +259,8 @@ export default class LoadingScene extends Phaser.Scene {
   }
 
   private loadCharacters(): void {
+    this.load.image('frogault', genericAssets.images.frogault)
+    this.load.image('froguette', genericAssets.images.froguette)
     this.load.spritesheet('tongue_up', genericAssets.images.tongue_up, {
       frameWidth: 32,
       frameHeight: 64
@@ -453,6 +456,7 @@ export default class LoadingScene extends Phaser.Scene {
   private loadSpikes(): void {
     this.load.image('spikes_jungle', jungleAssets.images.spikes_jungle)
     this.load.image('spikes_ice', iceAssets.images.spikes_ice)
+    this.load.image('spikes_volcano', volcanoAssets.images.spikes_volcano)
   }
 
   private loadOther(): void {

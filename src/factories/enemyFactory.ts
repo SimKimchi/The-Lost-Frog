@@ -32,7 +32,7 @@ export default abstract class EnemyFactory {
     spawnX: number,
     spawnY: number
   ): Enemy {
-    const lizard = new Enemy(3, 1, 56, 28, 75, 100, 'lizard', scene)
+    const lizard = new Enemy(2, 1, 56, 28, 75, 100, 'lizard', scene)
 
     const config: CharacterConfig = CharacterConfigProvider.getLizardConfig(
       spawnX,
@@ -70,7 +70,7 @@ export default abstract class EnemyFactory {
     spawnX: number,
     spawnY: number
   ): Enemy {
-    const fox = new Enemy(6, 1, 96, 96, 150, 300, 'fox', scene)
+    const fox = new Enemy(6, 2, 96, 96, 150, 300, 'fox', scene)
 
     const config: CharacterConfig = CharacterConfigProvider.getFoxConfig(
       spawnX,
