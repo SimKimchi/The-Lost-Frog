@@ -258,4 +258,13 @@ export default abstract class PlatformConfigProvider {
       clingSides: true
     }
   }
+
+  public static getVolcanoSpikesConfig(): PlatformConfig {
+    return {
+      width: 64,
+      height: 32,
+      spriteKey: 'spikes_volcano',
+      damageUp: true
+    }
+  }
 }

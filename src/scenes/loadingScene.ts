@@ -454,6 +454,7 @@ export default class LoadingScene extends Phaser.Scene {
   private loadSpikes(): void {
     this.load.image('spikes_jungle', jungleAssets.images.spikes_jungle)
     this.load.image('spikes_ice', iceAssets.images.spikes_ice)
+    this.load.image('spikes_volcano', volcanoAssets.images.spikes_volcano)
   }
 
   private loadOther(): void {
