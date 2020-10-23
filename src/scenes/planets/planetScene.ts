@@ -91,7 +91,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.collisionHelper?.setWorldCollisionListener(this.currentEnemies)
 
     this.startCutscene()
-    this.setDebug(true)
+    this.setDebug(false)
   }
 
   private finishSceneCreation(): void {

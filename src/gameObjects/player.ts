@@ -25,7 +25,7 @@ export default class Player extends Character {
   public lastJumpCoordinates: { x: number; y: number }
 
   private constructor(scene: PlanetScene, die: () => void) {
-    super(999, 1, 64, 64, 250, 'frog', scene)
+    super(10, 1, 64, 64, 250, 'frog', scene)
     this.tongueSprites = []
     this.currentTongueSprite = null
     this.wallClingDirection = null
