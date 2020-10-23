@@ -5,7 +5,7 @@ import PlanetScene from '../scenes/planets/planetScene'
 
 export default class Player extends Character {
   private static readonly ATTACK_DURATION = 200
-  private static readonly ATTACK_COOLDOWN = 400
+  private static readonly ATTACK_COOLDOWN = 450
   private static readonly HURT_DURATION = 200
 
   protected readonly invulnerableTime = 1000
