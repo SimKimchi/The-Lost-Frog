@@ -39,6 +39,7 @@ export default class VolcanoPlanetScene extends PlanetScene {
       .setOrigin(0)
       .setScrollFactor(1.25, 1)
       .setDepth(2)
+      .setDisplaySize(2360, 640)
       .setAlpha(0.75)
   }
 
