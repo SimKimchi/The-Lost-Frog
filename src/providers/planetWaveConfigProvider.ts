@@ -16,12 +16,11 @@ export default abstract class PlanetWaveConfigProvider {
       ],
       // Jungle Level 2
       [
-        { type: EnemyType.Lizard, spawnTileX: 2, spawnTileY: 8 },
         { type: EnemyType.Lizard, spawnTileX: 6, spawnTileY: 8 },
         { type: EnemyType.Lizard, spawnTileX: 11, spawnTileY: 2 },
         { type: EnemyType.Lizard, spawnTileX: 27, spawnTileY: 2 },
         { type: EnemyType.Lizard, spawnTileX: 27, spawnTileY: 8 },
-        { type: EnemyType.Owl, spawnTileX: 23, spawnTileY: 6 },
+        { type: EnemyType.Owl, spawnTileX: 23, spawnTileY: 6 }
       ],
       // Jungle Level 3
       [
@@ -33,8 +32,8 @@ export default abstract class PlanetWaveConfigProvider {
         { type: EnemyType.Lizard, spawnTileX: 26, spawnTileY: 8 },
         { type: EnemyType.Owl, spawnTileX: 20, spawnTileY: 0 },
         { type: EnemyType.Owl, spawnTileX: 9, spawnTileY: 0 },
-        { type: EnemyType.Fox, spawnTileX: 2, spawnTileY: 1 },
-      ],
+        { type: EnemyType.Fox, spawnTileX: 2, spawnTileY: 1 }
+      ]
     ]
   }
 
@@ -51,7 +50,7 @@ export default abstract class PlanetWaveConfigProvider {
         { type: EnemyType.Lizard, spawnTileX: 24, spawnTileY: 1 },
         { type: EnemyType.Lizard, spawnTileX: 26, spawnTileY: 8 },
         { type: EnemyType.Fox, spawnTileX: 15, spawnTileY: 8 },
-        { type: EnemyType.Lizard, spawnTileX: 15, spawnTileY: 6 },
+        { type: EnemyType.Lizard, spawnTileX: 15, spawnTileY: 6 }
       ],
       // Ice Level 2
       [
@@ -70,7 +69,7 @@ export default abstract class PlanetWaveConfigProvider {
         { type: EnemyType.Owl, spawnTileX: 18, spawnTileY: 0 },
         { type: EnemyType.Owl, spawnTileX: 22, spawnTileY: 0 },
         { type: EnemyType.Owl, spawnTileX: 9, spawnTileY: 0 },
-        { type: EnemyType.Owl, spawnTileX: 12, spawnTileY: 0 },
+        { type: EnemyType.Owl, spawnTileX: 12, spawnTileY: 0 }
       ]
     ]
   }
@@ -97,7 +96,7 @@ export default abstract class PlanetWaveConfigProvider {
         { type: EnemyType.Owl, spawnTileX: 7, spawnTileY: 4 },
         { type: EnemyType.Fox, spawnTileX: 8, spawnTileY: 2 },
         { type: EnemyType.Fox, spawnTileX: 16, spawnTileY: 2 },
-        { type: EnemyType.Fox, spawnTileX: 24, spawnTileY: 2 },
+        { type: EnemyType.Fox, spawnTileX: 24, spawnTileY: 2 }
       ],
       // Volcano Level 3
       [
@@ -110,7 +109,7 @@ export default abstract class PlanetWaveConfigProvider {
         { type: EnemyType.Owl, spawnTileX: 23, spawnTileY: 2 },
         { type: EnemyType.Owl, spawnTileX: 18, spawnTileY: 7 },
         { type: EnemyType.Owl, spawnTileX: 24, spawnTileY: 7 },
-        { type: EnemyType.Owl, spawnTileX: 27, spawnTileY: 5 },
+        { type: EnemyType.Owl, spawnTileX: 27, spawnTileY: 5 }
       ]
     ]
   }
