@@ -66,6 +66,7 @@ export type HotKeys = {
   RIGHT: Phaser.Input.Keyboard.Key
   ENTER: Phaser.Input.Keyboard.Key
   BACKSPACE: Phaser.Input.Keyboard.Key
+  SHIFT: Phaser.Input.Keyboard.Key
 }
 
 export function getRandomInt(max: number): number {
@@ -81,6 +82,10 @@ export enum EnemyType {
   Fox
 }
 
+export enum ItemType {
+  Heal
+}
+
 export type EnemySpawn = {
   type: EnemyType
   spawnTileX: number
@@ -92,4 +97,10 @@ export type PlayerSpawn = {
   spawnTileY: number
   spawnOffsetX?: number
   spawnOffsetY?: number
+}
+
+export type ItemSpawn = {
+  type: ItemType
+  spawnTileX: number
+  spawnTileY: number
 }

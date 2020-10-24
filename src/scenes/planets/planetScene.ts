@@ -9,7 +9,13 @@ import InputHelper from '../../helpers/inputHelper'
 import SoundHelper from '../../helpers/soundHelper'
 import CharacterConfigProvider from '../../providers/characterConfigProvider'
 import CharacterSpawnConfigProvider from '../../providers/characterSpawnConfigProvider'
-import { PlayerSpawn, EnemySpawn, gridHeight, gridWidth } from '../../util'
+import {
+  PlayerSpawn,
+  EnemySpawn,
+  gridHeight,
+  gridWidth,
+  ItemSpawn
+} from '../../util'
 
 export default abstract class PlanetScene extends Phaser.Scene {
   public velocityXModifier: number
@@ -17,6 +23,8 @@ export default abstract class PlanetScene extends Phaser.Scene {
   public planetFrictionModifier: number
   public currentEnemies: Enemy[]
   public abstract enemyWaves: EnemySpawn[][]
+  public currentItems: Phaser.Physics.Arcade.Sprite[]
+  public abstract itemWaves: ItemSpawn[][]
   public currentEnemyWave: number
   public soundHelper: SoundHelper | null
   public cutSceneGoingOn: boolean
@@ -49,6 +57,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.displayWave = null
     this.displayEnemies = null
     this.currentEnemies = []
+    this.currentItems = []
     this.currentEnemyWave = 0
     this.inputHelper = null
     this.soundHelper = null
@@ -65,16 +74,21 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.currentPlatformLayout = null
     this.displayScore = null
     this.displayHp = null
+    this.displayWave = null
+    this.displayEnemies = null
     this.currentEnemies = []
+    this.currentItems = []
     this.currentEnemyWave = 0
     this.collisionHelper = new CollisionHelper(this.physics, this.player)
     this.inputHelper = new InputHelper(
       this.input.keyboard,
       this.collisionHelper
     )
+    this.collisionHelper.setInputHelper(this.inputHelper)
     this.soundHelper = new SoundHelper(this.sound)
     this.deathHelper = new DeathHelper(this)
     this.cutSceneGoingOn = false
+    this.initializeItemAnim()
   }
 
   public create(): void {
@@ -89,6 +103,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
       this.currentEnemies
     )
     this.collisionHelper?.setWorldCollisionListener(this.currentEnemies)
+    this.spawnItems(this.itemWaves[this.currentEnemyWave])
 
     this.startCutscene()
     this.setDebug(false)
@@ -98,6 +113,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.initializePlayer()
 
     this.collisionHelper?.setPlayerCollisionsWithEnemies(this.currentEnemies)
+    this.collisionHelper?.setPlayerCollisionsWithItems(this.currentItems)
     this.collisionHelper?.setPlayerAttackCollisions(this.currentEnemies)
 
     this.collisionHelper?.setPlayerPlatformCollisions(
@@ -264,6 +280,22 @@ export default abstract class PlanetScene extends Phaser.Scene {
     }
   }
 
+  private spawnItems(itemSpawns: ItemSpawn[]): void {
+    this.currentItems = []
+
+    for (const itemSpawn of itemSpawns) {
+      const itemSprite = this.physics.add.staticSprite(
+        itemSpawn.spawnTileX * 64 + 32,
+        itemSpawn.spawnTileY * 64 + 32,
+        'item_heal'
+      )
+      itemSprite.anims.play('item_heal', true)
+      itemSprite.setDisplaySize(64, 64)
+
+      this.currentItems.push(itemSprite)
+    }
+  }
+
   private addMuteButtons(): void {
     const soundButton = this.add
       .sprite(790, 120, 'button_sound')
@@ -280,6 +312,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
       )
       .setSize(32, 32)
       .setDisplaySize(32, 32)
+      .setDepth(2)
 
     const mutedButton = this.add
       .sprite(790, 120, 'button_mute')
@@ -297,6 +330,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
       .setSize(32, 32)
       .setDisplaySize(32, 32)
       .setVisible(false)
+      .setDepth(2)
   }
 
   public completeWave(): void {
@@ -308,6 +342,8 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   private startNextWave(): void {
+    if (!this.currentEnemies.every((x) => x.getContainer().body === undefined))
+      return
     this.cutSceneGoingOn = true
     this.currentEnemyWave++
 
@@ -316,11 +352,13 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.spawnPlatforms()
     this.collisionHelper?.removeWorldCollisionsListener()
     this.spawnEnemies(this.enemyWaves[this.currentEnemyWave])
+    this.spawnItems(this.itemWaves[this.currentEnemyWave])
     this.repositionPlayer()
 
     this.collisionHelper?.setNextWaveCollisions(
       this.currentPlatformLayout,
-      this.currentEnemies
+      this.currentEnemies,
+      this.currentItems
     )
 
     this.collisionHelper?.setWorldCollisionListener(this.currentEnemies)
@@ -383,5 +421,17 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.collisionHelper?.removeEnemyVsPlatformCollider()
 
     this.currentPlatformLayout?.destroy(true)
+  }
+
+  private initializeItemAnim(): void {
+    this.anims.create({
+      key: 'item_heal',
+      frames: this.anims.generateFrameNumbers('item_heal', {
+        start: 0,
+        end: 16
+      }),
+      frameRate: 16,
+      repeat: -1
+    })
   }
 }

@@ -1,5 +1,4 @@
 import { TheLostFrogGame } from '..'
-import Enemy from '../gameObjects/enemy'
 import PlanetScene from '../scenes/planets/planetScene'
 
 export default class DeathHelper {
@@ -8,10 +7,6 @@ export default class DeathHelper {
     this.scene = scene
 
     this.scene.events.on('enemyKilled', this.onEnemyDeath, this)
-  }
-
-  public setEnemies(enemies: Enemy[]): void {
-    this.scene.currentEnemies = enemies
   }
 
   private onEnemyDeath(): void {

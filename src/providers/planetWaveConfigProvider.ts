@@ -41,7 +41,7 @@ export default abstract class PlanetWaveConfigProvider {
     return [
       // Ice Level 1
       [
-        { type: EnemyType.Owl, spawnTileX: 3, spawnTileY: 0 },
+        { type: EnemyType.Owl, spawnTileX: 3, spawnTileY: 2 },
         { type: EnemyType.Lizard, spawnTileX: 11, spawnTileY: 6 },
         { type: EnemyType.Lizard, spawnTileX: 20, spawnTileY: 6 },
         { type: EnemyType.Lizard, spawnTileX: 9, spawnTileY: 0 },
@@ -65,11 +65,11 @@ export default abstract class PlanetWaveConfigProvider {
       [
         { type: EnemyType.Owl, spawnTileX: 11, spawnTileY: 8 },
         { type: EnemyType.Owl, spawnTileX: 19, spawnTileY: 8 },
-        { type: EnemyType.Owl, spawnTileX: 15, spawnTileY: 3 },
-        { type: EnemyType.Owl, spawnTileX: 18, spawnTileY: 0 },
-        { type: EnemyType.Owl, spawnTileX: 22, spawnTileY: 0 },
-        { type: EnemyType.Owl, spawnTileX: 9, spawnTileY: 0 },
-        { type: EnemyType.Owl, spawnTileX: 12, spawnTileY: 0 }
+        { type: EnemyType.Owl, spawnTileX: 16, spawnTileY: 4 },
+        { type: EnemyType.Owl, spawnTileX: 18, spawnTileY: 1 },
+        { type: EnemyType.Owl, spawnTileX: 22, spawnTileY: 1 },
+        { type: EnemyType.Owl, spawnTileX: 9, spawnTileY: 1 },
+        { type: EnemyType.Owl, spawnTileX: 12, spawnTileY: 1 }
       ]
     ]
   }

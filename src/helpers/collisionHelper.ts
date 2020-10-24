@@ -3,6 +3,7 @@ import Enemy from '../gameObjects/enemy'
 import FlyingEnemy from '../gameObjects/flyingEnemy'
 import Player from '../gameObjects/player'
 import { Direction } from '../util'
+import InputHelper from './inputHelper'
 
 export interface IEdge {
   isAtEdge: boolean
@@ -14,6 +15,7 @@ export default class CollisionHelper {
   private player: Player
   private playerVsPlatformCollider: Phaser.Physics.Arcade.Collider | null
   private enemyVsPlatformCollider: Phaser.Physics.Arcade.Collider | null
+  private inputHelper: InputHelper | null = null
 
   constructor(physics: Phaser.Physics.Arcade.ArcadePhysics, player: Player) {
     this.physics = physics
@@ -22,13 +24,19 @@ export default class CollisionHelper {
     this.enemyVsPlatformCollider = null
   }
 
+  public setInputHelper(inputHelper: InputHelper): void {
+    this.inputHelper = inputHelper
+  }
+
   public setNextWaveCollisions(
     platformLayout: Phaser.Physics.Arcade.StaticGroup | null,
-    enemies: Enemy[]
+    enemies: Enemy[],
+    items: Phaser.Physics.Arcade.Sprite[]
   ): void {
     this.setPlayerPlatformCollisions(platformLayout)
     this.setEnemyPlatformCollisions(platformLayout, enemies)
     this.setPlayerCollisionsWithEnemies(enemies)
+    this.setPlayerCollisionsWithItems(items)
     this.setPlayerAttackCollisions(enemies)
   }
 
@@ -61,6 +69,7 @@ export default class CollisionHelper {
       platformLayout,
       (player, platform) => {
         this.player.clingToWall(platform as Phaser.GameObjects.Sprite)
+
         if ((<Phaser.Physics.Arcade.Body>player.body).touching.down) {
           this.player.canDoubleJump = true
 
@@ -198,6 +207,19 @@ export default class CollisionHelper {
     )
   }
 
+  public setPlayerCollisionsWithItems(
+    items: Phaser.Physics.Arcade.Sprite[]
+  ): void {
+    this.physics.add.overlap(
+      this.player.getContainer(),
+      items,
+      (_player, item) => {
+        item.destroy()
+        this.player.heal()
+      }
+    )
+  }
+
   public setPlayerAttackCollisions(enemies: Enemy[]): void {
     const attackSprites = this.player.getAttackSprites()
     for (const key in enemies) {
@@ -324,18 +346,26 @@ export default class CollisionHelper {
       if (direction === Direction.Left) {
         if (
           childSprite.x + childSprite.width / 2 ===
-          platformSprite.x - platformSprite.width / 2
-          || (childSprite.x + childSprite.getData('offsetX') + childSprite.width / 2 ===
-          platformSprite.x - platformSprite.getData('offsetX') - platformSprite.width / 2)
+            platformSprite.x - platformSprite.width / 2 ||
+          childSprite.x +
+            childSprite.getData('offsetX') +
+            childSprite.width / 2 ===
+            platformSprite.x -
+              platformSprite.getData('offsetX') -
+              platformSprite.width / 2
         ) {
           return child
         }
       } else if (direction === Direction.Right) {
         if (
           childSprite.x - childSprite.width / 2 ===
-          platformSprite.x + platformSprite.width / 2
-          || (childSprite.x + childSprite.getData('offsetX') - childSprite.width / 2 ===
-          platformSprite.x - platformSprite.getData('offsetX') + platformSprite.width / 2)
+            platformSprite.x + platformSprite.width / 2 ||
+          childSprite.x +
+            childSprite.getData('offsetX') -
+            childSprite.width / 2 ===
+            platformSprite.x -
+              platformSprite.getData('offsetX') +
+              platformSprite.width / 2
         ) {
           return child
         }

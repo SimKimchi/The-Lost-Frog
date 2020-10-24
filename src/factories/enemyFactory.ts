@@ -47,7 +47,7 @@ export default abstract class EnemyFactory {
     spawnX: number,
     spawnY: number
   ): FlyingEnemy {
-    const owl = new FlyingEnemy(6, 1, 96, 96, 95, 250, 'owl', scene)
+    const owl = new FlyingEnemy(6, 1, 96, 96, 105, 250, 'owl', scene)
 
     const owlSpawnOffsetX = 16
     const owlSpawnOffsetY = 16

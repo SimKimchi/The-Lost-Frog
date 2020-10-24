@@ -452,6 +452,7 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.audio('wall_cling', genericAssets.sounds.wall_cling)
     this.load.audio('wall_jump', genericAssets.sounds.wall_jump)
     this.load.audio('frog_attack', genericAssets.sounds.frog_attack)
+    this.load.audio('heal_sound', genericAssets.sounds.heal_sound)
   }
 
   private loadSpikes(): void {
@@ -469,5 +470,9 @@ export default class LoadingScene extends Phaser.Scene {
         frameHeight: 640
       }
     )
+    this.load.spritesheet('item_heal', genericAssets.images.item_heal, {
+      frameWidth: 64,
+      frameHeight: 64
+    })
   }
 }

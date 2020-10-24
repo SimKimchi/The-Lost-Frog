@@ -3,7 +3,7 @@ import { Direction, HotKeys } from '../util'
 import CollisionHelper, { IEdge } from './collisionHelper'
 
 export default class InputHelper {
-  private hotKeys: HotKeys
+  public hotKeys: HotKeys
   private collisionHelper: CollisionHelper
 
   constructor(
@@ -11,7 +11,7 @@ export default class InputHelper {
     collisionHelper: CollisionHelper
   ) {
     this.hotKeys = keyboard.addKeys(
-      'SPACE,A,S,D,E,W,UP,DOWN,LEFT,RIGHT,ENTER'
+      'SPACE,A,S,D,E,W,UP,DOWN,LEFT,RIGHT,ENTER,SHIFT'
     ) as HotKeys
     this.collisionHelper = collisionHelper
   }
@@ -88,7 +88,6 @@ export default class InputHelper {
     velocityYModifier: number,
     platformGroup: Phaser.Physics.Arcade.StaticGroup
   ): void {
-    // TODO Voir si ça vaut la peine de remettre du drag avec le cling (ça buggait dans la planète de glace, draguait trop loin et on pouvait climb à l'infini)
     let checkEdge: IEdge = { isAtEdge: false, adjacentPlatform: undefined }
     if (player.wallClingDirection === Direction.Up) {
       if (this.hotKeys.S.isDown) {

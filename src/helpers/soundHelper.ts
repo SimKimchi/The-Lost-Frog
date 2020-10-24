@@ -18,6 +18,7 @@ export default class SoundHelper {
     this.soundManager.add('wall_jump', { volume: 0.1 })
     this.soundManager.add('frog_attack', { volume: 0.1 })
     this.soundManager.add('shuttle_sound', { volume: 0.075 })
+    this.soundManager.add('heal_sound', { volume: 0.1 })
   }
 
   public setMusic(theme: string, volume: number, loop = true): void {
@@ -93,5 +94,9 @@ export default class SoundHelper {
 
   public playShuttleSound(): void {
     this.soundManager.get('shuttle_sound').play()
+  }
+
+  public playHealSound(): void {
+    this.soundManager.get('heal_sound').play()
   }
 }
