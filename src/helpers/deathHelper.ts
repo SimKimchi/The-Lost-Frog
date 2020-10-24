@@ -1,5 +1,4 @@
 import { TheLostFrogGame } from '..'
-import Enemy from '../gameObjects/enemy'
 import PlanetScene from '../scenes/planets/planetScene'
 
 export default class DeathHelper {

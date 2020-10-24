@@ -74,7 +74,10 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.currentPlatformLayout = null
     this.displayScore = null
     this.displayHp = null
+    this.displayWave = null
+    this.displayEnemies = null
     this.currentEnemies = []
+    this.currentItems = []
     this.currentEnemyWave = 0
     this.collisionHelper = new CollisionHelper(this.physics, this.player)
     this.inputHelper = new InputHelper(
@@ -339,6 +342,8 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   private startNextWave(): void {
+    if (!this.currentEnemies.every((x) => x.getContainer().body === undefined))
+      return
     this.cutSceneGoingOn = true
     this.currentEnemyWave++
 
