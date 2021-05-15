@@ -44,8 +44,6 @@ export default class Player extends Character {
   public init(planetGravity: number, config: CharacterConfig): void {
     super.init(planetGravity, config)
 
-    if (!this.container) return
-
     const tongueSpriteUp = this.scene.physics.add.sprite(-2, -48, 'tongue_up')
     tongueSpriteUp.setData('key', 'tongue_up')
     tongueSpriteUp.setData('direction', Direction.Up)
@@ -103,10 +101,21 @@ export default class Player extends Character {
         ],
         frameRate: 60
       })
-      this.container?.add(tongueSprite)
+      this._container?.add(tongueSprite)
     })
 
     this.updateAnimation()
+    this.hide()
+  }
+
+  public hide(): void {
+    this.container.setVisible(false)
+    this.body.setAllowGravity(false)
+  }
+
+  public show(): void {
+    this.container.setVisible(true)
+    this.body.setAllowGravity(true)
   }
 
   public getAttackSprites(): Phaser.Physics.Arcade.Sprite[] {
@@ -114,20 +123,20 @@ export default class Player extends Character {
   }
 
   public jump(multiplier: number): void {
-    if (!this.container) return
+    if (!this._container) return
 
     if (this.isGrounded()) {
       this.canDoubleJump = true
-      ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(
+      this.body.setVelocityY(
         this.jumpStrength * multiplier
       )
       this.scene.soundHelper?.playPlayerJumpSound()
 
-      this.lastJumpCoordinates = { x: this.container.x, y: this.container.y }
+      this.lastJumpCoordinates = { x: this._container.x, y: this._container.y }
       this.updateAnimation()
     } else if (this.canDoubleJump) {
       this.canDoubleJump = false
-      ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(
+      this.body.setVelocityY(
         this.jumpStrength * multiplier
       )
       this.scene.soundHelper?.playPlayerDoubleJumpSound()
@@ -137,17 +146,17 @@ export default class Player extends Character {
   }
 
   public climb(multiplier: number): void {
-    if (!this.container) return
+    if (!this._container) return
 
-    if ((<Phaser.Physics.Arcade.Body>this.container.body).touching.down) {
+    if (this.body.touching.down) {
       this.stopWallCling()
 
       return
     }
 
     const velocityY = this.moveSpeed * multiplier
-    ;(<Phaser.Physics.Arcade.Body>this.container.body).setDragY(0)
-    ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(velocityY)
+    this.body.setDragY(0)
+    this.body.setVelocityY(velocityY)
 
     if (velocityY > 0) {
       this.direction = Direction.Down
@@ -161,15 +170,15 @@ export default class Player extends Character {
   }
 
   public stopClimb(planetFrictionModifier: number): void {
-    if (!this.container) return
+    if (!this._container) return
 
-    if ((<Phaser.Physics.Arcade.Body>this.container.body).touching.down) {
+    if (this.body.touching.down) {
       this.stopWallCling()
 
       return
     }
 
-    ;(<Phaser.Physics.Arcade.Body>this.container.body).setDragY(
+    this.body.setDragY(
       planetFrictionModifier
     )
 
@@ -179,10 +188,10 @@ export default class Player extends Character {
   }
 
   public bounce(multiplier: number): void {
-    if (!this.container) return
+    if (!this._container) return
 
     this.canDoubleJump = true
-    ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(
+    this.body.setVelocityY(
       -this.jumpStrength * multiplier * 0.75
     )
 
@@ -190,7 +199,7 @@ export default class Player extends Character {
   }
 
   public updateAnimation(): void {
-    if (!this.container || !this.sprite) return
+    if (!this._container || !this.sprite) return
 
     // * Hurt or Dead
     if (this.isHurting || this.playerIsDead) {
@@ -241,10 +250,10 @@ export default class Player extends Character {
     // * Jump
     else if (
       Math.floor(
-        (<Phaser.Physics.Arcade.Body>this.container.body).velocity.y
+        this.body.velocity.y
       ) !== 0
     ) {
-      if ((<Phaser.Physics.Arcade.Body>this.container.body).velocity.y > 0) {
+      if (this.body.velocity.y > 0) {
         if (this.isFacingLeft()) {
           this.sprite.anims.play(`${this.assetPrefix}_jump_descend_left`, true)
         } else {
@@ -260,9 +269,9 @@ export default class Player extends Character {
     }
     // * Run
     else if (
-      Math.floor((<Phaser.Physics.Arcade.Body>this.container.body).velocity.x) >
+      Math.floor(this.body.velocity.x) >
         50 ||
-      Math.floor((<Phaser.Physics.Arcade.Body>this.container.body).velocity.x) <
+      Math.floor(this.body.velocity.x) <
         -50
     ) {
       if (this.isFacingLeft()) {
@@ -316,23 +325,23 @@ export default class Player extends Character {
   public clingToWall(platform: Phaser.GameObjects.Sprite): void {
     if (
       this.wallClingDirection !== null ||
-      !this.container ||
-      (this.container.body as Phaser.Physics.Arcade.Body).wasTouching.down
+      !this._container ||
+      this.body.wasTouching.down
     )
       return
 
     if (
-      (this.container.body as Phaser.Physics.Arcade.Body).touching.left &&
+      this.body.touching.left &&
       platform.getData('clingSides')
     ) {
       this.wallClingDirection = Direction.Left
     } else if (
-      (this.container.body as Phaser.Physics.Arcade.Body).touching.right &&
+      this.body.touching.right &&
       platform.getData('clingSides')
     ) {
       this.wallClingDirection = Direction.Right
     } else if (
-      (this.container.body as Phaser.Physics.Arcade.Body).touching.up &&
+      this.body.touching.up &&
       platform.getData('clingUnder')
     ) {
       this.wallClingDirection = Direction.Up
@@ -343,16 +352,16 @@ export default class Player extends Character {
 
     if (this.wallClingDirection === null) return
     this.clingPlatform = platform
-    ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocity(0, 0)
-    ;(<Phaser.Physics.Arcade.Body>this.container.body).setAllowGravity(false)
+    this.body.setVelocity(0, 0)
+    this.body.setAllowGravity(false)
 
     this.scene.soundHelper?.playPlayerWallClingSound()
     this.updateAnimation()
   }
 
   public wallJump(multiplier: number): void {
-    if (!this.container) return
-    ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(
+    if (!this._container) return
+    this.body.setVelocityY(
       this.jumpStrength * multiplier
     )
 
@@ -362,7 +371,7 @@ export default class Player extends Character {
   }
 
   public stopWallCling(): void {
-    if (!this.container) return
+    if (!this._container) return
 
     if (this.sprite && this.wallClingDirection === Direction.Up) {
       this.sprite.y += 16
@@ -370,8 +379,8 @@ export default class Player extends Character {
     this.wallClingDirection = null
     this.clingPlatform = null
     this.canDoubleJump = true
-    ;(<Phaser.Physics.Arcade.Body>this.container.body).setAllowGravity(true)
-    ;(<Phaser.Physics.Arcade.Body>this.container.body).setDragY(0)
+    this.body.setAllowGravity(true)
+    this.body.setDragY(0)
 
     this.updateAnimation()
   }
@@ -383,7 +392,7 @@ export default class Player extends Character {
   public repositionAfterFall(): void {
     this.stopWallCling()
 
-    this.container?.setPosition(
+    this._container?.setPosition(
       this.lastJumpCoordinates.x,
       this.lastJumpCoordinates.y - 5
     )
@@ -406,10 +415,10 @@ export default class Player extends Character {
   }
 
   protected triggerKnockbackTween(props: Record<string, unknown>): void {
-    if (!this.container || !this.container.body.velocity) return
+    if (!this._container || !this._container.body.velocity) return
 
     this.scene.tweens.add({
-      targets: this.container.body.velocity,
+      targets: this._container.body.velocity,
       duration: 200,
       props
     })

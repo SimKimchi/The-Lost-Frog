@@ -30,22 +30,17 @@ export default class FlyingEnemy extends Enemy {
 
   public init(planetGravity: number, config: CharacterConfig): void {
     super.init(planetGravity, config)
-    ;(<Phaser.Physics.Arcade.Body>this.getContainer().body).setAllowGravity(
+    this.body.setAllowGravity(
       false
     )
   }
 
   public fly(player: Player): void {
-    if (
-      !(<Phaser.Physics.Arcade.Body>player.getContainer().body) ||
-      !(<Phaser.Physics.Arcade.Body>this.getContainer().body)
-    )
+    if (!player.body || !this.body)
       return
 
-    const playerPos = (<Phaser.Physics.Arcade.Body>player.getContainer().body)
-      .position
-    const enemyPos = (<Phaser.Physics.Arcade.Body>this.getContainer().body)
-      .position
+    const playerPos = player.body.position
+    const enemyPos = this.body.position
     const distance = Math.sqrt(
       Math.pow(playerPos.x - enemyPos.x, 2) +
         Math.pow(playerPos.y - enemyPos.y, 2)
@@ -59,13 +54,13 @@ export default class FlyingEnemy extends Enemy {
       if (playerPos.y - enemyPos.y > -2 && playerPos.y - enemyPos.y < 2) {
         velocityY = 0
       }
-      ;(<Phaser.Physics.Arcade.Body>this.getContainer().body).setVelocity(
+      this.body.setVelocity(
         velocityX,
         velocityY
       )
       this.idle = false
     } else {
-      ;(<Phaser.Physics.Arcade.Body>this.getContainer().body).setVelocity(0)
+      this.body.setVelocity(0)
       this.idle = true
     }
 
@@ -77,7 +72,7 @@ export default class FlyingEnemy extends Enemy {
   }
 
   public updateAnimation(): void {
-    if (!this.sprite || !this.container || !this.container.body) return
+    if (!this.sprite || !this._container || !this._container.body) return
 
     // * Hurt
     if (this.isInvulnerable()) {
@@ -104,10 +99,10 @@ export default class FlyingEnemy extends Enemy {
   }
 
   protected triggerKnockbackTween(props: Record<string, unknown>): void {
-    if (!this.container || !this.container.body.velocity) return
+    if (!this._container || !this._container.body.velocity) return
 
     this.scene.tweens.add({
-      targets: this.container.body.velocity,
+      targets: this._container.body.velocity,
       duration: 200,
       props
     })

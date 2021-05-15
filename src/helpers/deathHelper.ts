@@ -12,7 +12,7 @@ export default class DeathHelper {
   private onEnemyDeath(): void {
     if (
       !this.scene.currentEnemies.every(
-        (x) => x.getContainer().body === undefined
+        (x) => x.container.body === undefined
       )
     )
       return

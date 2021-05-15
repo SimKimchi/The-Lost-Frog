@@ -3,7 +3,6 @@ import Enemy from '../gameObjects/enemy'
 import FlyingEnemy from '../gameObjects/flyingEnemy'
 import Player from '../gameObjects/player'
 import { Direction } from '../util'
-import InputHelper from './inputHelper'
 
 export interface IEdge {
   isAtEdge: boolean
@@ -15,17 +14,12 @@ export default class CollisionHelper {
   private player: Player
   private playerVsPlatformCollider: Phaser.Physics.Arcade.Collider | null
   private enemyVsPlatformCollider: Phaser.Physics.Arcade.Collider | null
-  private inputHelper: InputHelper | null = null
 
   constructor(physics: Phaser.Physics.Arcade.ArcadePhysics, player: Player) {
     this.physics = physics
     this.player = player
     this.playerVsPlatformCollider = null
     this.enemyVsPlatformCollider = null
-  }
-
-  public setInputHelper(inputHelper: InputHelper): void {
-    this.inputHelper = inputHelper
   }
 
   public setNextWaveCollisions(
@@ -65,12 +59,12 @@ export default class CollisionHelper {
     if (!platformLayout) return
 
     this.playerVsPlatformCollider = this.physics.add.collider(
-      [this.player.getContainer()],
+      [this.player.container],
       platformLayout,
       (player, platform) => {
         this.player.clingToWall(platform as Phaser.GameObjects.Sprite)
 
-        if ((<Phaser.Physics.Arcade.Body>player.body).touching.down) {
+        if (player.body.touching.down) {
           this.player.canDoubleJump = true
 
           const damageUp: boolean = platform.getData('damageUp')
@@ -78,19 +72,19 @@ export default class CollisionHelper {
           if (damageUp) {
             this.player.handleHit(null, 1)
           }
-        } else if ((<Phaser.Physics.Arcade.Body>player.body).touching.left) {
+        } else if (player.body.touching.left) {
           const damageLeft: boolean = platform.getData('damageLeft')
 
           if (damageLeft) {
             this.player.handleHit(null, 1)
           }
-        } else if ((<Phaser.Physics.Arcade.Body>player.body).touching.right) {
+        } else if (player.body.touching.right) {
           const damageRight: boolean = platform.getData('damageRight')
 
           if (damageRight) {
             this.player.handleHit(null, 1)
           }
-        } else if ((<Phaser.Physics.Arcade.Body>player.body).touching.up) {
+        } else if (player.body.touching.up) {
           const damageDown: boolean = platform.getData('damageDown')
 
           if (damageDown) {
@@ -149,7 +143,7 @@ export default class CollisionHelper {
     const enemyContainers = enemies
       .filter((enemy) => !(enemy instanceof FlyingEnemy))
       .map((enemy) => {
-        return enemy.getContainer()
+        return enemy.container
       })
 
     this.enemyVsPlatformCollider = this.physics.add.collider(
@@ -191,11 +185,11 @@ export default class CollisionHelper {
 
   public setPlayerCollisionsWithEnemies(enemies: Enemy[]): void {
     const enemyContainers = enemies.map((enemy) => {
-      return enemy.getContainer()
+      return enemy.container
     })
 
     this.physics.add.overlap(
-      this.player.getContainer(),
+      this.player.container,
       enemyContainers,
       (frog, enemy) => {
         const direction =
@@ -211,7 +205,7 @@ export default class CollisionHelper {
     items: Phaser.Physics.Arcade.Sprite[]
   ): void {
     this.physics.add.overlap(
-      this.player.getContainer(),
+      this.player.container,
       items,
       (_player, item) => {
         item.destroy()
@@ -225,7 +219,7 @@ export default class CollisionHelper {
     for (const key in enemies) {
       this.physics.add.overlap(
         attackSprites,
-        enemies[key].getContainer(),
+        enemies[key].container,
         (attackSprite) => {
           if (
             !this.player.currentTongueSprite ||
@@ -242,7 +236,7 @@ export default class CollisionHelper {
           }
           enemies[key].handleHit(
             this.player.currentTongueSprite.getData('direction'),
-            this.player.getContainer().getData('damage')
+            this.player.container.getData('damage')
           )
         }
       )
@@ -285,7 +279,7 @@ export default class CollisionHelper {
     characters: Character[],
     container: Phaser.GameObjects.Container
   ): Character | undefined {
-    return characters.find((x) => x.getContainer() === container)
+    return characters.find((x) => x.container === container)
   }
 
   private checkWallCollision(body: Phaser.Physics.Arcade.Body): boolean {

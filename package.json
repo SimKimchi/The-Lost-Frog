@@ -21,7 +21,7 @@
   "keywords": [],
   "dependencies": {
     "jquery": "^3.5.1",
-    "phaser": "^3.24.1",
+    "phaser": "^3.54.0",
     "popper.js": "^1.16.1"
   },
   "devDependencies": {

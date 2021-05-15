@@ -3,7 +3,7 @@ import 'phaser'
 import PlanetScene from '../scenes/planets/planetScene'
 import { CharacterConfig, Direction } from '../util'
 
-// TODO Ajouter scene comme champ privé
+// TODO Construire de l'extérieur, puisqu'on a besoin de Scene qui ne devrait pas être visible par le Character.
 export default abstract class Character {
   protected abstract jumpStrength: number
   protected abstract gravity: number
@@ -16,8 +16,8 @@ export default abstract class Character {
   protected moveSpeed: number
   protected direction: Direction
   protected idle: boolean
-  protected sprite: Phaser.GameObjects.Sprite | null
-  protected container: Phaser.GameObjects.Container | null
+  protected _sprite: Phaser.GameObjects.Sprite | null
+  protected _container: Phaser.GameObjects.Container | null
   protected invulnerable: boolean
   protected assetPrefix: string
   protected scene: PlanetScene
@@ -33,8 +33,8 @@ export default abstract class Character {
     assetPrefix: string,
     scene: PlanetScene
   ) {
-    this.sprite = null
-    this.container = null
+    this._sprite = null
+    this._container = null
     this.currentHp = this.maxHp = maxHp
     this.damage = damage
     this.spriteWidth = bodyWidth
@@ -55,12 +55,30 @@ export default abstract class Character {
 
   public abstract updateAnimation(): void
 
-  public getSprite(): Phaser.Physics.Arcade.Sprite {
-    return this.sprite as Phaser.Physics.Arcade.Sprite
+  public get sprite(): Phaser.GameObjects.Sprite {
+    if (!this._sprite) throw new Error("Sprite not yet initialized.")
+
+    return this._sprite as Phaser.GameObjects.Sprite
   }
 
-  public getContainer(): Phaser.GameObjects.Container {
-    return this.container as Phaser.GameObjects.Container
+  public set sprite(sprite: Phaser.GameObjects.Sprite) {
+    this._sprite = sprite;
+  }
+
+  public get container(): Phaser.GameObjects.Container {
+    if (!this._container) throw new Error("Container not yet initialized.")
+
+    return this._container as Phaser.GameObjects.Container
+  }
+
+  public set container(container: Phaser.GameObjects.Container) {
+    this._container = container
+  }
+
+  public get body(): Phaser.Physics.Arcade.Body {
+    if (!this._container) throw new Error("Container not yet initialized to access its body.")
+
+    return this._container.body as Phaser.Physics.Arcade.Body
   }
 
   public isInvulnerable(): boolean {
@@ -78,7 +96,7 @@ export default abstract class Character {
     ])
     this.container.setSize(config.hitAreaWidth, config.hitAreaHeight)
     this.scene.physics.world.enable(this.container)
-    ;(<Phaser.Physics.Arcade.Body>this.container.body).setCollideWorldBounds(
+    this.body.setCollideWorldBounds(
       config.collideWorldBounds
     )
 
@@ -100,21 +118,21 @@ export default abstract class Character {
     this.setGravity(planetGravity)
 
     this.container.setData('damage', this.damage)
-    ;(<Phaser.Physics.Arcade.Body>this.container.body).onWorldBounds = true
-    ;(<Phaser.Physics.Arcade.Body>this.container.body).setMaxVelocity(
+    this.body.onWorldBounds = true
+    this.body.setMaxVelocity(
       this.moveSpeed,
       this.jumpStrength
     )
-    ;(<Phaser.Physics.Arcade.Body>this.container.body).useDamping = true
+    //this.body.setDamping(true)
   }
 
   public run(multiplier: number): void {
-    if (!this.container) return
+    if (!this._container) return
     if (multiplier === 0) throw new Error('Call stop() instead.')
 
     const velocityX = this.moveSpeed * multiplier
-    ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityX(velocityX)
-    ;(<Phaser.Physics.Arcade.Body>this.container.body).setDragX(0)
+    this.body.setVelocityX(velocityX)
+    this.body.setDragX(0)
 
     if (velocityX > 0) {
       this.direction = Direction.Right
@@ -128,8 +146,8 @@ export default abstract class Character {
   }
 
   public stop(planetFrictionModifier: number): void {
-    if (!this.container) return
-    ;(<Phaser.Physics.Arcade.Body>this.container.body).setDragX(
+    if (!this._container) return
+    this.body.setDragX(
       planetFrictionModifier
     )
 
@@ -167,7 +185,7 @@ export default abstract class Character {
   }
 
   protected triggerKnockback(direction: Direction): void {
-    if (!this.container) return
+    if (!this._container) return
 
     let props = {}
     if (direction === Direction.Right || direction === Direction.Left) {
@@ -179,14 +197,15 @@ export default abstract class Character {
         y: -this.knockback / 5
       }
     }
+
     this.triggerKnockbackTween(props)
   }
 
   protected abstract triggerKnockbackTween(props: Record<string, unknown>): void
 
   public setGravity(multiplier: number): void {
-    if (!this.container) return
-    ;(<Phaser.Physics.Arcade.Body>this.container.body).setGravityY(
+    if (!this._container) return
+    this.body.setGravityY(
       this.gravity * multiplier
     )
   }
@@ -205,9 +224,9 @@ export default abstract class Character {
   }
 
   protected isGrounded(): boolean {
-    if (!this.container) return false
+    if (!this._container) return false
 
-    return (<Phaser.Physics.Arcade.Body>this.container.body).blocked.down
+    return this.body.blocked.down
   }
 
   protected isFacingLeft(): boolean {

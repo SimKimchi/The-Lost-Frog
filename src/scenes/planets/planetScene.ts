@@ -84,7 +84,6 @@ export default abstract class PlanetScene extends Phaser.Scene {
       this.input.keyboard,
       this.collisionHelper
     )
-    this.collisionHelper.setInputHelper(this.inputHelper)
     this.soundHelper = new SoundHelper(this.sound)
     this.deathHelper = new DeathHelper(this)
     this.cutSceneGoingOn = false
@@ -97,6 +96,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.initializeBackground()
 
     this.spawnPlatforms()
+    this.initializePlayer()
     this.spawnEnemies(this.enemyWaves[this.currentEnemyWave])
     this.collisionHelper?.setEnemyPlatformCollisions(
       this.currentPlatformLayout,
@@ -106,12 +106,11 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.spawnItems(this.itemWaves[this.currentEnemyWave])
 
     this.startCutscene()
-    this.setDebug(false)
+    this.setDebug(true)
   }
 
   private finishSceneCreation(): void {
-    this.initializePlayer()
-
+    this.player.show()
     this.collisionHelper?.setPlayerCollisionsWithEnemies(this.currentEnemies)
     this.collisionHelper?.setPlayerCollisionsWithItems(this.currentItems)
     this.collisionHelper?.setPlayerAttackCollisions(this.currentEnemies)
@@ -206,7 +205,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
 
   protected initializePlayerCamera(): void {
     this.cameras.main
-      .startFollow(this.player.getContainer(), false, 0.1, 0.05, 0, 50)
+      .startFollow(this.player.container, false, 0.1, 0.05, 0, 50)
       .setBounds(0, 0, 1920, 640)
       .setZoom(1.4)
   }
@@ -219,7 +218,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.displayHp = this.add
       .text(150, 110, this.player.getDisplayHp(), {
         font: '23px PlayMeGames',
-        fill: '#FFFFFF'
+        color: '#FFFFFF'
       })
       .setScrollFactor(0, 0)
       .setDepth(3)
@@ -227,7 +226,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.displayScore = this.add
       .text(150, 135, (this.game as TheLostFrogGame).displayScore(), {
         font: '16px PlayMeGames',
-        fill: '#FFFFFF'
+        color: '#FFFFFF'
       })
       .setScrollFactor(0, 0)
       .setDepth(3)
@@ -235,7 +234,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.displayWave = this.add
       .text(150, 155, `Region: 1 / ${this.enemyWaves.length}`, {
         font: '16px PlayMeGames',
-        fill: '#FFFFFF'
+        color: '#FFFFFF'
       })
       .setScrollFactor(0, 0)
       .setDepth(3)
@@ -243,7 +242,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.displayEnemies = this.add
       .text(150, 175, `Predators left: ${this.currentEnemies.length}`, {
         font: '16px PlayMeGames',
-        fill: '#FFFFFF'
+        color: '#FFFFFF'
       })
       .setScrollFactor(0, 0)
       .setDepth(3)
@@ -342,7 +341,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   private startNextWave(): void {
-    if (!this.currentEnemies.every((x) => x.getContainer().body === undefined))
+    if (!this.currentEnemies.every((x) => x.container.body === undefined))
       return
     this.cutSceneGoingOn = true
     this.currentEnemyWave++
@@ -374,7 +373,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     const spawnX = spawn.spawnTileX * gridWidth + (spawn.spawnOffsetX ?? 0)
     const spawnY = spawn.spawnTileY * gridHeight + (spawn.spawnOffsetY ?? 0)
 
-    this.player.getContainer().setPosition(spawnX, spawnY)
+    this.player.container.setPosition(spawnX, spawnY)
     this.player.lastJumpCoordinates = { x: spawnX, y: spawnY }
   }
 

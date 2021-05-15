@@ -147,7 +147,7 @@ export default class InputHelper {
     let checkEdge: IEdge = { isAtEdge: false, adjacentPlatform: undefined }
     if (player.clingPlatform) {
       checkEdge = this.collisionHelper.checkPlatformEdge(
-        <Phaser.Physics.Arcade.Body>player.getContainer().body,
+        player.body,
         player.clingPlatform,
         platformGroup,
         direction
