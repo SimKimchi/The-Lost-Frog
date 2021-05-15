@@ -106,7 +106,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.spawnItems(this.itemWaves[this.currentEnemyWave])
 
     this.startCutscene()
-    this.setDebug(true)
+    this.setDebug(false)
   }
 
   private finishSceneCreation(): void {
@@ -125,9 +125,9 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   public update(): void {
-    if (this.cutSceneGoingOn) return
-
     this.updateTexts()
+
+    if (this.cutSceneGoingOn) return
 
     this.inputHelper?.triggerKeyboardActions(
       this.player,
@@ -215,10 +215,16 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   protected initializeTexts(): void {
+    this.add.text(150, 110, 'Health: ', {
+      font: '23px PlayMeGames',
+      color:'white'
+    }).setScrollFactor(0, 0)
+      .setDepth(3)
+      .setStroke('black', 2)
     this.displayHp = this.add
-      .text(150, 110, this.player.getDisplayHp(), {
+      .text(225, 110, this.player.getDisplayHp(), {
         font: '23px PlayMeGames',
-        color: '#FFFFFF'
+        color: 'lightgreen'
       })
       .setScrollFactor(0, 0)
       .setDepth(3)
@@ -226,7 +232,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.displayScore = this.add
       .text(150, 135, (this.game as TheLostFrogGame).displayScore(), {
         font: '16px PlayMeGames',
-        color: '#FFFFFF'
+        color: 'white'
       })
       .setScrollFactor(0, 0)
       .setDepth(3)
@@ -234,15 +240,15 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.displayWave = this.add
       .text(150, 155, `Region: 1 / ${this.enemyWaves.length}`, {
         font: '16px PlayMeGames',
-        color: '#FFFFFF'
+        color: 'white'
       })
       .setScrollFactor(0, 0)
       .setDepth(3)
       .setStroke('black', 2)
     this.displayEnemies = this.add
-      .text(150, 175, `Predators left: ${this.currentEnemies.length}`, {
+      .text(150, 175, `Enemies remaining: ${this.currentEnemies.length}`, {
         font: '16px PlayMeGames',
-        color: '#FFFFFF'
+        color: 'white'
       })
       .setScrollFactor(0, 0)
       .setDepth(3)
@@ -251,17 +257,30 @@ export default abstract class PlanetScene extends Phaser.Scene {
 
   private updateTexts(): void {
     this.displayHp?.setText(this.player.getDisplayHp())
+    this.displayHp?.setColor(this.getDisplayHpColor())
     this.displayScore?.setText((this.game as TheLostFrogGame).displayScore())
     this.displayWave?.setText(
       `Region: ${this.currentEnemyWave + 1} / ${this.enemyWaves.length}`
     )
-    const s =
-      this.currentEnemies.filter((el) => !el.isDead()).length === 1 ? '' : 's'
+
+    const enemiesRemaining: number = this.currentEnemies.filter((el) => !el.isDead()).length
     this.displayEnemies?.setText(
-      `Predator${s} left: ${
-        this.currentEnemies.filter((el) => !el.isDead()).length
-      }`
+      `${enemiesRemaining > 1 ? 'Enemies' : 'Enemy'} remaining: ${enemiesRemaining}`
     )
+  }
+
+  private getDisplayHpColor(): string {
+    const playerCurrentHp: number = this.player.currentHp
+
+    if (playerCurrentHp > 6) {
+      return 'lightgreen'
+    }
+
+    if (playerCurrentHp > 3) {
+      return 'yellow'
+    }
+
+    return '#ff6961'
   }
 
   private spawnEnemies(enemySpawns: EnemySpawn[]): void {

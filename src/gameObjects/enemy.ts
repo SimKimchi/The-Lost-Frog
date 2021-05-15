@@ -27,8 +27,6 @@ export default class Enemy extends Character {
   }
 
   public jump(multiplier: number): void {
-    if (!this._container) return
-
     if (this.isGrounded()) {
       this.body.setVelocityY(
         this.jumpStrength * multiplier

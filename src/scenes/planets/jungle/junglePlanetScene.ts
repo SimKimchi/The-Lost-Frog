@@ -10,7 +10,7 @@ export default class JunglePlanetScene extends PlanetScene {
   public itemWaves: ItemSpawn[][] = ItemConfigProvider.getJungleItemConfig()
 
   constructor() {
-    super('JunglePlanetScene', 1, 1, 0.65)
+    super('JunglePlanetScene', 1, 1, 1300)
   }
 
   public goToNextPlanet(): void {

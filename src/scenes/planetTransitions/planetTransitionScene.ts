@@ -1,6 +1,7 @@
 import SoundHelper from '../../helpers/soundHelper'
 import { HotKeys } from '../../util'
 
+// TODO: Change the art for the next planet during transition
 export default class PlanetTransitionScene extends Phaser.Scene {
   private hotKeys: HotKeys | null
   public soundHelper: SoundHelper | null
@@ -38,14 +39,14 @@ export default class PlanetTransitionScene extends Phaser.Scene {
     this.add
       .text(350, 50, this.sceneTitle, {
         font: '45px PlayMeGames',
-        fill: '#ffffff'
+        color: 'white'
       })
       .setOrigin(0.5, 0.5)
       .setStroke('black', 2)
     this.add
       .text(350, 165, this.sceneDescription, {
         font: '16px PlayMeGames',
-        fill: '#ffffff'
+        color: 'white'
       })
       .setOrigin(0.5, 0.5)
       .setStroke('black', 2)
@@ -53,7 +54,7 @@ export default class PlanetTransitionScene extends Phaser.Scene {
     this.add
       .text(width / 2, height - 75, '[ Land on the planet! ]', {
         font: '35px PlayMeGames',
-        fill: '#ffffff'
+        color: 'white'
       })
       .setInteractive()
       .on(

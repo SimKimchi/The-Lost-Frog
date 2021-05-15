@@ -10,7 +10,7 @@ export default abstract class Character {
   protected abstract invulnerableTime: number
   protected abstract die: (() => void) | null
   protected abstract knockback: number
-  protected currentHp: number
+  protected _currentHp: number
   protected maxHp: number
   protected damage: number
   protected moveSpeed: number
@@ -35,7 +35,7 @@ export default abstract class Character {
   ) {
     this._sprite = null
     this._container = null
-    this.currentHp = this.maxHp = maxHp
+    this._currentHp = this.maxHp = maxHp
     this.damage = damage
     this.spriteWidth = bodyWidth
     this.spriteHeight = bodyHeight
@@ -81,6 +81,10 @@ export default abstract class Character {
     return this._container.body as Phaser.Physics.Arcade.Body
   }
 
+  public get currentHp(): number {
+    return this._currentHp
+  }
+
   public isInvulnerable(): boolean {
     return this.invulnerable
   }
@@ -123,11 +127,9 @@ export default abstract class Character {
       this.moveSpeed,
       this.jumpStrength
     )
-    //this.body.setDamping(true)
   }
 
   public run(multiplier: number): void {
-    if (!this._container) return
     if (multiplier === 0) throw new Error('Call stop() instead.')
 
     const velocityX = this.moveSpeed * multiplier
@@ -146,7 +148,6 @@ export default abstract class Character {
   }
 
   public stop(planetFrictionModifier: number): void {
-    if (!this._container) return
     this.body.setDragX(
       planetFrictionModifier
     )
@@ -169,14 +170,14 @@ export default abstract class Character {
   }
 
   public isDead(): boolean {
-    return this.currentHp === 0
+    return this._currentHp === 0
   }
 
   protected takeDamage(damage: number): void {
-    this.currentHp -= damage
+    this._currentHp -= damage
 
-    if (this.currentHp <= 0) {
-      this.currentHp = 0
+    if (this._currentHp <= 0) {
+      this._currentHp = 0
 
       if (this.die) {
         this.die()
@@ -185,8 +186,6 @@ export default abstract class Character {
   }
 
   protected triggerKnockback(direction: Direction): void {
-    if (!this._container) return
-
     let props = {}
     if (direction === Direction.Right || direction === Direction.Left) {
       props = {
@@ -204,7 +203,6 @@ export default abstract class Character {
   protected abstract triggerKnockbackTween(props: Record<string, unknown>): void
 
   public setGravity(multiplier: number): void {
-    if (!this._container) return
     this.body.setGravityY(
       this.gravity * multiplier
     )
@@ -224,8 +222,6 @@ export default abstract class Character {
   }
 
   protected isGrounded(): boolean {
-    if (!this._container) return false
-
     return this.body.blocked.down
   }
 

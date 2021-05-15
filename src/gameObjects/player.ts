@@ -123,8 +123,6 @@ export default class Player extends Character {
   }
 
   public jump(multiplier: number): void {
-    if (!this._container) return
-
     if (this.isGrounded()) {
       this.canDoubleJump = true
       this.body.setVelocityY(
@@ -132,7 +130,7 @@ export default class Player extends Character {
       )
       this.scene.soundHelper?.playPlayerJumpSound()
 
-      this.lastJumpCoordinates = { x: this._container.x, y: this._container.y }
+      this.lastJumpCoordinates = { x: this.container.x, y: this.container.y }
       this.updateAnimation()
     } else if (this.canDoubleJump) {
       this.canDoubleJump = false
@@ -146,8 +144,6 @@ export default class Player extends Character {
   }
 
   public climb(multiplier: number): void {
-    if (!this._container) return
-
     if (this.body.touching.down) {
       this.stopWallCling()
 
@@ -170,8 +166,6 @@ export default class Player extends Character {
   }
 
   public stopClimb(planetFrictionModifier: number): void {
-    if (!this._container) return
-
     if (this.body.touching.down) {
       this.stopWallCling()
 
@@ -188,8 +182,6 @@ export default class Player extends Character {
   }
 
   public bounce(multiplier: number): void {
-    if (!this._container) return
-
     this.canDoubleJump = true
     this.body.setVelocityY(
       -this.jumpStrength * multiplier * 0.75
@@ -293,7 +285,7 @@ export default class Player extends Character {
   }
 
   public getDisplayHp(): string {
-    return `Health: ${this.currentHp}/${this.maxHp}`
+    return `${this._currentHp}/${this.maxHp}`
   }
 
   public attack(direction: Direction): void {
@@ -360,7 +352,6 @@ export default class Player extends Character {
   }
 
   public wallJump(multiplier: number): void {
-    if (!this._container) return
     this.body.setVelocityY(
       this.jumpStrength * multiplier
     )
@@ -371,8 +362,6 @@ export default class Player extends Character {
   }
 
   public stopWallCling(): void {
-    if (!this._container) return
-
     if (this.sprite && this.wallClingDirection === Direction.Up) {
       this.sprite.y += 16
     }
@@ -399,10 +388,10 @@ export default class Player extends Character {
   }
 
   public heal(): void {
-    this.currentHp += 2
+    this._currentHp += 2
 
-    if (this.currentHp > this.maxHp) {
-      this.currentHp = this.maxHp
+    if (this._currentHp > this.maxHp) {
+      this._currentHp = this.maxHp
     }
 
     this.scene.soundHelper?.playHealSound()

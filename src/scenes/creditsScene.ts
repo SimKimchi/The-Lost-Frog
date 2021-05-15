@@ -1,5 +1,6 @@
 import { HotKeys } from '../util'
 
+// TODO: Remake this credits scene lmao it's ugly
 export default class CreditsScene extends Phaser.Scene {
   private hotKeys: HotKeys | null
 
@@ -20,7 +21,7 @@ export default class CreditsScene extends Phaser.Scene {
     this.add
       .text(width / 2, height / 2 - 200, 'The Lost Frog', {
         font: '45px PlayMeGames',
-        fill: '#ffffff'
+        color: 'white'
       })
       .setOrigin(0.5, 0.5)
 
@@ -61,7 +62,7 @@ Special thanks for our testers :
 `,
         {
           font: '14px PlayMeGames',
-          fill: '#ffffff'
+          color: 'white'
         }
       )
       .setOrigin(0.5, 0.5)
@@ -69,7 +70,7 @@ Special thanks for our testers :
     this.add
       .text(100, 50, '[ Go back ]', {
         font: '15px PlayMeGames',
-        fill: '#ffffff'
+        color: 'white'
       })
       .setInteractive()
       .on(

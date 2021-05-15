@@ -10,7 +10,7 @@ export default class IcePlanetScene extends PlanetScene {
   public itemWaves: ItemSpawn[][] = ItemConfigProvider.getIceItemConfig()
 
   constructor() {
-    super('IcePlanetScene', 1, 1, 0.95)
+    super('IcePlanetScene', 1, 1, 250)
   }
 
   public goToNextPlanet(): void {

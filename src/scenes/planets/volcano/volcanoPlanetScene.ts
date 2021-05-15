@@ -10,7 +10,7 @@ export default class VolcanoPlanetScene extends PlanetScene {
   public itemWaves: ItemSpawn[][] = ItemConfigProvider.getVolcanoItemConfig()
 
   constructor() {
-    super('VolcanoPlanetScene', 1, 1, 0.3)
+    super('VolcanoPlanetScene', 1, 1, 1300)
   }
 
   public goToNextPlanet(): void {
