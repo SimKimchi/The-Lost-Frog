@@ -1,33 +1,19 @@
 # The-Lost-Frog
 
-The lost frog!
+A fun 2d action platformer made for a game jam hosted on itch.io.
 
 ## Building and running on localhost
 
-First install dependencies:
-
-```sh
+- Install packages
+```
 npm install
 ```
-
-To run in hot module reloading mode:
-
-```sh
-npm start
+- Start the server
 ```
-
-To create a production build:
-
-```sh
-npm run build-prod
+npm run start
 ```
-
-## Running
-
-```sh
-node dist/bundle.js
-```
+- Go to http://localhost:1234
 
 ## Credits
 
-Made with [createapp.dev](https://createapp.dev/)
+Made by Simon Côté & Benoit Vézina
