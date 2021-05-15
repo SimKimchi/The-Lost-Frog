@@ -264,9 +264,11 @@ export default abstract class PlanetScene extends Phaser.Scene {
     )
 
     const enemiesRemaining: number = this.currentEnemies.filter((el) => !el.isDead()).length
-    this.displayEnemies?.setText(
-      `${enemiesRemaining > 1 ? 'Enemies' : 'Enemy'} remaining: ${enemiesRemaining}`
-    )
+    if (enemiesRemaining > 1) {
+      this.displayEnemies?.setText(`Enemies remaining: ${enemiesRemaining}`)
+    } else {
+      this.displayEnemies?.setText('One enemy remains')
+    }
   }
 
   private getDisplayHpColor(): string {
