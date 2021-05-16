@@ -69,30 +69,30 @@ export default abstract class CharacterConfigProvider {
         {
           key: 'frog_attack_right',
           assetKey: 'frog_attack',
-          frameStart: 1,
-          frameEnd: 3,
-          frameRate: 13
+          frameStart: 0,
+          frameEnd: 4,
+          frameRate: 8
         },
         {
           key: 'frog_attack_up',
           assetKey: 'frog_attack',
-          frameStart: 6,
+          frameStart: 5,
           frameEnd: 9,
-          frameRate: 13
+          frameRate: 8
         },
         {
           key: 'frog_attack_left',
           assetKey: 'frog_attack',
-          frameStart: 11,
-          frameEnd: 13,
-          frameRate: 13
+          frameStart: 10,
+          frameEnd: 14,
+          frameRate: 8
         },
         {
           key: 'frog_attack_down',
           assetKey: 'frog_attack',
-          frameStart: 18,
-          frameEnd: 20,
-          frameRate: 13
+          frameStart: 15,
+          frameEnd: 19,
+          frameRate: 8
         },
         {
           key: 'frog_hurt_right',
@@ -164,7 +164,7 @@ export default abstract class CharacterConfigProvider {
           key: 'lizard_run_left',
           assetKey: 'enemy_lizard_left',
           frameStart: 0,
-          frameEnd: 4,
+          frameEnd: 3,
           frameRate: 6,
           repeat: -1
         },
@@ -172,7 +172,7 @@ export default abstract class CharacterConfigProvider {
           key: 'lizard_run_right',
           assetKey: 'enemy_lizard_right',
           frameStart: 0,
-          frameEnd: 4,
+          frameEnd: 3,
           frameRate: 6,
           repeat: -1
         },

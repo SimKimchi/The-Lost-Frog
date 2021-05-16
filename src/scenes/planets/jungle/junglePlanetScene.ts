@@ -1,5 +1,9 @@
 import 'phaser'
-import { EnemySpawn, ItemSpawn } from '../../../util'
+import {
+  EnemySpawn,
+  ItemSpawn,
+  LevelResultClockMillisecondsMapping
+} from '../../../util'
 import PlanetScene from '../planetScene'
 import PlatformGroupFactory from '../../../factories/platformGroupFactory'
 import PlanetWaveConfigProvider from '../../../providers/planetWaveConfigProvider'
@@ -8,9 +12,17 @@ import ItemConfigProvider from '../../../providers/itemConfigProvider'
 export default class JunglePlanetScene extends PlanetScene {
   public enemyWaves: EnemySpawn[][] = PlanetWaveConfigProvider.getJungleWaveConfig()
   public itemWaves: ItemSpawn[][] = ItemConfigProvider.getJungleItemConfig()
+  public levelResultClockMillisecondsMapping: LevelResultClockMillisecondsMapping = {
+    S: { maxMs: 100000, appreciation: 'Gaming Warlord' },
+    A: { maxMs: 125000, appreciation: 'Epic' },
+    B: { maxMs: 150000, appreciation: 'Great' },
+    C: { maxMs: 175000, appreciation: 'Good' },
+    D: { maxMs: 200000, appreciation: 'Okay' },
+    E: { maxMs: 225000, appreciation: 'Oof' }
+  }
 
   constructor() {
-    super('JunglePlanetScene', 1, 1, 0.65)
+    super('JunglePlanetScene', 1, 1, 1300)
   }
 
   public goToNextPlanet(): void {

@@ -9,12 +9,17 @@ import InputHelper from '../../helpers/inputHelper'
 import SoundHelper from '../../helpers/soundHelper'
 import CharacterConfigProvider from '../../providers/characterConfigProvider'
 import CharacterSpawnConfigProvider from '../../providers/characterSpawnConfigProvider'
+import Clock from 'phaser3-rex-plugins/plugins/clock.js'
 import {
   PlayerSpawn,
   EnemySpawn,
   gridHeight,
   gridWidth,
-  ItemSpawn
+  ItemSpawn,
+  msToTime,
+  LevelResultClockMillisecondsMapping,
+  getLevelResult,
+  LevelResult
 } from '../../util'
 
 export default abstract class PlanetScene extends Phaser.Scene {
@@ -29,11 +34,14 @@ export default abstract class PlanetScene extends Phaser.Scene {
   public soundHelper: SoundHelper | null
   public cutSceneGoingOn: boolean
   protected player: Player
+  protected abstract levelResultClockMillisecondsMapping: LevelResultClockMillisecondsMapping
+  protected clock: typeof Clock | null
   protected currentPlatformLayout: Phaser.Physics.Arcade.StaticGroup | null
   protected displayScore: Phaser.GameObjects.Text | null
   protected displayHp: Phaser.GameObjects.Text | null
   protected displayWave: Phaser.GameObjects.Text | null
   protected displayEnemies: Phaser.GameObjects.Text | null
+  protected displayClock: Phaser.GameObjects.Text | null
   protected inputHelper: InputHelper | null
   protected collisionHelper: CollisionHelper | null
   protected deathHelper: DeathHelper | null
@@ -56,6 +64,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.displayHp = null
     this.displayWave = null
     this.displayEnemies = null
+    this.displayClock = null
     this.currentEnemies = []
     this.currentItems = []
     this.currentEnemyWave = 0
@@ -64,6 +73,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.collisionHelper = null
     this.deathHelper = null
     this.cutSceneGoingOn = false
+    this.clock = null
   }
 
   public init(): void {
@@ -76,6 +86,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.displayHp = null
     this.displayWave = null
     this.displayEnemies = null
+    this.displayClock = null
     this.currentEnemies = []
     this.currentItems = []
     this.currentEnemyWave = 0
@@ -84,10 +95,10 @@ export default abstract class PlanetScene extends Phaser.Scene {
       this.input.keyboard,
       this.collisionHelper
     )
-    this.collisionHelper.setInputHelper(this.inputHelper)
     this.soundHelper = new SoundHelper(this.sound)
     this.deathHelper = new DeathHelper(this)
     this.cutSceneGoingOn = false
+    this.clock = new Clock(this, {})
     this.initializeItemAnim()
   }
 
@@ -97,6 +108,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.initializeBackground()
 
     this.spawnPlatforms()
+    this.initializePlayer()
     this.spawnEnemies(this.enemyWaves[this.currentEnemyWave])
     this.collisionHelper?.setEnemyPlatformCollisions(
       this.currentPlatformLayout,
@@ -110,8 +122,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   private finishSceneCreation(): void {
-    this.initializePlayer()
-
+    this.player.show()
     this.collisionHelper?.setPlayerCollisionsWithEnemies(this.currentEnemies)
     this.collisionHelper?.setPlayerCollisionsWithItems(this.currentItems)
     this.collisionHelper?.setPlayerAttackCollisions(this.currentEnemies)
@@ -123,12 +134,13 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.initializePlayerCamera()
     this.initializeTexts()
     this.addMuteButtons()
+    this.clock.start()
   }
 
   public update(): void {
-    if (this.cutSceneGoingOn) return
-
     this.updateTexts()
+
+    if (this.cutSceneGoingOn) return
 
     this.inputHelper?.triggerKeyboardActions(
       this.player,
@@ -206,7 +218,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
 
   protected initializePlayerCamera(): void {
     this.cameras.main
-      .startFollow(this.player.getContainer(), false, 0.1, 0.05, 0, 50)
+      .startFollow(this.player.container, false, 0.1, 0.05, 0, 50)
       .setBounds(0, 0, 1920, 640)
       .setZoom(1.4)
   }
@@ -216,10 +228,18 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   protected initializeTexts(): void {
-    this.displayHp = this.add
-      .text(150, 110, this.player.getDisplayHp(), {
+    this.add
+      .text(150, 110, 'Health: ', {
         font: '23px PlayMeGames',
-        fill: '#FFFFFF'
+        color: 'white'
+      })
+      .setScrollFactor(0, 0)
+      .setDepth(3)
+      .setStroke('black', 2)
+    this.displayHp = this.add
+      .text(225, 110, this.player.getDisplayHp(), {
+        font: '23px PlayMeGames',
+        color: 'lightgreen'
       })
       .setScrollFactor(0, 0)
       .setDepth(3)
@@ -227,7 +247,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.displayScore = this.add
       .text(150, 135, (this.game as TheLostFrogGame).displayScore(), {
         font: '16px PlayMeGames',
-        fill: '#FFFFFF'
+        color: 'white'
       })
       .setScrollFactor(0, 0)
       .setDepth(3)
@@ -235,15 +255,23 @@ export default abstract class PlanetScene extends Phaser.Scene {
     this.displayWave = this.add
       .text(150, 155, `Region: 1 / ${this.enemyWaves.length}`, {
         font: '16px PlayMeGames',
-        fill: '#FFFFFF'
+        color: 'white'
       })
       .setScrollFactor(0, 0)
       .setDepth(3)
       .setStroke('black', 2)
     this.displayEnemies = this.add
-      .text(150, 175, `Predators left: ${this.currentEnemies.length}`, {
+      .text(150, 175, `Enemies remaining: ${this.currentEnemies.length}`, {
         font: '16px PlayMeGames',
-        fill: '#FFFFFF'
+        color: 'white'
+      })
+      .setScrollFactor(0, 0)
+      .setDepth(3)
+      .setStroke('black', 2)
+    this.displayClock = this.add
+      .text(150, 195, `Time elapsed: ${this.clockTime}`, {
+        font: '16px PlayMeGames',
+        color: 'white'
       })
       .setScrollFactor(0, 0)
       .setDepth(3)
@@ -252,17 +280,37 @@ export default abstract class PlanetScene extends Phaser.Scene {
 
   private updateTexts(): void {
     this.displayHp?.setText(this.player.getDisplayHp())
+    this.displayHp?.setColor(this.getDisplayHpColor())
     this.displayScore?.setText((this.game as TheLostFrogGame).displayScore())
     this.displayWave?.setText(
       `Region: ${this.currentEnemyWave + 1} / ${this.enemyWaves.length}`
     )
-    const s =
-      this.currentEnemies.filter((el) => !el.isDead()).length === 1 ? '' : 's'
-    this.displayEnemies?.setText(
-      `Predator${s} left: ${
-        this.currentEnemies.filter((el) => !el.isDead()).length
-      }`
-    )
+
+    const enemiesRemaining: number = this.currentEnemies.filter(
+      (el) => !el.isDead()
+    ).length
+    if (enemiesRemaining > 1) {
+      this.displayEnemies?.setText(`Enemies remaining: ${enemiesRemaining}`)
+    } else if (enemiesRemaining === 1) {
+      this.displayEnemies?.setText('One enemy remains')
+    } else {
+      this.displayEnemies?.setText("They're all dead")
+    }
+    this.displayClock?.setText(`Time elapsed: ${msToTime(this.clockTime)}`)
+  }
+
+  private getDisplayHpColor(): string {
+    const playerCurrentHp: number = this.player.currentHp
+
+    if (playerCurrentHp > 6) {
+      return 'lightgreen'
+    }
+
+    if (playerCurrentHp > 3) {
+      return 'yellow'
+    }
+
+    return '#ff6961'
   }
 
   private spawnEnemies(enemySpawns: EnemySpawn[]): void {
@@ -334,6 +382,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   public completeWave(): void {
+    this.pauseClock()
     this.cameras.main
       .fadeOut(1500, 0, 0, 0)
       .once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
@@ -342,8 +391,9 @@ export default abstract class PlanetScene extends Phaser.Scene {
   }
 
   private startNextWave(): void {
-    if (!this.currentEnemies.every((x) => x.getContainer().body === undefined))
+    if (!this.currentEnemies.every((x) => x.container.body === undefined))
       return
+
     this.cutSceneGoingOn = true
     this.currentEnemyWave++
 
@@ -365,6 +415,7 @@ export default abstract class PlanetScene extends Phaser.Scene {
 
     this.cameras.main.fadeIn(1500, 0, 0, 0)
     this.cutSceneGoingOn = false
+    this.resumeClock()
   }
 
   private repositionPlayer(): void {
@@ -374,23 +425,171 @@ export default abstract class PlanetScene extends Phaser.Scene {
     const spawnX = spawn.spawnTileX * gridWidth + (spawn.spawnOffsetX ?? 0)
     const spawnY = spawn.spawnTileY * gridHeight + (spawn.spawnOffsetY ?? 0)
 
-    this.player.getContainer().setPosition(spawnX, spawnY)
+    this.player.container.setPosition(spawnX, spawnY)
     this.player.lastJumpCoordinates = { x: spawnX, y: spawnY }
   }
 
   public completeLevel(): void {
     if (!this.soundHelper) return
 
-    this.soundHelper.fadeMusicOut(this)
+    this.cutSceneGoingOn = true
+    this.physics.pause()
+    this.pauseClock()
+    this.soundHelper.stopAllSounds()
+    this.soundHelper.setMusic('transition_theme', 0.3, false)
 
-    this.cameras.main
-      .fadeOut(1500, 0, 0, 0)
-      .once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
-        this.goToNextPlanet()
+    const levelResult = getLevelResult(
+      this.clockTime,
+      this.levelResultClockMillisecondsMapping
+    )
+
+    const healthBonusScore: number = this.player.currentHp * 50
+    this.displayEndLevelResult(levelResult, healthBonusScore)
+    ;(this.game as TheLostFrogGame).increaseScore(levelResult.levelScore)
+    ;(this.game as TheLostFrogGame).increaseScore(healthBonusScore)
+
+    this.input.once(
+      'pointerdown',
+      function (this: PlanetScene) {
+        this.cameras.main
+          .fadeOut(1500, 0, 0, 0)
+          .once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+            this.goToNextPlanet()
+          })
+      },
+      this
+    )
+    this.input.keyboard.once(
+      'keydown',
+      function (this: PlanetScene) {
+        if (!this.inputHelper?.enterIsDown()) return
+
+        this.cameras.main
+          .fadeOut(1500, 0, 0, 0)
+          .once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+            this.goToNextPlanet()
+          })
+      },
+      this
+    )
+  }
+
+  private displayEndLevelResult(
+    levelResult: LevelResult,
+    healthBonusScore: number
+  ): void {
+    const currentScore: number = (this.game as TheLostFrogGame).highScore
+
+    const titleText = this.add
+      .text(0, 0, 'Planet clear!', {
+        font: '50px PlayMeGames',
+        color: 'white'
       })
+      .setScrollFactor(0, 0)
+      .setStroke('black', 4)
+      .setDepth(3)
+    titleText.setPosition(
+      this.game.scale.width / 2 - titleText.width / 2,
+      this.game.scale.height / 2 - titleText.height / 2 - 75
+    )
+
+    const scoreText = this.add
+      .text(0, 0, `Score: ${currentScore}`, {
+        font: '18px PlayMeGames',
+        color: 'white'
+      })
+      .setScrollFactor(0, 0)
+      .setStroke('black', 3)
+      .setDepth(3)
+    scoreText.setPosition(
+      this.game.scale.width / 2 - scoreText.width / 2,
+      this.game.scale.height / 2 - scoreText.height / 2
+    )
+
+    const timeScoreText = this.add
+      .text(0, 0, `Time bonus: +${levelResult.levelScore}`, {
+        font: '18px PlayMeGames',
+        color: 'white'
+      })
+      .setScrollFactor(0, 0)
+      .setStroke('black', 3)
+      .setDepth(3)
+    timeScoreText.setPosition(
+      this.game.scale.width / 2 - timeScoreText.width / 2,
+      this.game.scale.height / 2 - timeScoreText.height / 2 + 18
+    )
+
+    const healthScoreText = this.add
+      .text(0, 0, `Health bonus: +${healthBonusScore}`, {
+        font: '18px PlayMeGames',
+        color: 'white'
+      })
+      .setScrollFactor(0, 0)
+      .setStroke('black', 3)
+      .setDepth(3)
+    healthScoreText.setPosition(
+      this.game.scale.width / 2 - healthScoreText.width / 2,
+      this.game.scale.height / 2 - healthScoreText.height / 2 + 36
+    )
+
+    const totalScoreText = this.add
+      .text(
+        0,
+        0,
+        `Total: ${currentScore + levelResult.levelScore + healthBonusScore}`,
+        {
+          font: '18px PlayMeGames',
+          color: 'white'
+        }
+      )
+      .setScrollFactor(0, 0)
+      .setStroke('black', 3)
+      .setDepth(3)
+    totalScoreText.setPosition(
+      this.game.scale.width / 2 - totalScoreText.width / 2,
+      this.game.scale.height / 2 - totalScoreText.height / 2 + 54
+    )
+
+    const appreciationText = this.add
+      .text(0, 0, `Appreciation: ${levelResult.levelAppreciation}`, {
+        font: '25px PlayMeGames',
+        color: 'white'
+      })
+      .setScrollFactor(0, 0)
+      .setStroke('black', 3)
+      .setDepth(3)
+    appreciationText.setPosition(
+      this.game.scale.width / 2 - appreciationText.width / 2,
+      this.game.scale.height / 2 - appreciationText.height / 2 + 100
+    )
+
+    const continueText = this.add
+      .text(0, 0, 'Click or press Enter to continue...', {
+        font: '18px PlayMeGames',
+        color: 'white'
+      })
+      .setScrollFactor(0, 0)
+      .setStroke('black', 3)
+      .setDepth(3)
+    continueText.setPosition(
+      this.game.scale.width / 2 - continueText.width / 2,
+      this.game.scale.height / 2 - continueText.height / 2 + 150
+    )
   }
 
   public abstract goToNextPlanet(): void
+
+  public pauseClock(): void {
+    this.clock.pause()
+  }
+
+  public resumeClock(): void {
+    this.clock.resume()
+  }
+
+  public get clockTime(): number {
+    return this.clock.now
+  }
 
   private setDebug(debug: boolean) {
     if (!debug) {
@@ -414,6 +613,8 @@ export default abstract class PlanetScene extends Phaser.Scene {
         this.add.text(x * 64, y * 64, `${x}-${y}`)
       }
     }
+
+    this.soundHelper!.mute()
   }
 
   private removeCurrentPlatforms(): void {

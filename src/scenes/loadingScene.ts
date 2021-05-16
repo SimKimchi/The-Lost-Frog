@@ -25,7 +25,7 @@ export default class LoadingScene extends Phaser.Scene {
         text: 'Loading...',
         style: {
           font: '20px PlayMeGames',
-          fill: '#ffffff'
+          color: 'white'
         }
       })
       .setOrigin(0.5, 0.5)
@@ -37,7 +37,7 @@ export default class LoadingScene extends Phaser.Scene {
         text: '0%',
         style: {
           font: '18px PlayMeGames',
-          fill: '#ffffff'
+          color: 'white'
         }
       })
       .setOrigin(0.5, 0.5)
@@ -49,7 +49,7 @@ export default class LoadingScene extends Phaser.Scene {
         text: '',
         style: {
           font: '18px PlayMeGames',
-          fill: '#ffffff'
+          color: 'white'
         }
       })
       .setOrigin(0.5, 0.5)
@@ -78,7 +78,7 @@ export default class LoadingScene extends Phaser.Scene {
             text: 'Click or press any key to continue!',
             style: {
               font: '20px PlayMeGames',
-              fill: '#ffffff'
+              color: 'white'
             }
           })
           .setOrigin(0.5, 0.5)

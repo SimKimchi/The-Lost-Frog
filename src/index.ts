@@ -35,28 +35,32 @@ const config: Phaser.Types.Core.GameConfig = {
 }
 
 export class TheLostFrogGame extends Phaser.Game {
-  private highScore: number
+  private _highScore: number
 
   constructor(config: Phaser.Types.Core.GameConfig) {
     super(config)
 
-    this.highScore = 0
+    this._highScore = 0
+  }
+
+  public get highScore(): number {
+    return this._highScore
   }
 
   public increaseScore(score: number): void {
-    this.highScore += score
+    this._highScore += score
   }
 
   public resetScore(): void {
-    this.highScore = 0
+    this._highScore = 0
   }
 
   public displayScore(): string {
-    return `Highscore: ${this.highScore}`
+    return `Highscore: ${this._highScore}`
   }
 
   public displayFinalScore(): string {
-    return `Final Score: ${this.highScore} !`
+    return `Final Score: ${this._highScore} !`
   }
 }
 

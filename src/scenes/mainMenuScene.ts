@@ -30,7 +30,7 @@ export default class MainMenuScene extends Phaser.Scene {
     this.playTextOption = this.add
       .text(width / 2, height / 2, '[ Play! ]', {
         font: '35px PlayMeGames',
-        fill: '#ffffff'
+        color: 'white'
       })
       .setInteractive()
       .on(
@@ -47,7 +47,7 @@ export default class MainMenuScene extends Phaser.Scene {
     this.creditsTextOption = this.add
       .text(width / 2, height / 2 + 100, 'See credits', {
         font: '18px PlayMeGames',
-        fill: '#ffffff'
+        color: 'white'
       })
       .setInteractive()
       .on(
@@ -90,8 +90,6 @@ export default class MainMenuScene extends Phaser.Scene {
   }
 
   private goToFirstPlanet(): void {
-    this.soundHelper?.stopAllSounds()
-
     this.game.scene.switch('MainMenuScene', 'JunglePlanetTransitionScene')
   }
 

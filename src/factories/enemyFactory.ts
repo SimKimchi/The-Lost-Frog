@@ -101,7 +101,7 @@ export default abstract class EnemyFactory {
   ): () => void {
     return () => {
       ;(scene.game as TheLostFrogGame).increaseScore(enemy.scoreWorth)
-      enemy.getContainer().destroy()
+      enemy.container.destroy()
       scene.events.emit('enemyKilled')
     }
   }

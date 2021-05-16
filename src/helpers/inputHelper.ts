@@ -89,6 +89,8 @@ export default class InputHelper {
     platformGroup: Phaser.Physics.Arcade.StaticGroup
   ): void {
     let checkEdge: IEdge = { isAtEdge: false, adjacentPlatform: undefined }
+    const drag: number = 1200
+
     if (player.wallClingDirection === Direction.Up) {
       if (this.hotKeys.S.isDown) {
         player.stopWallCling()
@@ -97,17 +99,17 @@ export default class InputHelper {
         if (!checkEdge.isAtEdge || checkEdge.adjacentPlatform) {
           player.run(-velocityXModifier * 0.75)
         } else {
-          player.stop(0.1)
+          player.stop(drag)
         }
       } else if (this.hotKeys.D.isDown) {
         checkEdge = this.checkEdge(player, platformGroup, Direction.Right)
         if (!checkEdge.isAtEdge || checkEdge.adjacentPlatform) {
           player.run(velocityXModifier * 0.75)
         } else {
-          player.stop(0.1)
+          player.stop(drag)
         }
       } else {
-        player.stop(0.1)
+        player.stop(drag)
       }
       if (checkEdge.adjacentPlatform) {
         player.clingPlatform = checkEdge.adjacentPlatform
@@ -118,17 +120,17 @@ export default class InputHelper {
         if (!checkEdge.isAtEdge || checkEdge.adjacentPlatform) {
           player.climb(-velocityYModifier * 0.75)
         } else {
-          player.stopClimb(0.1)
+          player.stopClimb(drag)
         }
       } else if (this.hotKeys.S.isDown) {
         checkEdge = this.checkEdge(player, platformGroup, Direction.Down)
         if (!checkEdge.isAtEdge || checkEdge.adjacentPlatform) {
           player.climb(velocityYModifier * 0.75)
         } else {
-          player.stopClimb(0.1)
+          player.stopClimb(drag)
         }
       } else {
-        player.stopClimb(0.1)
+        player.stopClimb(drag)
       }
       if (checkEdge.adjacentPlatform) {
         player.clingPlatform = checkEdge.adjacentPlatform
@@ -147,7 +149,7 @@ export default class InputHelper {
     let checkEdge: IEdge = { isAtEdge: false, adjacentPlatform: undefined }
     if (player.clingPlatform) {
       checkEdge = this.collisionHelper.checkPlatformEdge(
-        <Phaser.Physics.Arcade.Body>player.getContainer().body,
+        player.body,
         player.clingPlatform,
         platformGroup,
         direction

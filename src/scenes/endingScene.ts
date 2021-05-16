@@ -22,7 +22,7 @@ export default class EndingScene extends Phaser.Scene {
     this.add
       .text(width / 2, height / 2 - 200, 'The Lost Frog', {
         font: '45px PlayMeGames',
-        fill: '#ffffff'
+        color: 'white'
       })
       .setOrigin(0.5, 0.5)
     this.add
@@ -32,7 +32,7 @@ export default class EndingScene extends Phaser.Scene {
         (this.game as TheLostFrogGame).displayFinalScore(),
         {
           font: '15px PlayMeGames',
-          fill: '#ffffff'
+          color: 'white'
         }
       )
       .setOrigin(0.5, 0.5)
@@ -54,7 +54,7 @@ a nice dinner.
 Thank you player for helping Frogault save his wife!`,
         {
           font: '16px PlayMeGames',
-          fill: '#ffffff'
+          color: 'white'
         }
       )
       .setOrigin(0.5, 0.5)
@@ -62,7 +62,7 @@ Thank you player for helping Frogault save his wife!`,
     this.add
       .text(width / 2, height - 100, 'Thanks for playing our game!', {
         font: '30px PlayMeGames',
-        fill: '#ffffff'
+        color: 'white'
       })
       .setOrigin(0.5, 0.5)
 

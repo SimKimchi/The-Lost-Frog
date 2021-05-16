@@ -27,17 +27,15 @@ export default class Enemy extends Character {
   }
 
   public jump(multiplier: number): void {
-    if (!this.container) return
-
     if (this.isGrounded()) {
-      ;(<Phaser.Physics.Arcade.Body>this.container.body).setVelocityY(
+      this.body.setVelocityY(
         this.jumpStrength * multiplier
       )
     }
   }
 
   public updateAnimation(): void {
-    if (!this.sprite || !this.container || !this.container.body) return
+    if (!this.sprite || !this._container || !this._container.body) return
 
     if (this.isInvulnerable()) {
       if (this.direction === Direction.Left) {
@@ -46,7 +44,7 @@ export default class Enemy extends Character {
         this.sprite.anims.play(`${this.assetPrefix}_hurt_right`, true)
       }
     } else if (
-      (<Phaser.Physics.Arcade.Body>this.container.body).velocity.x < 0
+      this.body.velocity.x < 0
     ) {
       this.sprite.anims.play(`${this.assetPrefix}_run_left`, true)
     } else {
@@ -93,14 +91,14 @@ export default class Enemy extends Character {
   }
 
   protected triggerKnockbackTween(props: Record<string, unknown>): void {
-    if (!this.container || !this.container.body.velocity) return
+    if (!this._container || !this._container.body.velocity) return
 
     this.scene.tweens.add({
-      targets: this.container.body.velocity,
+      targets: this._container.body.velocity,
       duration: 200,
       props,
       onComplete: () => {
-        if (!this.container || !this.container.body) return
+        if (!this._container || !this._container.body) return
         this.turnAround() // Dont laugh
         this.turnAround()
       },
