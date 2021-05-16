@@ -90,8 +90,6 @@ export default class MainMenuScene extends Phaser.Scene {
   }
 
   private goToFirstPlanet(): void {
-    this.soundHelper?.stopAllSounds()
-
     this.game.scene.switch('MainMenuScene', 'JunglePlanetTransitionScene')
   }
 

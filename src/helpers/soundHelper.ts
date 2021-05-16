@@ -30,6 +30,12 @@ export default class SoundHelper {
     this.playMusic()
   }
 
+  public isMusicPlaying(musicKey: string): boolean {
+    const music = this.soundManager.get(musicKey)
+
+    return music ? music.isPlaying : false
+  }
+
   public playMusic(): void {
     if (!this.music) return
 
@@ -51,8 +57,6 @@ export default class SoundHelper {
   }
 
   public stopAllSounds(): void {
-    if (!this.music) return
-
     this.soundManager.removeAll()
   }
 

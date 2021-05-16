@@ -1,5 +1,9 @@
 import 'phaser'
-import { EnemySpawn, ItemSpawn } from '../../../util'
+import {
+  EnemySpawn,
+  ItemSpawn,
+  LevelResultClockMillisecondsMapping
+} from '../../../util'
 import PlanetScene from '../planetScene'
 import PlatformGroupFactory from '../../../factories/platformGroupFactory'
 import PlanetWaveConfigProvider from '../../../providers/planetWaveConfigProvider'
@@ -8,6 +12,14 @@ import ItemConfigProvider from '../../../providers/itemConfigProvider'
 export default class IcePlanetScene extends PlanetScene {
   public enemyWaves: EnemySpawn[][] = PlanetWaveConfigProvider.getIceWaveConfig()
   public itemWaves: ItemSpawn[][] = ItemConfigProvider.getIceItemConfig()
+  public levelResultClockMillisecondsMapping: LevelResultClockMillisecondsMapping = {
+    S: { maxMs: 100000, appreciation: 'Gaming Warlord' },
+    A: { maxMs: 125000, appreciation: 'Epic' },
+    B: { maxMs: 150000, appreciation: 'Great' },
+    C: { maxMs: 175000, appreciation: 'Good' },
+    D: { maxMs: 200000, appreciation: 'Okay' },
+    E: { maxMs: 225000, appreciation: 'Oof' }
+  }
 
   constructor() {
     super('IcePlanetScene', 1, 1, 250)

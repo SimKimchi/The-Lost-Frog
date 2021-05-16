@@ -52,8 +52,7 @@ export default class InputHelper {
         player,
         velocityXModifier,
         velocityYModifier,
-        platformGroup,
-        planetFrictionModifier
+        platformGroup
       )
     } else {
       this.handleRegularMovement(
@@ -87,10 +86,11 @@ export default class InputHelper {
     player: Player,
     velocityXModifier: number,
     velocityYModifier: number,
-    platformGroup: Phaser.Physics.Arcade.StaticGroup,
-    planetFrictionModifier: number
+    platformGroup: Phaser.Physics.Arcade.StaticGroup
   ): void {
     let checkEdge: IEdge = { isAtEdge: false, adjacentPlatform: undefined }
+    const drag: number = 1200
+
     if (player.wallClingDirection === Direction.Up) {
       if (this.hotKeys.S.isDown) {
         player.stopWallCling()
@@ -99,17 +99,17 @@ export default class InputHelper {
         if (!checkEdge.isAtEdge || checkEdge.adjacentPlatform) {
           player.run(-velocityXModifier * 0.75)
         } else {
-          player.stop(planetFrictionModifier)
+          player.stop(drag)
         }
       } else if (this.hotKeys.D.isDown) {
         checkEdge = this.checkEdge(player, platformGroup, Direction.Right)
         if (!checkEdge.isAtEdge || checkEdge.adjacentPlatform) {
           player.run(velocityXModifier * 0.75)
         } else {
-          player.stop(planetFrictionModifier)
+          player.stop(drag)
         }
       } else {
-        player.stop(planetFrictionModifier)
+        player.stop(drag)
       }
       if (checkEdge.adjacentPlatform) {
         player.clingPlatform = checkEdge.adjacentPlatform
@@ -120,17 +120,17 @@ export default class InputHelper {
         if (!checkEdge.isAtEdge || checkEdge.adjacentPlatform) {
           player.climb(-velocityYModifier * 0.75)
         } else {
-          player.stopClimb(planetFrictionModifier)
+          player.stopClimb(drag)
         }
       } else if (this.hotKeys.S.isDown) {
         checkEdge = this.checkEdge(player, platformGroup, Direction.Down)
         if (!checkEdge.isAtEdge || checkEdge.adjacentPlatform) {
           player.climb(velocityYModifier * 0.75)
         } else {
-          player.stopClimb(planetFrictionModifier)
+          player.stopClimb(drag)
         }
       } else {
-        player.stopClimb(planetFrictionModifier)
+        player.stopClimb(drag)
       }
       if (checkEdge.adjacentPlatform) {
         player.clingPlatform = checkEdge.adjacentPlatform

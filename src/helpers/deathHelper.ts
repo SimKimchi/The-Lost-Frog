@@ -10,11 +10,7 @@ export default class DeathHelper {
   }
 
   private onEnemyDeath(): void {
-    if (
-      !this.scene.currentEnemies.every(
-        (x) => x.container.body === undefined
-      )
-    )
+    if (!this.scene.currentEnemies.every((x) => x.container.body === undefined))
       return
 
     if (this.scene.currentEnemyWave === this.scene.enemyWaves.length - 1) {
@@ -30,6 +26,7 @@ export default class DeathHelper {
     this.scene.soundHelper?.pauseMusic()
     this.scene.soundHelper?.setMusic('gameover_theme', 0.5, false)
     this.scene.soundHelper?.playMusic()
+    this.scene.pauseClock()
     this.displayGameOver()
     this.allowRetry()
   }
@@ -42,6 +39,7 @@ export default class DeathHelper {
       })
       .setScrollFactor(0, 0)
       .setStroke('black', 4)
+      .setDepth(3)
     gameOverText.setPosition(
       this.scene.game.scale.width / 2 - gameOverText.width / 2,
       this.scene.game.scale.height / 2 - gameOverText.height / 2
@@ -53,6 +51,7 @@ export default class DeathHelper {
       })
       .setScrollFactor(0, 0)
       .setStroke('black', 3)
+      .setDepth(3)
     retryText.setPosition(
       this.scene.game.scale.width / 2 - retryText.width / 2,
       this.scene.game.scale.height / 2 - retryText.height / 2 + 50

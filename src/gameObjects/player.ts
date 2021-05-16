@@ -125,18 +125,14 @@ export default class Player extends Character {
   public jump(multiplier: number): void {
     if (this.isGrounded()) {
       this.canDoubleJump = true
-      this.body.setVelocityY(
-        this.jumpStrength * multiplier
-      )
+      this.body.setVelocityY(this.jumpStrength * multiplier)
       this.scene.soundHelper?.playPlayerJumpSound()
 
       this.lastJumpCoordinates = { x: this.container.x, y: this.container.y }
       this.updateAnimation()
     } else if (this.canDoubleJump) {
       this.canDoubleJump = false
-      this.body.setVelocityY(
-        this.jumpStrength * multiplier
-      )
+      this.body.setVelocityY(this.jumpStrength * multiplier)
       this.scene.soundHelper?.playPlayerDoubleJumpSound()
 
       this.updateAnimation()
@@ -172,9 +168,7 @@ export default class Player extends Character {
       return
     }
 
-    this.body.setDragY(
-      planetFrictionModifier
-    )
+    this.body.setDragY(planetFrictionModifier)
 
     this.idle = false
 
@@ -183,9 +177,7 @@ export default class Player extends Character {
 
   public bounce(multiplier: number): void {
     this.canDoubleJump = true
-    this.body.setVelocityY(
-      -this.jumpStrength * multiplier * 0.75
-    )
+    this.body.setVelocityY(-this.jumpStrength * multiplier * 0.75)
 
     this.updateAnimation()
   }
@@ -240,11 +232,7 @@ export default class Player extends Character {
       }
     }
     // * Jump
-    else if (
-      Math.floor(
-        this.body.velocity.y
-      ) !== 0
-    ) {
+    else if (Math.floor(this.body.velocity.y) !== 0) {
       if (this.body.velocity.y > 0) {
         if (this.isFacingLeft()) {
           this.sprite.anims.play(`${this.assetPrefix}_jump_descend_left`, true)
@@ -261,10 +249,8 @@ export default class Player extends Character {
     }
     // * Run
     else if (
-      Math.floor(this.body.velocity.x) >
-        50 ||
-      Math.floor(this.body.velocity.x) <
-        -50
+      Math.floor(this.body.velocity.x) > 50 ||
+      Math.floor(this.body.velocity.x) < -50
     ) {
       if (this.isFacingLeft()) {
         this.sprite.anims.play(`${this.assetPrefix}_run_left`, true)
@@ -322,20 +308,11 @@ export default class Player extends Character {
     )
       return
 
-    if (
-      this.body.touching.left &&
-      platform.getData('clingSides')
-    ) {
+    if (this.body.touching.left && platform.getData('clingSides')) {
       this.wallClingDirection = Direction.Left
-    } else if (
-      this.body.touching.right &&
-      platform.getData('clingSides')
-    ) {
+    } else if (this.body.touching.right && platform.getData('clingSides')) {
       this.wallClingDirection = Direction.Right
-    } else if (
-      this.body.touching.up &&
-      platform.getData('clingUnder')
-    ) {
+    } else if (this.body.touching.up && platform.getData('clingUnder')) {
       this.wallClingDirection = Direction.Up
       if (this.sprite) {
         this.sprite.y -= 16
@@ -352,9 +329,7 @@ export default class Player extends Character {
   }
 
   public wallJump(multiplier: number): void {
-    this.body.setVelocityY(
-      this.jumpStrength * multiplier
-    )
+    this.body.setVelocityY(this.jumpStrength * multiplier)
 
     this.stopWallCling()
 
@@ -395,7 +370,6 @@ export default class Player extends Character {
     }
 
     this.scene.soundHelper?.playHealSound()
-    ;(this.scene.game as TheLostFrogGame).increaseScore(50)
   }
 
   protected makeInvulnerable(): void {
