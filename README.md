@@ -2,6 +2,10 @@
 
 A fun 2d action platformer made for a game jam hosted on itch.io.
 
+## Play the game!
+
+The game can be played [here](https://simkimchi.itch.io/the-lost-frog) and [here](https://the-lost-frog.herokuapp.com/)
+
 ## Building and running on localhost
 
 - Install packages
